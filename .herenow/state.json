@@ -1,0 +1,10 @@
+{
+  "publishes": {
+    "rising-valley-tyqm": {
+      "siteUrl": "https://rising-valley-tyqm.here.now/",
+      "claimToken": "WbemJS4u3kOlMA5t",
+      "claimUrl": "https://here.now/c/WbemJS4u3kOlMA5t",
+      "expiresAt": "2026-10-05T12:01:12.773Z"
+    }
+  }
+}
