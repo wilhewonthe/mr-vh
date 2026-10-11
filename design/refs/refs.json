@@ -1,0 +1,284 @@
+[
+  {
+    "site": "https://madewithgsap.com",
+    "name": null,
+    "via": "direct",
+    "url": "https://madewithgsap.com",
+    "title": "Made With Gsap",
+    "sheets": 2,
+    "readyState": "complete",
+    "globals": [
+      "gsap",
+      "ScrollTrigger",
+      "Lenis"
+    ],
+    "htmlClass": "lenis",
+    "pinSpacers": 4,
+    "stickies": 0,
+    "canvases": 0,
+    "webgl": false,
+    "videos": [
+      {
+        "autoplay": false,
+        "loop": true,
+        "muted": true,
+        "preload": "none",
+        "src": "093.mp4"
+      },
+      {
+        "autoplay": false,
+        "loop": true,
+        "muted": true,
+        "preload": "none",
+        "src": "062.mp4"
+      },
+      {
+        "autoplay": false,
+        "loop": true,
+        "muted": true,
+        "preload": "none",
+        "src": "005.mp4"
+      },
+      {
+        "autoplay": false,
+        "loop": true,
+        "muted": true,
+        "preload": "none",
+        "src": "026.mp4"
+      }
+    ],
+    "mixBlend": 0,
+    "cursorNone": false,
+    "cssTimeline": false,
+    "fontFaces": [
+      "LayGrotesk",
+      "PPNeueMontrealMono"
+    ],
+    "display": {
+      "font": "LayGrotesk",
+      "px": 120,
+      "weight": "500",
+      "sample": "freshly added"
+    },
+    "bodyFont": "LayGrotesk",
+    "bg": "rgb(10, 10, 11)",
+    "palette": [
+      "#0a0a0b ×378",
+      "#ffffff ×364",
+      "#999999 ×57",
+      "#000000 ×51",
+      "#c9fe6e ×8",
+      "#f3f3f3 ×6"
+    ],
+    "sections": 14,
+    "scrollH": 19916,
+    "vh": 900,
+    "framework": "unknown",
+    "libs": [
+      "GSAP",
+      "ScrollTrigger",
+      "ScrollSmoother",
+      "SplitText",
+      "Lenis",
+      "Matter.js"
+    ],
+    "jsBytes": 814898,
+    "scrollRatio": 22.1,
+    "mechanics": [
+      "4 pinned scene(s) (GSAP ScrollTrigger)",
+      "smoothed/virtualised scroll"
+    ],
+    "httpStatus": 200,
+    "errorPage": false,
+    "thin": false,
+    "shots": [
+      "shots/madewithgsap.com-00.png",
+      "shots/madewithgsap.com-01.png",
+      "shots/madewithgsap.com-02.png"
+    ],
+    "shotsWanted": 3
+  },
+  {
+    "site": "https://stripe.com",
+    "name": null,
+    "via": "direct",
+    "url": "https://stripe.com",
+    "title": "Stripe | Financial Infrastructure to Grow Your Revenue",
+    "sheets": 7,
+    "readyState": "complete",
+    "globals": [],
+    "htmlClass": "",
+    "pinSpacers": 0,
+    "stickies": 1,
+    "canvases": 5,
+    "webgl": true,
+    "videos": [],
+    "mixBlend": 5,
+    "cursorNone": false,
+    "cssTimeline": false,
+    "fontFaces": [],
+    "display": {
+      "font": "sohne-var, \"SF Pro Display\", sans-serif",
+      "px": 56,
+      "weight": "300",
+      "sample": "The backbone of global comme"
+    },
+    "bodyFont": "sohne-var, \"SF Pro Display\", sans-serif",
+    "bg": "rgba(0, 0, 0, 0)",
+    "palette": [
+      "#000000 ×1608",
+      "#533afd ×790",
+      "#061b31 ×303",
+      "#50617a ×229",
+      "#ffffff ×174",
+      "#64748d ×145"
+    ],
+    "sections": 131,
+    "scrollH": 15266,
+    "vh": 900,
+    "framework": "Next.js",
+    "libs": [
+      "three.js",
+      "Framer Motion"
+    ],
+    "jsBytes": 4179586,
+    "scrollRatio": 17,
+    "mechanics": [
+      "WebGL scene driven by scroll",
+      "5 mix-blend-mode layer(s)"
+    ],
+    "httpStatus": 200,
+    "errorPage": false,
+    "thin": false,
+    "shots": [
+      "shots/stripe.com-00.png",
+      "shots/stripe.com-01.png",
+      "shots/stripe.com-02.png"
+    ],
+    "shotsWanted": 3
+  },
+  {
+    "site": "https://linear.app",
+    "name": null,
+    "via": "direct",
+    "url": "https://linear.app",
+    "title": "Linear – The system for product development",
+    "sheets": 69,
+    "readyState": "complete",
+    "globals": [],
+    "htmlClass": "enhanced js",
+    "pinSpacers": 0,
+    "stickies": 0,
+    "canvases": 0,
+    "webgl": false,
+    "videos": [],
+    "mixBlend": 16,
+    "cursorNone": false,
+    "cssTimeline": false,
+    "fontFaces": [],
+    "display": {
+      "font": "\"Inter Variable\", \"SF Pro Display\", -apple-system, BlinkMacS",
+      "px": 72,
+      "weight": "510",
+      "sample": "Built for the future. Availa"
+    },
+    "bodyFont": "\"Inter Variable\", \"SF Pro Display\", -apple-system, BlinkMacSystemFont,",
+    "bg": "rgb(8, 9, 10)",
+    "palette": [
+      "#f7f8f8 ×2631",
+      "#8a8f98 ×434",
+      "#62666d ×284",
+      "#d0d6e0 ×199",
+      "#ffffff ×165",
+      "#e2e4e7 ×142"
+    ],
+    "sections": 103,
+    "scrollH": 9960,
+    "vh": 900,
+    "framework": "unknown",
+    "libs": [
+      "Framer Motion"
+    ],
+    "jsBytes": 3744933,
+    "scrollRatio": 11.1,
+    "mechanics": [
+      "16 mix-blend-mode layer(s)"
+    ],
+    "httpStatus": 200,
+    "errorPage": false,
+    "thin": false,
+    "shots": [
+      "shots/linear.app-00.png",
+      "shots/linear.app-01.png",
+      "shots/linear.app-02.png"
+    ],
+    "shotsWanted": 3
+  },
+  {
+    "site": "https://vercel.com",
+    "name": null,
+    "via": "direct",
+    "url": "https://vercel.com",
+    "title": "Agentic Infrastructure - Vercel",
+    "sheets": 6,
+    "readyState": "complete",
+    "globals": [],
+    "htmlClass": "VEU71W_className EpxkQa_className VEU71W_variable EpxkQa_variable light-theme",
+    "pinSpacers": 0,
+    "stickies": 2,
+    "canvases": 1,
+    "webgl": false,
+    "videos": [],
+    "mixBlend": 4,
+    "cursorNone": false,
+    "cssTimeline": true,
+    "fontFaces": [
+      "Geist Mono",
+      "GeistSans",
+      "GeistSans Fallback",
+      "GeistPixelSquare",
+      "GeistPixelGrid",
+      "GeistPixelCircle",
+      "GeistPixelTriangle",
+      "GeistPixelLine"
+    ],
+    "display": {
+      "font": "GeistSans, \"GeistSans Fallback\"",
+      "px": 64,
+      "weight": "400",
+      "sample": "Agentic Infrastructure"
+    },
+    "bodyFont": "GeistSans, \"GeistSans Fallback\"",
+    "bg": "rgb(250, 250, 250)",
+    "palette": [
+      "#171717 ×866",
+      "#4d4d4d ×209",
+      "#8f8f8f ×30",
+      "#ffffff ×26",
+      "#c9c9c9 (lab(80.976 0 -0.0000119209)) ×12",
+      "#fafafa ×10"
+    ],
+    "sections": 12,
+    "scrollH": 5542,
+    "vh": 900,
+    "framework": "unknown",
+    "libs": [
+      "Framer Motion"
+    ],
+    "jsBytes": 4040191,
+    "scrollRatio": 6.2,
+    "mechanics": [
+      "CSS scroll-driven animations (animation-timeline)",
+      "4 mix-blend-mode layer(s)"
+    ],
+    "httpStatus": 200,
+    "errorPage": false,
+    "thin": false,
+    "shots": [
+      "shots/vercel.com-00.png",
+      "shots/vercel.com-01.png",
+      "shots/vercel.com-02.png"
+    ],
+    "shotsWanted": 3
+  }
+]
