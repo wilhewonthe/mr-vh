@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mr. vH — Forged in Code | Venture Studio & Command Deck</title>
+  <title>MRVH — Ventures & Systems Architecture | Command Deck</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -1109,6 +1109,134 @@
       color: var(--text-dim);
       font-size: 12px;
     }
+
+    /* MRVH Rebrand Styles */
+    :root {
+      --purple-brand: #a824ec;
+      --purple-glow: rgba(168, 36, 236, 0.45);
+      --purple-deep: #581c87;
+      --cyan-glitch: #00ffff;
+      --cyan-glow: rgba(0, 255, 255, 0.35);
+      --magenta-glitch: #ff00ff;
+    }
+
+    .brand-lockup {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      height: 46px;
+    }
+
+    .nav-logo-monogram {
+      height: 38px;
+      width: auto;
+      filter: drop-shadow(0 0 10px var(--purple-glow));
+      transition: transform 0.25s ease, filter 0.25s ease;
+    }
+
+    .brand-lockup:hover .nav-logo-monogram {
+      transform: scale(1.08) rotate(-3deg);
+      filter: drop-shadow(0 0 18px rgba(168, 36, 236, 0.85));
+    }
+
+    .nav-logo-wordmark {
+      height: 22px;
+      width: auto;
+      filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.35));
+    }
+
+    /* Hero Rebrand Centerpiece */
+    .hero-brand-stage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 28px;
+      position: relative;
+    }
+
+    .hero-monogram-container {
+      position: relative;
+      width: 220px;
+      height: 230px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+
+    .hero-monogram-img {
+      position: absolute;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      opacity: 0;
+      transform: scale(0.92);
+      transition: opacity 0.35s ease, transform 0.35s ease, filter 0.35s ease;
+      pointer-events: none;
+    }
+
+    .hero-monogram-img.active {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+    }
+
+    .hero-monogram-img.purple-glow {
+      filter: drop-shadow(0 0 32px rgba(168, 36, 236, 0.65)) drop-shadow(0 0 12px rgba(168, 36, 236, 0.9));
+    }
+
+    .hero-monogram-img.wireframe-glow {
+      filter: drop-shadow(0 0 24px rgba(255, 255, 255, 0.5)) drop-shadow(0 0 40px rgba(0, 255, 255, 0.25));
+    }
+
+    .hero-monogram-img.glitch-glow {
+      filter: drop-shadow(-3px 0 12px rgba(255, 0, 255, 0.7)) drop-shadow(3px 0 12px rgba(0, 255, 255, 0.7));
+    }
+
+    .hero-wordmark-container {
+      max-width: 440px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+
+    .hero-wordmark-img {
+      width: 100%;
+      max-width: 360px;
+      height: auto;
+      filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.55));
+    }
+
+    .hero-brand-variants {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      margin-bottom: 14px;
+    }
+
+    .variant-chip {
+      background: rgba(18, 18, 24, 0.85);
+      border: 1px solid var(--steel);
+      border-radius: 3px;
+      padding: 4px 10px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .variant-chip:hover, .variant-chip.active {
+      border-color: var(--purple-brand);
+      color: #fff;
+      background: rgba(168, 36, 236, 0.22);
+      box-shadow: 0 0 12px rgba(168, 36, 236, 0.35);
+    }
+
   </style>
   <script src="/js/three.min.js"></script>
   <script src="/js/OrbitControls.js"></script>
@@ -1118,26 +1246,9 @@
 
   <!-- Top Navigation -->
   <header class="top-nav">
-    <a href="#top" class="brand-lockup" aria-label="Mr. vH Home">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 590 176" role="img" aria-label="Mr.vH shield and wordmark lockup">
-        <g transform="translate(-4 -16) scale(.38)">
-          <path d="M256 35 441 83 441 292 395 391 256 477 117 391 71 292 71 83Z" fill="#ece8df"/>
-          <path d="M256 53 425 97 425 288 382 379 256 458 130 379 87 288 87 97Z" fill="#0a0a0a"/>
-          <path d="M137 277V150H169L256 240 343 150H375V277H339V207L273 278H239L173 207V277Z" fill="#ece8df"/>
-          <path d="M139 291H185L256 370 327 291H373L274 400H238Z" fill="#ece8df"/>
-          <path d="M211 418H303L294 427H220Z" fill="#ff5a1f"/>
-        </g>
-        <g transform="translate(199 28) scale(1.08)">
-          <g fill="#ece8df">
-            <path d="M0 100V0H18L40 48 61 0H79V100H62V35L46 74H33L17 35V100Z"/>
-            <path d="M94 100V30H110V39L122 30H136L144 38V58H128V48L123 45 110 51V100Z"/>
-            <path d="M155 100V83L159 79H171V100Z"/>
-            <path d="M180 30H198L209 73 220 30H238L218 100H200Z"/>
-            <path d="M251 100V0H269V42H309V0H327V100H309V58H269V100Z"/>
-          </g>
-          <path d="M0 121H116L107 126H0Z" fill="#ff5a1f"/>
-        </g>
-      </svg>
+    <a href="#top" class="brand-lockup" aria-label="MRVH Ventures Home">
+      <img src="/assets/branding/mrvh-monogram-purple.png" alt="MRVH Monogram" class="nav-logo-monogram">
+      <img src="/assets/branding/mrvh-wordmark-ventures.png" alt="MRVH Ventures" class="nav-logo-wordmark">
     </a>
 
     <div style="display: flex; align-items: center; gap: 14px;">
@@ -1166,26 +1277,22 @@
   <section class="scene-hero" id="top">
     <canvas id="forgeParticles" class="forge-canvas"></canvas>
     <div class="hero-content">
-      <svg class="hero-emblem" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 590 176" role="img" aria-label="Mr.vH Master Emblem">
-        <g transform="translate(-4 -16) scale(.38)">
-          <path d="M256 35 441 83 441 292 395 391 256 477 117 391 71 292 71 83Z" fill="#ece8df"/>
-          <path d="M256 53 425 97 425 288 382 379 256 458 130 379 87 288 87 97Z" fill="#0a0a0a"/>
-          <path d="M137 277V150H169L256 240 343 150H375V277H339V207L273 278H239L173 207V277Z" fill="#ece8df"/>
-          <path d="M139 291H185L256 370 327 291H373L274 400H238Z" fill="#ece8df"/>
-          <path d="M211 418H303L294 427H220Z" fill="#ff5a1f"/>
-        </g>
-        <g transform="translate(199 28) scale(1.08)">
-          <g fill="#ece8df">
-            <path d="M0 100V0H18L40 48 61 0H79V100H62V35L46 74H33L17 35V100Z"/>
-            <path d="M94 100V30H110V39L122 30H136L144 38V58H128V48L123 45 110 51V100Z"/>
-            <path d="M155 100V83L159 79H171V100Z"/>
-            <path d="M180 30H198L209 73 220 30H238L218 100H200Z"/>
-            <path d="M251 100V0H269V42H309V0H327V100H309V58H269V100Z"/>
-          </g>
-          <path d="M0 121H116L107 126H0Z" fill="#ff5a1f"/>
-        </g>
-      </svg>
-      <p class="tagline">FORGED IN CODE · PANIC RESPONSIBLY™ · VENTURE STUDIO & COMMAND DECK</p>
+      <div class="hero-brand-stage">
+        <div class="hero-monogram-container">
+          <img src="/assets/branding/mrvh-monogram-purple.png" alt="MRVH 3D Isometric Monogram" class="hero-monogram-img purple-glow active" id="heroBrandPurple">
+          <img src="/assets/branding/mrvh-monogram-wireframe.png" alt="MRVH Wireframe Monogram" class="hero-monogram-img wireframe-glow" id="heroBrandWire">
+          <img src="/assets/branding/mrvh-industries-rgb-glitch.png" alt="MRVH RGB Glitch" class="hero-monogram-img glitch-glow" id="heroBrandGlitch">
+        </div>
+        <div class="hero-wordmark-container">
+          <img src="/assets/branding/mrvh-wordmark-ventures.png" alt="MRVH Ventures" class="hero-wordmark-img" id="heroWordmark">
+        </div>
+        <div class="hero-brand-variants">
+          <button class="variant-chip active" data-v="purple">3D PURPLE</button>
+          <button class="variant-chip" data-v="wire">WIREFRAME</button>
+          <button class="variant-chip" data-v="glitch">RGB GLITCH</button>
+        </div>
+      </div>
+      <p class="tagline">MRVH VENTURES // FORGED IN CODE · SYSTEMS ARCHITECTURE · COMMAND DECK</p>
       <p class="hero-sub">
         Off-grid mobile energy engineering, autonomous multi-agent systems, client-side privacy tools, additive manufacturing, and quantitative market telemetry. Built and operated by Mr. vH.
       </p>
@@ -2303,6 +2410,28 @@
     });
 
     searchInput.addEventListener('input', filterCards);
+
+    // Hero Rebrand Variant Switcher
+    const variantChips = document.querySelectorAll('.variant-chip');
+    const heroPurple = document.getElementById('heroBrandPurple');
+    const heroWire = document.getElementById('heroBrandWire');
+    const heroGlitch = document.getElementById('heroBrandGlitch');
+
+    variantChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        variantChips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        window.MRVH_Audio.playClick();
+        const v = chip.dataset.v;
+
+        [heroPurple, heroWire, heroGlitch].forEach(img => img?.classList.remove('active'));
+
+        if (v === 'purple') heroPurple?.classList.add('active');
+        else if (v === 'wire') heroWire?.classList.add('active');
+        else if (v === 'glitch') heroGlitch?.classList.add('active');
+      });
+    });
+
 
     // Audio click hooks on primary buttons
     document.querySelectorAll('.btn-primary, .btn-secondary, .card-link').forEach(btn => {
