@@ -1586,6 +1586,111 @@
       border-left-color: var(--purple-brand);
     }
 
+  
+    /* Meticulous Brand Lockup: MRVH on top, VENTURES right underneath from R/V gap to H end */
+    .mrvh-stacked-lockup {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-end;
+      position: relative;
+      text-align: right;
+      user-select: none;
+    }
+
+    .lockup-mrvh {
+      font-family: var(--font-brand-mrvh);
+      font-weight: 700;
+      font-size: clamp(48px, 8.5vw, 96px);
+      line-height: 0.95;
+      letter-spacing: 0.04em;
+      background: linear-gradient(135deg, #ffffff 0%, var(--gold) 45%, var(--purple-brand) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 25px rgba(168, 36, 236, 0.45));
+      transition: all 0.3s ease;
+      display: block;
+    }
+
+    .lockup-sub-bar {
+      width: 48%; /* Starts between R and V, extends to outer right edge of H */
+      display: flex;
+      flex-direction: column;
+      margin-top: 6px; /* Right up against the bottom */
+      border-top: 2px solid rgba(212, 175, 55, 0.45);
+      padding-top: 5px;
+      transition: border-color 0.3s ease;
+    }
+
+    .lockup-ventures {
+      font-family: var(--font-brand-normal);
+      font-weight: 600;
+      font-style: normal !important;
+      font-size: clamp(12px, 2vw, 20px);
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--bone);
+      text-align: right;
+      padding-right: 0.08em;
+      opacity: 0.9;
+      transition: all 0.3s ease;
+    }
+
+    .mrvh-stacked-lockup:hover .lockup-mrvh {
+      filter: drop-shadow(0 0 40px rgba(168, 36, 236, 0.85)) drop-shadow(0 0 80px rgba(0, 255, 255, 0.35));
+      transform: translateY(-2px);
+    }
+
+    .mrvh-stacked-lockup:hover .lockup-sub-bar {
+      border-top-color: var(--purple-brand);
+    }
+
+    .mrvh-stacked-lockup:hover .lockup-ventures {
+      color: #ffffff;
+      letter-spacing: 0.42em;
+      text-shadow: 0 0 14px rgba(168, 36, 236, 0.7);
+    }
+
+    /* Navbar Stacked Lockup */
+    .nav-stacked-lockup {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      text-align: right;
+      line-height: 1;
+    }
+
+    .nav-mrvh {
+      font-family: var(--font-brand-mrvh);
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--bone);
+      transition: color 0.2s;
+    }
+
+    .nav-ventures {
+      font-family: var(--font-brand-normal);
+      font-size: 7.5px;
+      font-weight: 600;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 3px;
+      width: 52%;
+      border-top: 1px solid rgba(212, 175, 55, 0.35);
+      padding-top: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .brand-lockup:hover .nav-mrvh {
+      color: var(--gold);
+    }
+
+    .brand-lockup:hover .nav-ventures {
+      color: #ffffff;
+      border-top-color: var(--purple-brand);
+    }
+
   </style>
   <script src="/js/three.min.js"></script>
   <script src="/js/OrbitControls.js"></script>
@@ -1597,7 +1702,10 @@
   <header class="top-nav">
     <a href="#top" class="brand-lockup" aria-label="MRVH Home">
       <img src="/assets/branding/mrvh-monogram-purple.png" alt="MRVH 3D Monogram" class="nav-standalone-monogram">
-      <span class="nav-brand-code"><span class="brand-stem">MRVH</span><span class="brand-normal">VENTURES</span></span>
+      <div class="nav-stacked-lockup">
+        <span class="nav-mrvh">MRVH</span>
+        <span class="nav-ventures">VENTURES</span>
+      </div>
     </a>
 
     <div style="display: flex; align-items: center; gap: 14px;">
@@ -1641,7 +1749,14 @@
           <span class="status-text">HOVER TO ENERGIZE · CLICK FOR OVERDRIVE</span>
         </div>
 
-        <h1 class="hero-title"><span class="brand-stem">MRVH</span><span class="brand-normal">VENTURES</span></h1>
+        <h1 class="hero-title">
+          <div class="mrvh-stacked-lockup" id="heroBrandLockup">
+            <span class="lockup-mrvh">MRVH</span>
+            <div class="lockup-sub-bar">
+              <span class="lockup-ventures">VENTURES</span>
+            </div>
+          </div>
+        </h1>
       </div>
 
       <p class="tagline">FORGED IN CODE · SYSTEMS ARCHITECTURE · COMMAND DECK</p>

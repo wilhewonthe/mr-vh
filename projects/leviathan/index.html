@@ -632,6 +632,41 @@
     .brand-breadcrumb:hover .brand-stem { color: var(--solar-gold); }
     .brand-breadcrumb:hover .brand-normal { color: #fff; border-left-color: var(--purple-brand); }
 
+  
+    .nav-stacked-lockup {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      text-align: right;
+      line-height: 1;
+    }
+
+    .nav-mrvh {
+      font-family: var(--font-brand-mrvh);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--bone);
+      transition: color 0.2s;
+    }
+
+    .nav-ventures {
+      font-family: var(--font-brand-normal);
+      font-size: 7.5px;
+      font-weight: 600;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--solar-gold);
+      margin-top: 3px;
+      width: 52%;
+      border-top: 1px solid rgba(212, 175, 55, 0.35);
+      padding-top: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .brand-breadcrumb:hover .nav-mrvh { color: var(--solar-gold); }
+    .brand-breadcrumb:hover .nav-ventures { color: #fff; border-top-color: var(--purple-brand); }
+
   </style>
 </head>
 <body>
@@ -641,7 +676,12 @@
     <a href="/" class="brand-breadcrumb" title="Return to MRVH Master Command Deck">
       <img src="/assets/branding/mrvh-monogram-wireframe.png" alt="MRVH Monogram" class="nav-monogram">
       <div class="breadcrumb-trail">
-        <span class="trail-root"><span class="brand-stem">MRVH</span> <span class="brand-normal">VENTURES</span></span>
+        <span class="trail-root">
+        <div class="nav-stacked-lockup">
+          <span class="nav-mrvh">MRVH</span>
+          <span class="nav-ventures">VENTURES</span>
+        </div>
+      </span>
         <span class="trail-sep">/</span>
         <span class="trail-current">OPERATION LEVIATHAN</span>
       </div>
