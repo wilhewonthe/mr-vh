@@ -8,6 +8,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    @font-face {
+      font-family: 'MRVH Display';
+      src: url('/assets/fonts/MRVHTacticalDisplay-Regular.woff2') format('woff2'),
+           url('/assets/fonts/MRVHTacticalDisplay-Regular.woff') format('woff'),
+           url('/assets/fonts/MRVHTacticalDisplay-Regular.ttf') format('truetype');
+      font-weight: 400 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
@@ -47,7 +57,8 @@
       --text-muted: #6b7280;
       --bone: #f3f4f6;
 
-      --font-display: 'Syne', sans-serif;
+      --font-mrvh: 'MRVH Display', 'Space Grotesk', sans-serif;
+      --font-display: 'MRVH Display', 'Syne', sans-serif;
       --font-mono: 'IBM Plex Mono', monospace;
     }
 
@@ -163,25 +174,27 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(212, 175, 55, 0.1);
-      border: 1px solid rgba(212, 175, 55, 0.35);
+      background: rgba(212, 175, 55, 0.08);
+      border: 1px solid rgba(212, 175, 55, 0.4);
       border-radius: 4px;
-      padding: 6px 12px;
+      padding: 6px 14px;
       color: var(--bone);
-      font-family: var(--font-mono);
+      font-family: var(--font-mrvh);
       font-size: 11px;
-      font-weight: 600;
+      font-weight: 700;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.25s ease;
     }
 
     .hud-trigger-btn:hover {
-      background: var(--gold);
-      color: #111116;
-      border-color: var(--gold);
-      box-shadow: 0 0 16px var(--gold-glow);
+      background: rgba(168, 36, 236, 0.25);
+      color: #ffffff;
+      border-color: var(--purple-brand);
+      box-shadow: 0 0 20px rgba(168, 36, 236, 0.7);
+      text-shadow: 0 0 8px rgba(168, 36, 236, 0.9);
+      transform: translateY(-1px);
     }
 
     .hud-trigger-btn kbd {
@@ -450,17 +463,24 @@
     }
 
     .hero-title {
-      font-family: var(--font-display);
-      font-weight: 800;
-      font-size: clamp(36px, 5.5vw, 64px);
-      letter-spacing: -0.02em;
+      font-family: var(--font-mrvh);
+      font-weight: 900;
+      font-size: clamp(40px, 6.5vw, 78px);
+      letter-spacing: 0.08em;
       color: var(--bone);
       line-height: 1.05;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       text-transform: uppercase;
-      background: linear-gradient(180deg, #ffffff 30%, #9ca3af 100%);
+      background: linear-gradient(135deg, #ffffff 0%, var(--gold) 45%, var(--purple-brand) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 25px rgba(168, 36, 236, 0.45));
+      transition: filter 0.3s ease, letter-spacing 0.3s ease;
+    }
+
+    .hero-title:hover {
+      filter: drop-shadow(0 0 40px rgba(168, 36, 236, 0.85)) drop-shadow(0 0 80px rgba(0, 255, 255, 0.35));
+      letter-spacing: 0.1em;
     }
 
     .tagline {
@@ -528,44 +548,63 @@
     }
 
     .btn-primary, .btn-secondary {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      font-weight: 600;
+      font-family: var(--font-mrvh);
+      font-size: 13px;
+      font-weight: 700;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      padding: 13px 24px;
+      padding: 13px 26px;
       border-radius: 4px;
       text-decoration: none;
-      transition: all 0.2s ease;
+      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(8px);
+      user-select: none;
     }
 
+    /* Primary: Industrial Gold Wireframe Resting -> Glowing Ultraviolet Hover */
     .btn-primary {
-      background: var(--gold);
-      color: #111116;
-      border: 1px solid var(--gold);
+      background: rgba(212, 175, 55, 0.08);
+      color: var(--bone);
+      border: 1px solid rgba(212, 175, 55, 0.45);
+      box-shadow: 0 0 12px rgba(212, 175, 55, 0.1);
     }
 
     .btn-primary:hover {
-      background: var(--gold-pale);
-      border-color: var(--gold-pale);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px var(--gold-glow);
+      border-color: var(--purple-brand);
+      color: #ffffff;
+      background: linear-gradient(135deg, rgba(168, 36, 236, 0.3) 0%, rgba(35, 12, 50, 0.85) 100%);
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 0 25px rgba(168, 36, 236, 0.75), 0 0 50px rgba(168, 36, 236, 0.35), inset 0 0 14px rgba(168, 36, 236, 0.3);
+      text-shadow: 0 0 10px rgba(168, 36, 236, 0.9), 0 0 20px rgba(168, 36, 236, 0.5);
     }
 
+    /* Secondary: Titanium Dark Wireframe Resting -> Glowing Ultraviolet Hover */
     .btn-secondary {
-      background: var(--charcoal);
-      color: var(--bone);
-      border: 1px solid var(--steel-light);
+      background: rgba(17, 17, 22, 0.85);
+      color: var(--text-dim);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     }
 
     .btn-secondary:hover {
-      border-color: var(--gold);
-      color: var(--gold);
-      transform: translateY(-2px);
+      border-color: var(--purple-brand);
+      color: #ffffff;
+      background: linear-gradient(135deg, rgba(168, 36, 236, 0.22) 0%, rgba(22, 10, 30, 0.8) 100%);
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 0 22px rgba(168, 36, 236, 0.65), 0 0 45px rgba(168, 36, 236, 0.25), inset 0 0 12px rgba(168, 36, 236, 0.25);
+      text-shadow: 0 0 8px rgba(168, 36, 236, 0.8);
+    }
+
+    .btn-primary:active, .btn-secondary:active {
+      transform: translateY(0) scale(0.98);
+      border-color: var(--cyan-glitch);
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.6), inset 0 0 16px rgba(0, 255, 255, 0.4);
     }
 
     /* Scene Headers */
@@ -584,11 +623,18 @@
     }
 
     .scene-title {
-      font-family: var(--font-display);
+      font-family: var(--font-mrvh);
       font-weight: 800;
-      font-size: clamp(28px, 4vw, 42px);
-      letter-spacing: -0.02em;
+      font-size: clamp(26px, 3.8vw, 42px);
+      letter-spacing: 0.08em;
       color: var(--bone);
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+    }
+
+    .scene-title:hover {
+      color: #ffffff;
+      text-shadow: 0 0 18px rgba(168, 36, 236, 0.75);
     }
 
     /* Scene 2: Master Venture Command Deck */
@@ -616,25 +662,34 @@
     }
 
     .filter-btn {
-      background: var(--charcoal);
-      border: 1px solid var(--steel);
+      background: rgba(26, 26, 35, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       color: var(--text-dim);
-      font-family: var(--font-mono);
+      font-family: var(--font-mrvh);
       font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.12em;
+      font-weight: 600;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      padding: 8px 14px;
+      padding: 9px 16px;
       border-radius: 3px;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.25s ease;
     }
 
-    .filter-btn:hover,
+    .filter-btn:hover {
+      border-color: var(--purple-brand);
+      color: #ffffff;
+      background: rgba(168, 36, 236, 0.2);
+      box-shadow: 0 0 16px rgba(168, 36, 236, 0.5);
+      text-shadow: 0 0 8px rgba(168, 36, 236, 0.8);
+      transform: translateY(-1px);
+    }
+
     .filter-btn.active {
       border-color: var(--gold);
       color: var(--bone);
-      background: rgba(212, 175, 55, 0.15);
+      background: rgba(212, 175, 55, 0.2);
+      box-shadow: 0 0 14px rgba(212, 175, 55, 0.35);
     }
 
     .search-box {
@@ -760,11 +815,19 @@
     }
 
     .project-card h3 {
-      font-family: var(--font-display);
-      font-size: 20px;
-      font-weight: 700;
+      font-family: var(--font-mrvh);
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
       color: var(--bone);
       margin-bottom: 10px;
+      text-transform: uppercase;
+      transition: color 0.25s, text-shadow 0.25s;
+    }
+
+    .project-card:hover h3 {
+      color: #ffffff;
+      text-shadow: 0 0 14px rgba(168, 36, 236, 0.7);
     }
 
     .project-card p {
@@ -922,22 +985,33 @@
     .stage-mode-btn {
       background: rgba(22, 22, 30, 0.88);
       backdrop-filter: blur(8px);
-      border: 1px solid var(--steel);
+      border: 1px solid rgba(255, 255, 255, 0.18);
       border-radius: 3px;
-      padding: 6px 12px;
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 0.12em;
+      padding: 7px 14px;
+      font-family: var(--font-mrvh);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--text-dim);
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.25s ease;
     }
 
-    .stage-mode-btn:hover, .stage-mode-btn.active {
+    .stage-mode-btn:hover {
+      border-color: var(--purple-brand);
+      color: #ffffff;
+      background: rgba(168, 36, 236, 0.25);
+      box-shadow: 0 0 16px rgba(168, 36, 236, 0.6);
+      text-shadow: 0 0 8px rgba(168, 36, 236, 0.9);
+      transform: translateY(-1px);
+    }
+
+    .stage-mode-btn.active {
       border-color: var(--gold);
       color: var(--bone);
-      background: rgba(212, 175, 55, 0.18);
+      background: rgba(212, 175, 55, 0.22);
+      box-shadow: 0 0 14px rgba(212, 175, 55, 0.4);
     }
 
     .leviathan-info-panel {
@@ -1216,21 +1290,33 @@
 
     .hud-chip {
       background: #1e1e28;
-      border: 1px solid var(--steel);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       color: var(--text-dim);
-      padding: 6px 12px;
+      padding: 6px 14px;
       border-radius: 3px;
+      font-family: var(--font-mrvh);
       font-size: 11px;
+      font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.12em;
       cursor: pointer;
-      transition: all 0.15s;
+      transition: all 0.2s ease;
     }
 
-    .hud-chip:hover, .hud-chip.active {
+    .hud-chip:hover {
+      border-color: var(--purple-brand);
+      color: #ffffff;
+      background: rgba(168, 36, 236, 0.25);
+      box-shadow: 0 0 16px rgba(168, 36, 236, 0.5);
+      text-shadow: 0 0 8px rgba(168, 36, 236, 0.8);
+      transform: translateY(-1px);
+    }
+
+    .hud-chip.active {
       border-color: var(--gold);
       color: var(--bone);
-      background: rgba(212, 175, 55, 0.18);
+      background: rgba(212, 175, 55, 0.2);
+      box-shadow: 0 0 12px rgba(212, 175, 55, 0.35);
     }
 
     .hud-matrix-body {
@@ -1995,7 +2081,7 @@
         osc.stop(this.ctx.currentTime + 0.25);
       }
 
-      playPowerUp() {
+      playPowerUp(duration = 0.42, maxGain = 0.12) {
         if (!this.enabled) return;
         this.init();
         if (!this.ctx) return;
@@ -2631,9 +2717,16 @@
 
     searchInput.addEventListener('input', filterCards);
 
-    // Audio click hooks on primary buttons
-    document.querySelectorAll('.btn-primary, .btn-secondary, .card-link').forEach(btn => {
-      btn.addEventListener('click', () => window.MRVH_Audio.playClick());
+    // Audio feedback hooks on tactical wireframe-to-purple buttons
+    document.querySelectorAll('.btn-primary, .btn-secondary, .card-link, .hud-trigger-btn, .filter-btn, .stage-mode-btn, .hud-chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (window.MRVH_Audio) window.MRVH_Audio.playClick();
+      });
+      btn.addEventListener('mouseenter', () => {
+        if (window.MRVH_Audio && !window.MRVH_Audio.muted) {
+          window.MRVH_Audio.playPowerUp(0.08, 0.05); // subtle micro-charge chirp
+        }
+      });
     });
   </script>
 </body>
