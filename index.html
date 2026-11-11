@@ -1110,6 +1110,97 @@
       font-size: 12px;
     }
 
+
+    /* Sovereign Standalone Monogram in Navbar */
+    .brand-lockup {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      height: 48px;
+    }
+
+    .nav-standalone-monogram {
+      height: 40px;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 0 12px rgba(168, 36, 236, 0.5));
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+    }
+
+    .brand-lockup:hover .nav-standalone-monogram {
+      transform: scale(1.12) rotate(-3deg);
+      filter: drop-shadow(0 0 20px rgba(168, 36, 236, 0.9));
+    }
+
+    .nav-brand-code {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 15px;
+      letter-spacing: 0.18em;
+      color: var(--bone);
+      transition: color 0.2s;
+    }
+
+    .brand-lockup:hover .nav-brand-code {
+      color: var(--purple-brand);
+    }
+
+    /* Sovereign 3D Monogram Hero Stage */
+    .hero-brand-stage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 32px;
+      position: relative;
+    }
+
+    .hero-monogram-container {
+      position: relative;
+      width: 260px;
+      height: 270px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .hero-monogram-container:hover {
+      transform: translateY(-4px) scale(1.02);
+    }
+
+    .hero-monogram-img {
+      position: absolute;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      opacity: 0;
+      transform: scale(0.92);
+      transition: opacity 0.35s ease, transform 0.35s ease, filter 0.35s ease;
+      pointer-events: none;
+    }
+
+    .hero-monogram-img.active {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(36px, 5.5vw, 64px);
+      letter-spacing: -0.02em;
+      color: var(--bone);
+      line-height: 1.05;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      background: linear-gradient(180deg, #ffffff 30%, #9a9892 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
     /* MRVH Rebrand Styles */
     :root {
       --purple-brand: #a824ec;
@@ -1246,9 +1337,9 @@
 
   <!-- Top Navigation -->
   <header class="top-nav">
-    <a href="#top" class="brand-lockup" aria-label="MRVH Ventures Home">
-      <img src="/assets/branding/mrvh-monogram-purple.png" alt="MRVH Monogram" class="nav-logo-monogram">
-      <img src="/assets/branding/mrvh-wordmark-ventures.png" alt="MRVH Ventures" class="nav-logo-wordmark">
+    <a href="#top" class="brand-lockup" aria-label="MRVH Home">
+      <img src="/assets/branding/mrvh-monogram-purple.png" alt="MRVH 3D Monogram" class="nav-standalone-monogram">
+      <span class="nav-brand-code">MRVH</span>
     </a>
 
     <div style="display: flex; align-items: center; gap: 14px;">
@@ -1278,19 +1369,22 @@
     <canvas id="forgeParticles" class="forge-canvas"></canvas>
     <div class="hero-content">
       <div class="hero-brand-stage">
+        <!-- Standalone 3D Isometric Monogram Sculpture -->
         <div class="hero-monogram-container">
           <img src="/assets/branding/mrvh-monogram-purple.png" alt="MRVH 3D Isometric Monogram" class="hero-monogram-img purple-glow active" id="heroBrandPurple">
           <img src="/assets/branding/mrvh-monogram-wireframe.png" alt="MRVH Wireframe Monogram" class="hero-monogram-img wireframe-glow" id="heroBrandWire">
           <img src="/assets/branding/mrvh-industries-rgb-glitch.png" alt="MRVH RGB Glitch" class="hero-monogram-img glitch-glow" id="heroBrandGlitch">
         </div>
-        <div class="hero-wordmark-container">
-          <img src="/assets/branding/mrvh-wordmark-ventures.png" alt="MRVH Ventures" class="hero-wordmark-img" id="heroWordmark">
-        </div>
+
+        <!-- Standalone 3D Variant Switcher -->
         <div class="hero-brand-variants">
           <button class="variant-chip active" data-v="purple">3D PURPLE</button>
           <button class="variant-chip" data-v="wire">WIREFRAME</button>
           <button class="variant-chip" data-v="glitch">RGB GLITCH</button>
         </div>
+
+        <!-- Independent Entity Stature -->
+        <h1 class="hero-title">MRVH VENTURES</h1>
       </div>
       <p class="tagline">MRVH VENTURES // FORGED IN CODE · SYSTEMS ARCHITECTURE · COMMAND DECK</p>
       <p class="hero-sub">
