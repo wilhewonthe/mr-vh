@@ -6,7 +6,7 @@
   <title>Mr. vH — Forged in Code | Venture Studio & Command Deck</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
@@ -15,14 +15,18 @@
       --molten: #ff5a1f;
       --molten-dim: #ff8c00;
       --molten-pale: #ffaa44;
+      --molten-glow: rgba(255, 90, 31, 0.35);
       --charcoal: #141414;
-      --charcoal-elevated: #1c1c1c;
-      --steel: #2a2a2a;
-      --steel-light: #444444;
+      --charcoal-elevated: #1a1a1a;
+      --charcoal-deep: #0e0e0e;
+      --steel: #262626;
+      --steel-light: #3e3e3e;
       --text: #ece8df;
       --text-dim: #9a9892;
       --text-muted: #66645e;
       --teal: #14b8a6;
+      --teal-glow: rgba(20, 184, 166, 0.3);
+      --emerald: #10b981;
       --font-display: 'Syne', sans-serif;
       --font-mono: 'IBM Plex Mono', monospace;
     }
@@ -36,7 +40,7 @@
       }
     }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; background: var(--bg); }
 
     body {
       background: var(--bg);
@@ -48,6 +52,20 @@
       -webkit-font-smoothing: antialiased;
     }
 
+    /* Scroll progress bar */
+    .scroll-indicator {
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(180deg, var(--molten), var(--molten-pale));
+      z-index: 1001;
+      transform-origin: top;
+      transform: scaleY(0);
+      box-shadow: 0 0 10px var(--molten-glow);
+    }
+
     /* Top Command Navbar */
     .top-nav {
       position: fixed;
@@ -55,26 +73,26 @@
       left: 0;
       right: 0;
       height: 64px;
-      background: rgba(10, 10, 10, 0.88);
-      backdrop-filter: blur(12px);
+      background: rgba(10, 10, 10, 0.92);
+      backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--steel);
       z-index: 999;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 28px;
+      padding: 0 24px;
     }
 
     .brand-lockup {
       display: inline-flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
       text-decoration: none;
       color: var(--bone);
     }
 
     .brand-lockup svg {
-      height: 36px;
+      height: 34px;
       width: auto;
       display: block;
     }
@@ -82,14 +100,14 @@
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 24px;
+      gap: 16px;
     }
 
     .nav-links a {
       font-family: var(--font-mono);
       font-size: 11px;
       font-weight: 500;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--text-dim);
       text-decoration: none;
@@ -100,101 +118,144 @@
       color: var(--molten);
     }
 
-    .nav-cta {
-      padding: 7px 14px;
-      border: 1px solid var(--molten);
-      border-radius: 3px;
-      color: var(--bone) !important;
+    /* Tactical HUD Trigger in Nav */
+    .hud-trigger-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       background: rgba(255, 90, 31, 0.12);
-    }
-
-    .nav-cta:hover {
-      background: var(--molten);
-      color: #0a0a0a !important;
-    }
-
-    /* Scroll indicator */
-    .scroll-indicator {
-      position: fixed;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 2px;
-      background: linear-gradient(to bottom, var(--molten), var(--molten-dim) 50%, transparent);
-      z-index: 1000;
-      transform-origin: top;
-      transform: scaleY(0);
-      pointer-events: none;
-    }
-
-    section {
-      position: relative;
-      width: 100%;
-    }
-
-    .scene-header {
-      max-width: 1280px;
-      margin: 0 auto 48px;
-      padding: 0 24px;
-      z-index: 100;
-    }
-
-    .scene-label {
+      border: 1px solid rgba(255, 90, 31, 0.4);
+      border-radius: 4px;
+      padding: 6px 12px;
+      color: var(--bone);
       font-family: var(--font-mono);
       font-size: 11px;
       font-weight: 600;
-      letter-spacing: 0.3em;
-      color: var(--molten);
-      margin-bottom: 10px;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s ease;
     }
 
-    .scene-title {
-      font-family: var(--font-display);
-      font-weight: 800;
-      font-size: clamp(32px, 4.5vw, 64px);
-      line-height: 1.02;
+    .hud-trigger-btn:hover {
+      background: var(--molten);
+      color: #0a0a0a;
+      border-color: var(--molten);
+      box-shadow: 0 0 16px var(--molten-glow);
+    }
+
+    .hud-trigger-btn kbd {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 3px;
+      padding: 2px 5px;
+      font-size: 9px;
+      letter-spacing: 0.05em;
+    }
+
+    .hud-trigger-btn .hud-led {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--teal);
+      box-shadow: 0 0 8px var(--teal);
+      animation: pulseLed 2s infinite ease-in-out;
+    }
+
+    @keyframes pulseLed {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    /* Audio Toggle */
+    .audio-toggle-btn {
+      background: transparent;
+      border: 1px solid var(--steel);
+      color: var(--text-dim);
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .audio-toggle-btn:hover, .audio-toggle-btn.active {
+      border-color: var(--steel-light);
       color: var(--bone);
-      letter-spacing: -0.02em;
     }
 
-    /* Scene 1: Hero + Quick Command Bar */
+    .nav-cta {
+      padding: 6px 12px;
+      border: 1px solid var(--steel);
+      border-radius: 4px;
+      color: var(--bone) !important;
+      background: var(--charcoal);
+    }
+
+    .nav-cta:hover {
+      border-color: var(--molten);
+      color: var(--molten) !important;
+    }
+
+    /* Scene 1: Hero */
     .scene-hero {
-      min-height: 92vh;
-      padding: 110px 24px 60px;
+      min-height: 94vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      padding: 120px 24px 60px;
+      position: relative;
       text-align: center;
-      background:
-        radial-gradient(ellipse at 50% 25%, rgba(255, 90, 31, 0.14) 0%, transparent 60%),
-        radial-gradient(ellipse at 50% 85%, rgba(255, 140, 0, 0.06) 0%, transparent 50%),
-        var(--bg);
+      overflow: hidden;
       border-bottom: 1px solid var(--steel);
     }
 
+    .forge-canvas {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.65;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 980px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
     .hero-emblem {
-      width: min(440px, 82vw);
+      width: 100%;
+      max-width: 520px;
+      height: auto;
       margin-bottom: 24px;
-      filter: drop-shadow(0 0 28px rgba(255, 90, 31, 0.18));
+      filter: drop-shadow(0 0 24px rgba(255, 90, 31, 0.15));
     }
 
     .tagline {
       font-family: var(--font-mono);
-      font-weight: 600;
-      font-size: clamp(12px, 1.5vw, 15px);
+      font-size: 11px;
       letter-spacing: 0.28em;
       text-transform: uppercase;
       color: var(--molten);
       margin-bottom: 18px;
+      font-weight: 600;
     }
 
     .hero-sub {
-      max-width: 720px;
-      color: var(--text-dim);
-      font-size: 14px;
-      margin-bottom: 36px;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--bone);
+      max-width: 760px;
+      margin-bottom: 34px;
     }
 
     .hero-stats-bar {
@@ -215,6 +276,12 @@
       align-items: center;
       gap: 10px;
       font-size: 12px;
+      transition: all 0.2s;
+    }
+
+    .stat-pill:hover {
+      border-color: var(--steel-light);
+      transform: translateY(-1px);
     }
 
     .stat-pill .dot {
@@ -250,6 +317,7 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
+      cursor: pointer;
     }
 
     .btn-primary {
@@ -262,7 +330,7 @@
       background: var(--molten-pale);
       border-color: var(--molten-pale);
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(255, 90, 31, 0.3);
+      box-shadow: 0 8px 24px rgba(255, 90, 31, 0.35);
     }
 
     .btn-secondary {
@@ -277,7 +345,30 @@
       transform: translateY(-2px);
     }
 
-    /* Scene 2: Master Venture & Project Command Deck */
+    /* Scene Headers */
+    .scene-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .scene-label {
+      font-size: 11px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--molten);
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .scene-title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(28px, 4vw, 42px);
+      letter-spacing: -0.02em;
+      color: var(--bone);
+    }
+
+    /* Scene 2: Master Venture Command Deck */
     .scene-command-deck {
       padding: 96px 24px;
       max-width: 1320px;
@@ -331,8 +422,9 @@
       font-size: 12px;
       padding: 8px 14px;
       border-radius: 3px;
-      width: 260px;
+      width: 280px;
       outline: none;
+      transition: border-color 0.2s;
     }
 
     .search-box:focus {
@@ -346,6 +438,7 @@
       padding: 0 24px;
     }
 
+    /* Dynamic Molten Mouse Tracking on Cards */
     .project-card {
       background: var(--charcoal);
       border: 1px solid var(--steel);
@@ -357,6 +450,29 @@
       position: relative;
       overflow: hidden;
       transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .project-card::after {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      padding: 1px;
+      background: radial-gradient(
+        320px circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
+        rgba(255, 90, 31, 0.4),
+        transparent 70%
+      );
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .project-card:hover::after {
+      opacity: 1;
     }
 
     .project-card::before {
@@ -420,25 +536,18 @@
       background: rgba(20, 184, 166, 0.1);
     }
 
-    .card-badge.sim {
-      border-color: rgba(245, 158, 11, 0.5);
-      color: #fbbf24;
-      background: rgba(245, 158, 11, 0.1);
-    }
-
     .project-card h3 {
       font-family: var(--font-display);
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 700;
       color: var(--bone);
       margin-bottom: 10px;
-      letter-spacing: -0.01em;
     }
 
     .project-card p {
-      font-size: 13px;
       color: var(--text-dim);
-      line-height: 1.65;
+      font-size: 13px;
+      line-height: 1.6;
       margin-bottom: 18px;
     }
 
@@ -446,126 +555,226 @@
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
 
     .tech-tag {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--steel);
+      border-radius: 3px;
+      padding: 3px 8px;
       font-size: 10px;
+      letter-spacing: 0.06em;
       color: var(--text-muted);
-      background: #0e0e0e;
-      border: 1px solid #222;
-      padding: 2px 7px;
-      border-radius: 2px;
     }
 
     .card-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      padding-top: 14px;
+      gap: 8px;
+      padding-top: 16px;
       border-top: 1px solid var(--steel);
     }
 
     .card-link {
-      font-family: var(--font-mono);
       font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--bone);
       text-decoration: none;
-      padding: 6px 11px;
+      padding: 7px 12px;
       border-radius: 3px;
-      background: var(--charcoal-elevated);
+      color: var(--bone);
+      background: transparent;
       border: 1px solid var(--steel-light);
       transition: all 0.2s;
     }
 
-    .card-link.primary {
-      background: rgba(255, 90, 31, 0.16);
-      border-color: var(--molten);
-      color: var(--molten-pale);
-    }
-
     .card-link:hover {
-      background: var(--molten);
       border-color: var(--molten);
-      color: #0a0a0a;
+      color: var(--molten);
     }
 
-    /* Scene 3: Operation Leviathan Deep Spotlight */
+    .card-link.primary {
+      background: var(--molten);
+      color: #0a0a0a !important;
+      border-color: var(--molten);
+      font-weight: 600;
+    }
+
+    .card-link.primary:hover {
+      background: var(--molten-pale);
+      border-color: var(--molten-pale);
+    }
+
+    /* Scene 3: Upgraded Operation Leviathan 3D Showcase */
     .scene-leviathan {
       padding: 96px 24px;
-      background:
-        radial-gradient(ellipse at 20% 20%, rgba(255, 90, 31, 0.05) 0%, transparent 50%),
-        var(--charcoal);
-      border-top: 1px solid var(--steel);
-      border-bottom: 1px solid var(--steel);
-    }
-
-    .leviathan-showcase {
-      max-width: 1240px;
+      max-width: 1320px;
       margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 36px;
-      align-items: center;
+      border-top: 1px solid var(--steel);
     }
 
-    .leviathan-preview-box {
-      background: var(--bg);
-      border: 1px solid var(--steel-light);
+    .leviathan-stage-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 28px;
+      padding: 0 24px;
+      align-items: stretch;
+    }
+
+    @media (max-width: 1024px) {
+      .leviathan-stage-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .leviathan-3d-box {
+      background: #080808;
+      border: 1px solid var(--steel);
       border-radius: 6px;
-      padding: 36px;
       position: relative;
+      overflow: hidden;
+      min-height: 480px;
+      display: flex;
+      flex-direction: column;
     }
 
-    .leviathan-preview-box h3 {
-      font-family: var(--font-display);
-      font-size: 28px;
+    #leviathanCanvas {
+      width: 100%;
+      height: 100%;
+      min-height: 440px;
+      display: block;
+      cursor: grab;
+    }
+
+    #leviathanCanvas:active {
+      cursor: grabbing;
+    }
+
+    .stage-overlay-hud {
+      position: absolute;
+      top: 14px;
+      left: 16px;
+      right: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .stage-hud-badge {
+      background: rgba(10, 10, 10, 0.75);
+      border: 1px solid var(--steel);
+      border-radius: 3px;
+      padding: 5px 10px;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
       color: var(--molten);
-      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    .leviathan-specs {
+    .stage-hud-badge .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--teal);
+      box-shadow: 0 0 6px var(--teal);
+    }
+
+    .stage-mode-strip {
+      position: absolute;
+      bottom: 14px;
+      left: 14px;
+      right: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      z-index: 10;
+    }
+
+    .stage-mode-btn {
+      background: rgba(16, 16, 16, 0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--steel);
+      border-radius: 3px;
+      padding: 6px 12px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .stage-mode-btn:hover, .stage-mode-btn.active {
+      border-color: var(--molten);
+      color: var(--bone);
+      background: rgba(255, 90, 31, 0.2);
+    }
+
+    .leviathan-info-panel {
+      background: var(--charcoal);
+      border: 1px solid var(--steel);
+      border-radius: 6px;
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .leviathan-info-panel h3 {
+      font-family: var(--font-display);
+      font-size: 26px;
+      color: var(--molten);
+      margin-bottom: 12px;
+    }
+
+    .leviathan-specs-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin: 24px 0;
     }
 
     .spec-card {
       background: var(--bg);
       border: 1px solid var(--steel);
       border-radius: 4px;
-      padding: 18px 14px;
+      padding: 14px;
       text-align: center;
     }
 
     .spec-card.accent {
-      border-color: var(--molten);
+      border-color: rgba(255, 90, 31, 0.45);
     }
 
     .spec-value {
       font-family: var(--font-display);
       font-weight: 800;
-      font-size: 26px;
+      font-size: 22px;
       color: var(--molten);
       line-height: 1.1;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .spec-label {
-      font-size: 10px;
+      font-size: 9px;
       letter-spacing: 0.14em;
       color: var(--text-dim);
       text-transform: uppercase;
     }
 
-    /* Scene 4: Local Services & Homelab Matrix */
+    /* Scene 4: Homelab Matrix */
     .scene-homelab {
       padding: 96px 24px;
-      max-width: 1280px;
+      max-width: 1320px;
       margin: 0 auto;
+      border-top: 1px solid var(--steel);
     }
 
     .rack-grid {
@@ -575,20 +784,25 @@
       padding: 0 24px;
     }
 
+    @media (max-width: 900px) {
+      .rack-grid { grid-template-columns: 1fr; }
+    }
+
     .rack-container {
       background: var(--charcoal);
       border: 1px solid var(--steel);
-      border-radius: 4px;
+      border-radius: 5px;
       overflow: hidden;
+      position: relative;
     }
 
     .rack-header {
       padding: 16px 22px;
-      background: #101010;
+      background: #111;
       border-bottom: 1px solid var(--steel);
       font-family: var(--font-display);
       font-weight: 700;
-      font-size: 16px;
+      font-size: 15px;
       color: var(--bone);
       display: flex;
       justify-content: space-between;
@@ -596,51 +810,51 @@
     }
 
     .rack-unit {
-      min-height: 58px;
+      min-height: 56px;
       border-bottom: 1px solid var(--steel);
-      display: flex;
+      display: grid;
+      grid-template-columns: 44px 1fr auto;
       align-items: center;
-      padding: 10px 22px;
-      gap: 14px;
+      padding: 10px 18px;
+      gap: 12px;
+      transition: background 0.15s;
     }
 
-    .rack-unit:last-child { border-bottom: none; }
+    .rack-unit:last-child {
+      border-bottom: none;
+    }
 
-    .rack-unit .led {
+    .rack-unit:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .led {
       width: 9px;
       height: 9px;
       border-radius: 50%;
-      background: var(--molten);
-      box-shadow: 0 0 10px var(--molten);
-      flex-shrink: 0;
-      animation: ledPulse 2.2s ease-in-out infinite;
+      background: #333;
+      justify-self: center;
     }
 
-    .rack-unit .led.green {
+    .led.green {
       background: var(--teal);
-      box-shadow: 0 0 10px var(--teal);
-    }
-
-    @keyframes ledPulse {
-      0%, 100% { opacity: 0.45; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.18); }
+      box-shadow: 0 0 8px var(--teal);
     }
 
     .rack-label {
-      font-weight: 600;
       font-size: 12px;
       color: var(--bone);
+      font-weight: 500;
     }
 
     .rack-spec {
       font-size: 11px;
       color: var(--text-dim);
-      margin-left: auto;
       text-align: right;
     }
 
     .rack-spec a {
-      color: var(--molten-pale);
+      color: var(--molten);
       text-decoration: none;
     }
 
@@ -648,21 +862,256 @@
       text-decoration: underline;
     }
 
-    /* Footer */
-    footer {
-      border-top: 1px solid var(--steel);
-      padding: 48px 24px;
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 12px;
+    /* GLOBAL TACTICAL COMMAND HUD MODAL */
+    .command-hud-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(8, 8, 8, 0.94);
+      backdrop-filter: blur(24px);
+      z-index: 99999;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 24px;
     }
 
-    @media (max-width: 960px) {
-      .leviathan-showcase, .rack-grid { grid-template-columns: 1fr; }
-      .nav-links { display: none; }
-      .projects-grid { grid-template-columns: 1fr; }
+    .command-hud-modal.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .hud-dialog {
+      max-width: 1240px;
+      width: 100%;
+      margin: 0 auto;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      background: var(--charcoal);
+      border: 1px solid var(--steel-light);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 90, 31, 0.12);
+    }
+
+    .hud-topbar {
+      padding: 16px 24px;
+      background: #111;
+      border-bottom: 1px solid var(--steel);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .hud-title-lockup {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hud-title-lockup .title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 16px;
+      color: var(--bone);
+      letter-spacing: 0.05em;
+    }
+
+    .hud-clock-ticker {
+      font-size: 11px;
+      color: var(--molten);
+      letter-spacing: 0.1em;
+    }
+
+    .hud-close-btn {
+      background: transparent;
+      border: 1px solid var(--steel);
+      color: var(--text-dim);
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hud-close-btn:hover {
+      border-color: var(--molten);
+      color: var(--molten);
+    }
+
+    .hud-search-section {
+      padding: 20px 24px 14px;
+      background: #141414;
+      border-bottom: 1px solid var(--steel);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .hud-input-row {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .hud-search-input {
+      width: 100%;
+      background: #0d0d0d;
+      border: 1px solid var(--steel-light);
+      border-radius: 5px;
+      padding: 14px 18px 14px 44px;
+      color: var(--bone);
+      font-family: var(--font-mono);
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .hud-search-input:focus {
+      border-color: var(--molten);
+      box-shadow: 0 0 12px rgba(255, 90, 31, 0.25);
+    }
+
+    .hud-search-icon {
+      position: absolute;
+      left: 16px;
+      color: var(--molten);
+      font-size: 16px;
+      pointer-events: none;
+    }
+
+    .hud-filter-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .hud-chip {
+      background: #1c1c1c;
+      border: 1px solid var(--steel);
+      color: var(--text-dim);
+      padding: 6px 12px;
+      border-radius: 3px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .hud-chip:hover, .hud-chip.active {
+      border-color: var(--molten);
+      color: var(--bone);
+      background: rgba(255, 90, 31, 0.18);
+    }
+
+    .hud-matrix-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 16px;
+    }
+
+    .hud-matrix-item {
+      background: #0f0f0f;
+      border: 1px solid var(--steel);
+      border-radius: 4px;
+      padding: 16px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.18s;
+    }
+
+    .hud-matrix-item:hover {
+      border-color: var(--molten);
+      background: #161616;
+      transform: translateY(-2px);
+    }
+
+    .hud-matrix-item .node-id {
+      font-size: 10px;
+      color: var(--molten);
+      letter-spacing: 0.14em;
+      margin-bottom: 6px;
+    }
+
+    .hud-matrix-item .node-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--bone);
+      margin-bottom: 6px;
+    }
+
+    .hud-matrix-item .node-desc {
+      font-size: 11px;
+      color: var(--text-dim);
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    .hud-matrix-item .node-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    .hud-telemetry-drawer {
+      padding: 14px 24px;
+      background: #101010;
+      border-top: 1px solid var(--steel);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+
+    .hud-telemetry-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .telemetry-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .telemetry-item .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--teal);
+    }
+
+    /* Footer */
+    footer {
+      padding: 48px 24px;
+      text-align: center;
+      border-top: 1px solid var(--steel);
+      color: var(--text-dim);
+      font-size: 12px;
     }
   </style>
+  <script src="/js/three.min.js"></script>
+  <script src="/js/OrbitControls.js"></script>
 </head>
 <body>
   <div class="scroll-indicator" id="scrollIndicator"></div>
@@ -690,6 +1139,20 @@
         </g>
       </svg>
     </a>
+
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <button class="hud-trigger-btn" id="hudTriggerBtn" aria-label="Open Tactical Command HUD">
+        <span class="hud-led"></span>
+        <span>COMMAND HUD</span>
+        <kbd>SPACE</kbd>
+      </button>
+
+      <button class="audio-toggle-btn" id="audioToggleBtn" aria-label="Toggle Tactical Audio">
+        <span id="audioIcon">🔊</span>
+        <span id="audioLabel">AUDIO: ON</span>
+      </button>
+    </div>
+
     <nav class="nav-links">
       <a href="#projects">Command Deck</a>
       <a href="#leviathan">Operation Leviathan</a>
@@ -701,39 +1164,42 @@
 
   <!-- Scene 1: Hero -->
   <section class="scene-hero" id="top">
-    <svg class="hero-emblem" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 590 176" role="img" aria-label="Mr.vH Master Emblem">
-      <g transform="translate(-4 -16) scale(.38)">
-        <path d="M256 35 441 83 441 292 395 391 256 477 117 391 71 292 71 83Z" fill="#ece8df"/>
-        <path d="M256 53 425 97 425 288 382 379 256 458 130 379 87 288 87 97Z" fill="#0a0a0a"/>
-        <path d="M137 277V150H169L256 240 343 150H375V277H339V207L273 278H239L173 207V277Z" fill="#ece8df"/>
-        <path d="M139 291H185L256 370 327 291H373L274 400H238Z" fill="#ece8df"/>
-        <path d="M211 418H303L294 427H220Z" fill="#ff5a1f"/>
-      </g>
-      <g transform="translate(199 28) scale(1.08)">
-        <g fill="#ece8df">
-          <path d="M0 100V0H18L40 48 61 0H79V100H62V35L46 74H33L17 35V100Z"/>
-          <path d="M94 100V30H110V39L122 30H136L144 38V58H128V48L123 45 110 51V100Z"/>
-          <path d="M155 100V83L159 79H171V100Z"/>
-          <path d="M180 30H198L209 73 220 30H238L218 100H200Z"/>
-          <path d="M251 100V0H269V42H309V0H327V100H309V58H269V100Z"/>
+    <canvas id="forgeParticles" class="forge-canvas"></canvas>
+    <div class="hero-content">
+      <svg class="hero-emblem" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 590 176" role="img" aria-label="Mr.vH Master Emblem">
+        <g transform="translate(-4 -16) scale(.38)">
+          <path d="M256 35 441 83 441 292 395 391 256 477 117 391 71 292 71 83Z" fill="#ece8df"/>
+          <path d="M256 53 425 97 425 288 382 379 256 458 130 379 87 288 87 97Z" fill="#0a0a0a"/>
+          <path d="M137 277V150H169L256 240 343 150H375V277H339V207L273 278H239L173 207V277Z" fill="#ece8df"/>
+          <path d="M139 291H185L256 370 327 291H373L274 400H238Z" fill="#ece8df"/>
+          <path d="M211 418H303L294 427H220Z" fill="#ff5a1f"/>
         </g>
-        <path d="M0 121H116L107 126H0Z" fill="#ff5a1f"/>
-      </g>
-    </svg>
-    <p class="tagline">FORGED IN CODE · PANIC RESPONSIBLY™ · VENTURE STUDIO & COMMAND DECK</p>
-    <p class="hero-sub">
-      Off-grid mobile energy engineering, autonomous multi-agent systems, client-side privacy tools, additive manufacturing, and quantitative market telemetry. Built and operated by Mr. vH.
-    </p>
-    <div class="hero-stats-bar">
-      <div class="stat-pill"><span class="dot"></span><strong>14+</strong> Active Ventures & Tools</div>
-      <div class="stat-pill"><span class="dot"></span><strong>48V / 3.6kW+</strong> Alfa See Ya Micro-Grid</div>
-      <div class="stat-pill"><span class="dot"></span><strong>590+</strong> Unified Agent Skills & MCPs</div>
-      <div class="stat-pill"><span class="dot"></span><strong>Bambu P1S</strong> Additive Fab Hub</div>
-    </div>
-    <div class="hero-actions">
-      <a href="#projects" class="btn-primary">Explore All Projects ↓</a>
-      <a href="https://wilhewonthe.github.io/leviathan/" target="_blank" class="btn-secondary">Launch 3D Leviathan Panel ↗</a>
-      <a href="https://wilhewonthe.github.io/tiamat/" target="_blank" class="btn-secondary">Open Tiamat Matrix ↗</a>
+        <g transform="translate(199 28) scale(1.08)">
+          <g fill="#ece8df">
+            <path d="M0 100V0H18L40 48 61 0H79V100H62V35L46 74H33L17 35V100Z"/>
+            <path d="M94 100V30H110V39L122 30H136L144 38V58H128V48L123 45 110 51V100Z"/>
+            <path d="M155 100V83L159 79H171V100Z"/>
+            <path d="M180 30H198L209 73 220 30H238L218 100H200Z"/>
+            <path d="M251 100V0H269V42H309V0H327V100H309V58H269V100Z"/>
+          </g>
+          <path d="M0 121H116L107 126H0Z" fill="#ff5a1f"/>
+        </g>
+      </svg>
+      <p class="tagline">FORGED IN CODE · PANIC RESPONSIBLY™ · VENTURE STUDIO & COMMAND DECK</p>
+      <p class="hero-sub">
+        Off-grid mobile energy engineering, autonomous multi-agent systems, client-side privacy tools, additive manufacturing, and quantitative market telemetry. Built and operated by Mr. vH.
+      </p>
+      <div class="hero-stats-bar">
+        <div class="stat-pill"><span class="dot"></span><strong>14+</strong> Active Ventures & Tools</div>
+        <div class="stat-pill"><span class="dot"></span><strong>48V / 3.6kW+</strong> Alfa See Ya Micro-Grid</div>
+        <div class="stat-pill"><span class="dot"></span><strong>590+</strong> Unified Agent Skills & MCPs</div>
+        <div class="stat-pill"><span class="dot"></span><strong>Bambu P1S</strong> Additive Fab Hub</div>
+      </div>
+      <div class="hero-actions">
+        <a href="#projects" class="btn-primary">Explore All Projects ↓</a>
+        <button class="btn-secondary" onclick="window.MRVH_HUD.open()">Launch Command HUD ↗</button>
+        <a href="#leviathan" class="btn-secondary">Inspect 3D Leviathan ↗</a>
+      </div>
     </div>
   </section>
 
@@ -748,15 +1214,14 @@
       <div class="filter-tabs" role="tablist">
         <button class="filter-btn active" data-filter="all">All Projects (14)</button>
         <button class="filter-btn" data-filter="energy">Off-Grid & Hardware</button>
-        <button class="filter-btn" data-filter="ai">AI Agents & Infra</button>
-        <button class="filter-btn" data-filter="apps">Public Web Apps</button>
-        <button class="filter-btn" data-filter="quant">Quant & Ventures</button>
+        <button class="filter-btn" data-filter="quant">Quant & Systems</button>
+        <button class="filter-btn" data-filter="apps">Privacy & Apps</button>
       </div>
       <input type="search" id="projectSearch" class="search-box" placeholder="Filter projects, stack, tags...">
     </div>
 
     <div class="projects-grid" id="projectsGrid">
-      <!-- 1. Operation Leviathan -->
+<!-- 1. Operation Leviathan -->
       <article class="project-card featured" data-category="energy">
         <div>
           <div class="card-top">
@@ -1050,47 +1515,73 @@
     </div>
   </section>
 
-  <!-- Scene 3: Operation Leviathan Deep Spotlight -->
+  <!-- Scene 3: Upgraded Operation Leviathan Deep Spotlight with Interactive 3D WebGL Canvas -->
   <section class="scene-leviathan" id="leviathan">
     <div class="scene-header">
-      <p class="scene-label">FLAGSHIP ENGINEERING</p>
+      <p class="scene-label">FLAGSHIP ENGINEERING // 40FT EXPEDITION RIG</p>
       <h2 class="scene-title">OPERATION LEVIATHAN · ALFA 37FD</h2>
     </div>
-    <div class="leviathan-showcase">
-      <div class="leviathan-preview-box">
-        <h3>40 FEET. NATIVE 48V. FULL AUTONOMY.</h3>
-        <p style="color: var(--text-dim); margin-bottom: 20px;">
-          Built on a 2006 Alfa See Ya 37FD Founders Edition (CAT C7 350HP turbo-diesel, Freightliner XC chassis). Engineered with a separated 48V LiFePO4 server-rack bank, Victron/EG4 inverter brain, 10kW diesel generator backstop, rolling water-ballasted Bermuda Solar Shutters, and opportunistic GPU compute dump loads.
-        </p>
-        <div style="display: flex; flex-wrap: wrap; gap: 12px;">
-          <a href="https://wilhewonthe.github.io/leviathan/" target="_blank" class="btn-primary">Open Interactive 3D Coach ↗</a>
-          <a href="https://wilhewonthe.github.io/tiamat/" target="_blank" class="btn-secondary">View Power Ledger ↗</a>
+
+    <div class="leviathan-stage-grid">
+      <!-- Left: Interactive 3D WebGL Viewport -->
+      <div class="leviathan-3d-box">
+        <div class="stage-overlay-hud">
+          <div class="stage-hud-badge">
+            <span class="dot"></span>
+            <span id="stageStatusText">LEVIATHAN // 3D HARDWARE VIEWPORT</span>
+          </div>
+          <span style="font-size: 10px; color: var(--text-dim); letter-spacing: 0.1em;">ROTATE: DRAG · ZOOM: SCROLL</span>
+        </div>
+
+        <canvas id="leviathanCanvas"></canvas>
+
+        <div class="stage-mode-strip">
+          <button class="stage-mode-btn active" data-mode="orbit">Perspective Orbit</button>
+          <button class="stage-mode-btn" data-mode="solar">3.6kW Solar Array</button>
+          <button class="stage-mode-btn" data-mode="battery">48V Battery Bus</button>
+          <button class="stage-mode-btn" data-mode="xray">X-Ray Blueprint</button>
         </div>
       </div>
-      <div class="leviathan-specs">
-        <div class="spec-card accent">
-          <div class="spec-value">3.6kW+</div>
-          <div class="spec-label">Roof + Shutter PV</div>
+
+      <!-- Right: Detailed Specs & Telemetry Panel -->
+      <div class="leviathan-info-panel">
+        <div>
+          <h3>40 FEET. NATIVE 48V. TOTAL AUTONOMY.</h3>
+          <p style="color: var(--text-dim); font-size: 13px; line-height: 1.6; margin-bottom: 20px;">
+            Built on a 2006 Alfa See Ya 37FD Founders Edition (CAT C7 350HP turbo-diesel, Freightliner XC chassis). Engineered with a separated 48V LiFePO4 server-rack bank, Victron/EG4 inverter brain, 10kW diesel generator backstop, rolling water-ballasted Bermuda Solar Shutters, and opportunistic GPU compute dump loads.
+          </p>
+
+          <div class="leviathan-specs-grid">
+            <div class="spec-card accent">
+              <div class="spec-value">3.6kW+</div>
+              <div class="spec-label">Roof + Shutter PV</div>
+            </div>
+            <div class="spec-card">
+              <div class="spec-value">48V</div>
+              <div class="spec-label">LiFePO4 Rack Bank</div>
+            </div>
+            <div class="spec-card accent">
+              <div class="spec-value">10kW</div>
+              <div class="spec-label">Diesel Genset</div>
+            </div>
+            <div class="spec-card">
+              <div class="spec-value">VAWT</div>
+              <div class="spec-label">Telescoping Wind</div>
+            </div>
+            <div class="spec-card accent">
+              <div class="spec-value">120V</div>
+              <div class="spec-label">Mini-Split Thermal</div>
+            </div>
+            <div class="spec-card">
+              <div class="spec-value">35 Pages</div>
+              <div class="spec-label">Engineering Wiki</div>
+            </div>
+          </div>
         </div>
-        <div class="spec-card">
-          <div class="spec-value">48V</div>
-          <div class="spec-label">LiFePO4 Rack Bank</div>
-        </div>
-        <div class="spec-card accent">
-          <div class="spec-value">10kW</div>
-          <div class="spec-label">Diesel Genset</div>
-        </div>
-        <div class="spec-card">
-          <div class="spec-value">VAWT</div>
-          <div class="spec-label">Telescoping Wind</div>
-        </div>
-        <div class="spec-card accent">
-          <div class="spec-value">120V</div>
-          <div class="spec-label">Mini-Split Thermal</div>
-        </div>
-        <div class="spec-card">
-          <div class="spec-value">35 Pages</div>
-          <div class="spec-label">Engineering Wiki</div>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px;">
+          <a href="https://wilhewonthe.github.io/leviathan/" target="_blank" class="btn-primary">Launch Full 3D Twin ↗</a>
+          <a href="https://wilhewonthe.github.io/tiamat/" target="_blank" class="btn-secondary">View Power Ledger ↗</a>
         </div>
       </div>
     </div>
@@ -1098,7 +1589,7 @@
 
   <!-- Scene 4: Homelab & Local Endpoints Matrix -->
   <section class="scene-homelab" id="homelab">
-    <div class="scene-header">
+<div class="scene-header">
       <p class="scene-label">WORKSTATION & CLOUD NODES</p>
       <h2 class="scene-title">HOMELAB & SERVICE ENDPOINTS</h2>
     </div>
@@ -1159,12 +1650,627 @@
     </div>
   </section>
 
+  <!-- GLOBAL TACTICAL COMMAND HUD MODAL OVERLAY -->
+  <div class="command-hud-modal" id="commandHudModal" role="dialog" aria-modal="true" aria-label="Tactical Command Deck HUD">
+    <div class="hud-dialog">
+      <!-- Top bar -->
+      <div class="hud-topbar">
+        <div class="hud-title-lockup">
+          <span class="hud-led" style="width: 8px; height: 8px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 8px var(--teal);"></span>
+          <span class="title">MR. vH // TACTICAL COMMAND HUD</span>
+          <span style="font-size: 10px; color: var(--text-dim); background: #1a1a1a; padding: 2px 8px; border-radius: 3px;">SYSTEM MATRIX v2.4</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div class="hud-clock-ticker" id="hudClock">UTC --:--:-- | PST --:--:--</div>
+          <button class="hud-close-btn" id="hudCloseBtn">
+            <span>ESC / CLOSE</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Search & Filters -->
+      <div class="hud-search-section">
+        <div class="hud-input-row">
+          <span class="hud-search-icon">⚡</span>
+          <input type="text" id="hudSearchInput" class="hud-search-input" placeholder="Type to filter ventures, hardware, AI nodes, or tech stack..." autocomplete="off">
+        </div>
+        <div class="hud-filter-chips">
+          <button class="hud-chip active" data-hud-filter="all">All Ventures (14)</button>
+          <button class="hud-chip" data-hud-filter="energy">Off-Grid & Hardware</button>
+          <button class="hud-chip" data-hud-filter="quant">Quant & Systems</button>
+          <button class="hud-chip" data-hud-filter="apps">Privacy & Apps</button>
+        </div>
+      </div>
+
+      <!-- Project Matrix Body -->
+      <div class="hud-matrix-body" id="hudMatrixBody">
+        <!-- Rendered dynamically via JS for ultra-fast filtering -->
+      </div>
+
+      <!-- Real-Time Telemetry Footer -->
+      <div class="hud-telemetry-drawer">
+        <div class="hud-telemetry-group">
+          <div class="telemetry-item">
+            <span class="dot"></span>
+            <span>POWER BUS: <strong>48.4V DC</strong></span>
+          </div>
+          <div class="telemetry-item">
+            <span class="dot"></span>
+            <span>SOC: <strong>98% (14.7 kWh)</strong></span>
+          </div>
+          <div class="telemetry-item">
+            <span class="dot"></span>
+            <span>PV HARVEST: <strong>1,840W ACTIVE</strong></span>
+          </div>
+        </div>
+        <div class="hud-telemetry-group">
+          <span style="color: var(--molten);">HERMES: ONLINE (127.0.0.1:9119)</span>
+          <span>·</span>
+          <span style="color: var(--teal);">OLLAMA: READY (127.0.0.1:11434)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <footer>
     <p><strong>MR. vH · FORGED IN CODE · PANIC RESPONSIBLY™</strong> — Built & Operated by Mr. vH (<a href="https://github.com/wilhewonthe" target="_blank" style="color: var(--molten); text-decoration: none;">@wilhewonthe</a>)</p>
   </footer>
 
   <script>
-    // Scroll progress bar
+    /* =====================================================================
+       MR. vH PROCEDURAL AUDIO ENGINE (Web Audio API)
+       ===================================================================== */
+    class TacticalAudioEngine {
+      constructor() {
+        this.ctx = null;
+        this.enabled = localStorage.getItem('mrvh_audio') !== 'false';
+        this.updateBtnState();
+      }
+
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) this.ctx = new AudioContext();
+        }
+        if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+      }
+
+      playClick() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(2600, this.ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(120, this.ctx.currentTime + 0.02);
+        gain.gain.setValueAtTime(0.08, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.02);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(this.ctx.currentTime + 0.022);
+      }
+
+      playThud() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(65, this.ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(28, this.ctx.currentTime + 0.08);
+        gain.gain.setValueAtTime(0.18, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.08);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(this.ctx.currentTime + 0.085);
+      }
+
+      playWarp() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(140, this.ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(740, this.ctx.currentTime + 0.22);
+        gain.gain.setValueAtTime(0.05, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.24);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(this.ctx.currentTime + 0.25);
+      }
+
+      toggle() {
+        this.enabled = !this.enabled;
+        localStorage.setItem('mrvh_audio', this.enabled);
+        this.updateBtnState();
+        if (this.enabled) this.playClick();
+      }
+
+      updateBtnState() {
+        const icon = document.getElementById('audioIcon');
+        const label = document.getElementById('audioLabel');
+        const btn = document.getElementById('audioToggleBtn');
+        if (icon && label && btn) {
+          if (this.enabled) {
+            icon.textContent = '🔊';
+            label.textContent = 'AUDIO: ON';
+            btn.classList.add('active');
+          } else {
+            icon.textContent = '🔇';
+            label.textContent = 'MUTED';
+            btn.classList.remove('active');
+          }
+        }
+      }
+    }
+
+    window.MRVH_Audio = new TacticalAudioEngine();
+    document.getElementById('audioToggleBtn')?.addEventListener('click', () => window.MRVH_Audio.toggle());
+
+    /* =====================================================================
+       AMBIENT FORGE PARTICLE FIELD (HTML5 Canvas)
+       ===================================================================== */
+    const forgeCanvas = document.getElementById('forgeParticles');
+    if (forgeCanvas) {
+      const ctx = forgeCanvas.getContext('2d');
+      let width, height;
+      const sparks = [];
+      const sparkCount = 38;
+
+      function resize() {
+        width = forgeCanvas.width = forgeCanvas.offsetWidth;
+        height = forgeCanvas.height = forgeCanvas.offsetHeight;
+      }
+      window.addEventListener('resize', resize, { passive: true });
+      resize();
+
+      for (let i = 0; i < sparkCount; i++) {
+        sparks.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.4,
+          vy: - (0.4 + Math.random() * 0.8),
+          size: 1 + Math.random() * 2,
+          alpha: 0.1 + Math.random() * 0.7,
+          decay: 0.003 + Math.random() * 0.006,
+          hue: 20 + Math.random() * 25 // Molten orange/gold hue
+        });
+      }
+
+      function renderSparks() {
+        ctx.clearRect(0, 0, width, height);
+        for (let i = 0; i < sparks.length; i++) {
+          const s = sparks[i];
+          s.x += s.vx;
+          s.y += s.vy;
+          s.alpha -= s.decay;
+
+          if (s.y < 0 || s.alpha <= 0) {
+            s.x = Math.random() * width;
+            s.y = height + 10;
+            s.alpha = 0.2 + Math.random() * 0.8;
+            s.vy = - (0.4 + Math.random() * 0.8);
+          }
+
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+          ctx.fillStyle = `hsla(${s.hue}, 100%, 55%, ${s.alpha})`;
+          ctx.shadowBlur = 8;
+          ctx.shadowColor = 'rgba(255, 90, 31, 0.6)';
+          ctx.fill();
+        }
+        requestAnimationFrame(renderSparks);
+      }
+      renderSparks();
+    }
+
+    /* =====================================================================
+       OPERATION LEVIATHAN: 3D PROCEDURAL EXPEDITION RV (Three.js)
+       ===================================================================== */
+    (function initLeviathan3D() {
+      const canvas = document.getElementById('leviathanCanvas');
+      if (!canvas || typeof THREE === 'undefined') return;
+
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x080808);
+
+      const camera = new THREE.PerspectiveCamera(42, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
+      camera.position.set(9, 4.5, 9);
+
+      const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+      renderer.shadowMap.enabled = true;
+
+      const controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.06;
+      controls.maxPolarAngle = Math.PI / 2 - 0.02; // Don't go below ground
+      controls.minDistance = 4;
+      controls.maxDistance = 22;
+
+      // Lighting
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.65);
+      scene.add(ambientLight);
+
+      const dirLight = new THREE.DirectionalLight(0xffeedd, 1.4);
+      dirLight.position.set(12, 18, 10);
+      scene.add(dirLight);
+
+      const moltenRimLight = new THREE.DirectionalLight(0xff5a1f, 1.8);
+      moltenRimLight.position.set(-10, -4, -10);
+      scene.add(moltenRimLight);
+
+      // Ground Grid
+      const grid = new THREE.GridHelper(26, 26, 0xff5a1f, 0x1f1f1f);
+      grid.position.y = -0.01;
+      scene.add(grid);
+
+      // Root RV Group
+      const rvGroup = new THREE.Group();
+      scene.add(rvGroup);
+
+      // Base Materials
+      const coachBodyMat = new THREE.MeshStandardMaterial({
+        color: 0x181818,
+        roughness: 0.25,
+        metalness: 0.85
+      });
+
+      const accentStripeMat = new THREE.MeshStandardMaterial({
+        color: 0xff5a1f,
+        emissive: 0xff5a1f,
+        emissiveIntensity: 0.5,
+        roughness: 0.2
+      });
+
+      const glassMat = new THREE.MeshStandardMaterial({
+        color: 0x051522,
+        roughness: 0.05,
+        metalness: 0.95,
+        transparent: true,
+        opacity: 0.8
+      });
+
+      const solarMat = new THREE.MeshStandardMaterial({
+        color: 0x092b3a,
+        emissive: 0x041a24,
+        roughness: 0.3,
+        metalness: 0.85
+      });
+
+      const metalMat = new THREE.MeshStandardMaterial({
+        color: 0x333333,
+        roughness: 0.4,
+        metalness: 0.9
+      });
+
+      const tireMat = new THREE.MeshStandardMaterial({
+        color: 0x0e0e0e,
+        roughness: 0.9
+      });
+
+      // 1. Coach Body (40ft Alfa 37FD)
+      const bodyGeom = new THREE.BoxGeometry(7.6, 2.3, 2.4);
+      const coachBody = new THREE.Mesh(bodyGeom, coachBodyMat);
+      coachBody.position.y = 1.65;
+      rvGroup.add(coachBody);
+
+      // Molten Pinstripe
+      const stripeGeom = new THREE.BoxGeometry(7.62, 0.1, 2.42);
+      const stripe = new THREE.Mesh(stripeGeom, accentStripeMat);
+      stripe.position.y = 1.35;
+      rvGroup.add(stripe);
+
+      // Front Windshield
+      const windshieldGeom = new THREE.BoxGeometry(0.3, 1.1, 2.2);
+      const windshield = new THREE.Mesh(windshieldGeom, glassMat);
+      windshield.position.set(3.7, 1.9, 0);
+      windshield.rotation.z = -0.22;
+      rvGroup.add(windshield);
+
+      // Side Windows
+      const sideWinGeom = new THREE.BoxGeometry(5.2, 0.7, 2.44);
+      const sideWindows = new THREE.Mesh(sideWinGeom, glassMat);
+      sideWindows.position.set(-0.2, 2.0, 0);
+      rvGroup.add(sideWindows);
+
+      // 2. Wheels (6-wheel chassis)
+      const wheelGeom = new THREE.CylinderGeometry(0.48, 0.48, 0.35, 24);
+      wheelGeom.rotateX(Math.PI / 2);
+
+      const wheelPositions = [
+        [2.3, 0.5, 1.25],   // Front Right
+        [2.3, 0.5, -1.25],  // Front Left
+        [-1.8, 0.5, 1.25],  // Tandem 1 Right
+        [-1.8, 0.5, -1.25], // Tandem 1 Left
+        [-2.8, 0.5, 1.25],  // Tandem 2 Right
+        [-2.8, 0.5, -1.25]  // Tandem 2 Left
+      ];
+
+      wheelPositions.forEach(pos => {
+        const wheel = new THREE.Mesh(wheelGeom, tireMat);
+        wheel.position.set(pos[0], pos[1], pos[2]);
+        rvGroup.add(wheel);
+
+        // Center hub cap in copper
+        const hubGeom = new THREE.CylinderGeometry(0.18, 0.18, 0.36, 16);
+        hubGeom.rotateX(Math.PI / 2);
+        const hub = new THREE.Mesh(hubGeom, accentStripeMat);
+        hub.position.set(pos[0], pos[1], pos[2]);
+        rvGroup.add(hub);
+      });
+
+      // 3. Elevated Over-Roof Bifacial Solar Array (3.6kW Unistrut)
+      const solarRack = new THREE.Group();
+      solarRack.position.set(0, 2.9, 0);
+      rvGroup.add(solarRack);
+
+      // Unistrut rails
+      const railGeom = new THREE.BoxGeometry(7.2, 0.08, 0.08);
+      const rail1 = new THREE.Mesh(railGeom, metalMat);
+      rail1.position.z = 1.05;
+      const rail2 = new THREE.Mesh(railGeom, metalMat);
+      rail2.position.z = -1.05;
+      solarRack.add(rail1, rail2);
+
+      // 10 Bifacial Panels
+      const panelGeom = new THREE.BoxGeometry(0.65, 0.04, 2.15);
+      for (let i = -4; i <= 4; i++) {
+        const panel = new THREE.Mesh(panelGeom, solarMat);
+        panel.position.x = i * 0.76;
+        panel.position.y = 0.05;
+        solarRack.add(panel);
+      }
+
+      // 4. Rear Telescoping VAWT Wind Mast
+      const mastGeom = new THREE.CylinderGeometry(0.06, 0.06, 1.6);
+      const mast = new THREE.Mesh(mastGeom, metalMat);
+      mast.position.set(-3.4, 3.5, 0);
+      rvGroup.add(mast);
+
+      const turbineGeom = new THREE.CylinderGeometry(0.35, 0.35, 0.9, 8, 1, true);
+      const turbine = new THREE.Mesh(turbineGeom, accentStripeMat);
+      turbine.position.set(-3.4, 3.8, 0);
+      rvGroup.add(turbine);
+
+      // 5. Underbelly 48V Battery & Inverter Bank
+      const batteryBoxGeom = new THREE.BoxGeometry(2.2, 0.6, 2.1);
+      const batteryBox = new THREE.Mesh(batteryBoxGeom, metalMat);
+      batteryBox.position.set(0.4, 0.45, 0);
+      rvGroup.add(batteryBox);
+
+      // LED Indicator row on battery bank
+      const ledRow = new THREE.Group();
+      ledRow.position.set(0.4, 0.5, 1.06);
+      for (let i = 0; i < 4; i++) {
+        const bLed = new THREE.Mesh(
+          new THREE.SphereGeometry(0.04, 12, 12),
+          new THREE.MeshBasicMaterial({ color: i === 3 ? 0xff5a1f : 0x14b8a6 })
+        );
+        bLed.position.x = (i - 1.5) * 0.22;
+        ledRow.add(bLed);
+      }
+      rvGroup.add(ledRow);
+
+      // Handle Resize
+      function onResize() {
+        const w = canvas.parentElement.clientWidth;
+        const h = canvas.parentElement.clientHeight || 460;
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h);
+      }
+      window.addEventListener('resize', onResize);
+      setTimeout(onResize, 100);
+
+      // Interactive Modes
+      let targetCameraPos = new THREE.Vector3(9, 4.5, 9);
+      let targetLookAt = new THREE.Vector3(0, 1.5, 0);
+      let isXRay = false;
+      const statusText = document.getElementById('stageStatusText');
+
+      const modeBtns = document.querySelectorAll('.stage-mode-btn');
+      modeBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          modeBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          window.MRVH_Audio.playClick();
+          const mode = btn.dataset.mode;
+
+          if (mode === 'orbit') {
+            targetCameraPos.set(9, 4.5, 9);
+            targetLookAt.set(0, 1.5, 0);
+            setWireframe(false);
+            if (statusText) statusText.textContent = 'LEVIATHAN // PERSPECTIVE ORBIT';
+          } else if (mode === 'solar') {
+            targetCameraPos.set(0.1, 7.5, 4.5);
+            targetLookAt.set(0, 2.9, 0);
+            setWireframe(false);
+            if (statusText) statusText.textContent = 'LEVIATHAN // 3.6kW+ ROOF ARRAY VIEW';
+          } else if (mode === 'battery') {
+            targetCameraPos.set(2.5, 1.0, 3.8);
+            targetLookAt.set(0.4, 0.5, 0);
+            setWireframe(false);
+            if (statusText) statusText.textContent = 'LEVIATHAN // 48V LiFePO4 POWER LOCKER';
+          } else if (mode === 'xray') {
+            setWireframe(true);
+            if (statusText) statusText.textContent = 'LEVIATHAN // X-RAY BLUEPRINT SCHEMATIC';
+          }
+        });
+      });
+
+      function setWireframe(val) {
+        isXRay = val;
+        coachBodyMat.wireframe = val;
+        solarMat.wireframe = val;
+        metalMat.wireframe = val;
+        tireMat.wireframe = val;
+        accentStripeMat.wireframe = val;
+      }
+
+      // Animation Loop
+      function animate() {
+        requestAnimationFrame(animate);
+
+        // Spin wind turbine
+        turbine.rotation.y += 0.04;
+
+        // Smooth camera transitions
+        camera.position.lerp(targetCameraPos, 0.04);
+        controls.target.lerp(targetLookAt, 0.04);
+        controls.update();
+
+        renderer.render(scene, camera);
+      }
+      animate();
+    })();
+
+    /* =====================================================================
+       GLOBAL COMMAND HUD LOGIC
+       ===================================================================== */
+    (function initCommandHUD() {
+      const modal = document.getElementById('commandHudModal');
+      const triggerBtn = document.getElementById('hudTriggerBtn');
+      const closeBtn = document.getElementById('hudCloseBtn');
+      const searchInput = document.getElementById('hudSearchInput');
+      const filterChips = document.querySelectorAll('.hud-chip');
+      const matrixBody = document.getElementById('hudMatrixBody');
+      const clockElem = document.getElementById('hudClock');
+
+      // Extract raw data from all project cards
+      const cards = Array.from(document.querySelectorAll('.project-card'));
+      const projectsData = cards.map((card, idx) => {
+        const title = card.querySelector('h3')?.innerText || `PROJECT_${idx+1}`;
+        const cat = card.dataset.category || 'general';
+        const catLabel = card.querySelector('.card-category')?.innerText || cat;
+        const desc = card.querySelector('p')?.innerText || '';
+        const tags = Array.from(card.querySelectorAll('.tech-tag')).map(t => t.innerText);
+        const link = card.querySelector('.card-link.primary')?.getAttribute('href') || '#';
+        const isExternal = link.startsWith('http');
+        return { id: `NODE_${String(idx+1).padStart(2, '0')}`, title, cat, catLabel, desc, tags, link, isExternal, domId: card.id || `card-${idx}` };
+      });
+
+      function renderMatrix(items) {
+        if (!matrixBody) return;
+        matrixBody.innerHTML = items.map(p => `
+          <div class="hud-matrix-item" data-cat="${p.cat}" onclick="window.MRVH_HUD.selectProject('${p.link}', ${p.isExternal})">
+            <div>
+              <div class="node-id">${p.id} // ${p.catLabel}</div>
+              <div class="node-title">${p.title}</div>
+              <div class="node-desc">${p.desc.slice(0, 110)}...</div>
+            </div>
+            <div class="node-footer">
+              <span>STACK: ${p.tags.slice(0, 2).join(' · ')}</span>
+              <span style="color: var(--molten); font-weight: 600;">${p.isExternal ? 'LAUNCH ↗' : 'NAVIGATE ↓'}</span>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      renderMatrix(projectsData);
+
+      let currentHudFilter = 'all';
+
+      function filterHudItems() {
+        const q = (searchInput?.value || '').toLowerCase().trim();
+        const filtered = projectsData.filter(p => {
+          const catMatch = currentHudFilter === 'all' || p.cat === currentHudFilter;
+          const textMatch = !q || p.title.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q) || p.tags.some(t => t.toLowerCase().includes(q));
+          return catMatch && textMatch;
+        });
+        renderMatrix(filtered);
+      }
+
+      searchInput?.addEventListener('input', filterHudItems);
+
+      filterChips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          filterChips.forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          window.MRVH_Audio.playClick();
+          currentHudFilter = chip.dataset.hudFilter;
+          filterHudItems();
+        });
+      });
+
+      // Live UTC / PST Clock
+      function updateClock() {
+        if (!clockElem) return;
+        const now = new Date();
+        const utc = now.toUTCString().slice(17, 25);
+        const pst = now.toLocaleTimeString('en-US', { timeZone: 'America/Los_Angeles', hour12: false });
+        clockElem.textContent = `UTC ${utc} | PST ${pst}`;
+      }
+      setInterval(updateClock, 1000);
+      updateClock();
+
+      window.MRVH_HUD = {
+        open: function() {
+          modal.classList.add('active');
+          window.MRVH_Audio.playWarp();
+          setTimeout(() => searchInput?.focus(), 80);
+        },
+        close: function() {
+          modal.classList.remove('active');
+          window.MRVH_Audio.playThud();
+        },
+        toggle: function() {
+          if (modal.classList.contains('active')) this.close();
+          else this.open();
+        },
+        selectProject: function(link, isExternal) {
+          window.MRVH_Audio.playClick();
+          this.close();
+          if (isExternal) {
+            window.open(link, '_blank');
+          } else {
+            const el = document.querySelector(link);
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      };
+
+      triggerBtn?.addEventListener('click', () => window.MRVH_HUD.open());
+      closeBtn?.addEventListener('click', () => window.MRVH_HUD.close());
+
+      // Spacebar and Esc Hotkeys
+      window.addEventListener('keydown', (e) => {
+        const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+        const isInput = activeTag === 'input' || activeTag === 'textarea';
+
+        if (e.code === 'Space' && !isInput) {
+          e.preventDefault();
+          window.MRVH_HUD.toggle();
+        } else if (e.key === 'Escape' && modal.classList.contains('active')) {
+          window.MRVH_HUD.close();
+        }
+      });
+    })();
+
+    /* =====================================================================
+       DYNAMIC CURSOR RIM-LIGHTING ON CARDS
+       ===================================================================== */
+    document.querySelectorAll('.project-card, .rack-container, .spec-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+        card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+      });
+    });
+
+    /* =====================================================================
+       SCROLL INDICATOR & PROJECT CARD FILTERS
+       ===================================================================== */
     const scrollIndicator = document.getElementById('scrollIndicator');
     window.addEventListener('scroll', () => {
       const max = document.documentElement.scrollHeight - window.innerHeight;
@@ -1172,7 +2278,6 @@
       scrollIndicator.style.transform = `scaleY(${Math.min(1, Math.max(0, p))})`;
     }, { passive: true });
 
-    // Interactive category filter + instant search
     const filterBtns = document.querySelectorAll('.filter-btn');
     const searchInput = document.getElementById('projectSearch');
     const cards = document.querySelectorAll('.project-card');
@@ -1191,12 +2296,18 @@
       btn.addEventListener('click', () => {
         filterBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
+        window.MRVH_Audio.playClick();
         activeCategory = btn.dataset.filter;
         filterCards();
       });
     });
 
     searchInput.addEventListener('input', filterCards);
+
+    // Audio click hooks on primary buttons
+    document.querySelectorAll('.btn-primary, .btn-secondary, .card-link').forEach(btn => {
+      btn.addEventListener('click', () => window.MRVH_Audio.playClick());
+    });
   </script>
 </body>
 </html>
