@@ -308,12 +308,24 @@
       border-bottom: 1px solid var(--steel);
     }
 
-    .forge-canvas {
-      position: absolute;
-      inset: 0;
+    /* Full-Viewport Ambient 3D Monogram Swarm Canvas */
+    .ambient-swarm-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
       pointer-events: none;
+      z-index: 0;
+    }
+
+    .scene-hero,
+    .scene-command-deck,
+    .scene-leviathan,
+    .scene-homelab,
+    footer {
+      position: relative;
       z-index: 1;
-      opacity: 0.65;
     }
 
     .hero-content {
@@ -1492,6 +1504,329 @@
       box-shadow: 0 0 12px rgba(212, 175, 55, 0.35);
     }
 
+    /* Ambient Swarm Navigation Trigger */
+    .swarm-nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(168, 36, 236, 0.12);
+      border: 1px solid rgba(168, 36, 236, 0.45);
+      border-radius: 4px;
+      padding: 6px 12px;
+      color: var(--bone);
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .swarm-nav-btn:hover {
+      background: rgba(168, 36, 236, 0.35);
+      border-color: var(--purple-brand);
+      box-shadow: 0 0 18px var(--purple-glow);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    /* Floating Ambient Swarm Controller Widget */
+    .swarm-hud-widget {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 998;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+      font-family: var(--font-mono);
+      pointer-events: auto;
+    }
+
+    .swarm-pill-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(15, 16, 22, 0.94);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(212, 175, 55, 0.45);
+      border-radius: 30px;
+      padding: 8px 16px;
+      color: var(--text);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 0 14px rgba(212, 175, 55, 0.2);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .swarm-pill-btn:hover {
+      border-color: var(--purple-brand);
+      color: #fff;
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.8), 0 0 20px var(--purple-glow);
+      transform: translateY(-2px);
+    }
+
+    .swarm-pill-led {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--purple-brand);
+      box-shadow: 0 0 8px var(--purple-brand);
+      animation: pulseLed 2s infinite ease-in-out;
+    }
+
+    /* Swarm Controller Expanded Panel */
+    .swarm-panel {
+      width: 330px;
+      max-width: calc(100vw - 32px);
+      background: rgba(14, 15, 21, 0.96);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(212, 175, 55, 0.45);
+      border-radius: 8px;
+      padding: 18px;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.85), 0 0 30px rgba(168, 36, 236, 0.22);
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+      animation: slideUpPanel 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .swarm-panel.active {
+      display: flex;
+    }
+
+    @keyframes slideUpPanel {
+      from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.97);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .swarm-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .swarm-panel-title {
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .swarm-close-btn {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 3px;
+      color: var(--text-dim);
+      font-size: 11px;
+      cursor: pointer;
+      padding: 2px 7px;
+      transition: all 0.2s;
+    }
+
+    .swarm-close-btn:hover {
+      border-color: #ff4444;
+      color: #fff;
+    }
+
+    .swarm-control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .swarm-group-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .swarm-group-label strong {
+      color: var(--gold);
+    }
+
+    .swarm-slider-track {
+      width: 100%;
+      height: 6px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #1e1f2b;
+      border-radius: 3px;
+      outline: none;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .swarm-slider-track::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 10px var(--gold-glow);
+      cursor: pointer;
+      border: 2px solid #0d0e12;
+      transition: all 0.2s;
+    }
+
+    .swarm-slider-track::-webkit-slider-thumb:hover {
+      transform: scale(1.25);
+      background: var(--purple-brand);
+      box-shadow: 0 0 14px var(--purple-glow);
+    }
+
+    .swarm-btn-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+
+    .swarm-opt-btn {
+      background: #171822;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-dim);
+      padding: 6px 4px;
+      border-radius: 3px;
+      font-size: 9px;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-align: center;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .swarm-opt-btn:hover {
+      border-color: var(--purple-brand);
+      color: #fff;
+      background: rgba(168, 36, 236, 0.2);
+    }
+
+    .swarm-opt-btn.active {
+      border-color: var(--gold);
+      color: var(--bone);
+      background: rgba(212, 175, 55, 0.22);
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+    }
+
+    .swarm-surge-btn {
+      background: linear-gradient(135deg, rgba(168, 36, 236, 0.25) 0%, rgba(212, 175, 55, 0.2) 100%);
+      border: 1px solid var(--purple-brand);
+      color: #ffffff;
+      padding: 8px 14px;
+      border-radius: 4px;
+      font-family: var(--font-display);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.25s;
+    }
+
+    .swarm-surge-btn:hover {
+      background: linear-gradient(135deg, rgba(168, 36, 236, 0.5) 0%, rgba(212, 175, 55, 0.4) 100%);
+      box-shadow: 0 0 20px var(--purple-glow);
+      transform: translateY(-1px);
+    }
+
+    /* Command HUD System Config Bar (Font Engine + Swarm) */
+    .hud-system-config-bar {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 14px 24px;
+      background: #14151d;
+      border-top: 1px solid var(--steel);
+      border-bottom: 1px solid var(--steel);
+      font-size: 11px;
+    }
+
+    .hud-config-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .hud-config-label {
+      color: var(--gold);
+      font-family: var(--font-display);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-style: italic;
+      font-weight: 700;
+      min-width: 170px;
+    }
+
+    .hud-config-chips {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .hud-swarm-type-btn,
+    .hud-surge-trigger-btn {
+      background: #1a1a24;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: var(--text-dim);
+      padding: 5px 12px;
+      border-radius: 3px;
+      font-size: 10px;
+      font-family: var(--font-mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .hud-swarm-type-btn:hover,
+    .hud-surge-trigger-btn:hover {
+      border-color: var(--purple-brand);
+      color: #fff;
+      background: rgba(168, 36, 236, 0.25);
+    }
+
+    .hud-swarm-type-btn.active {
+      border-color: var(--gold);
+      color: var(--bone);
+      background: rgba(212, 175, 55, 0.22);
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+    }
+
+    .hud-surge-trigger-btn {
+      border-color: var(--purple-brand);
+      color: #ffffff;
+      background: rgba(168, 36, 236, 0.2);
+    }
+
   
     /* Typographic Juxtaposition: Hyper-Stylized MRVH + Refined Normal VENTURES */
     .brand-stem {
@@ -1708,7 +2043,12 @@
       </div>
     </a>
 
-    <div style="display: flex; align-items: center; gap: 14px;">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <button class="swarm-nav-btn" id="swarmNavToggleBtn" aria-label="Toggle Ambient 3D Swarm Controls">
+        <span class="swarm-pill-led"></span>
+        <span>3D SWARM</span>
+      </button>
+
       <button class="hud-trigger-btn" id="hudTriggerBtn" aria-label="Open Tactical Command HUD">
         <span class="hud-led"></span>
         <span>COMMAND HUD</span>
@@ -1730,9 +2070,11 @@
     </nav>
   </header>
 
+  <!-- Full-Viewport Ambient 3D Monogram Swarm Canvas -->
+  <canvas id="ambientSwarmCanvas" class="ambient-swarm-canvas" aria-hidden="true"></canvas>
+
   <!-- Scene 1: Hero -->
   <section class="scene-hero" id="top">
-    <canvas id="forgeParticles" class="forge-canvas"></canvas>
     <div class="hero-content">
 
       <!-- Sovereign 3D Monogram: Wireframe Resting -> Hover Power-Up Purple -> Click Glitch Overdrive -->
@@ -2263,6 +2605,33 @@
         <!-- Rendered dynamically via JS for ultra-fast filtering -->
       </div>
 
+      <!-- Tactical System Configuration: Type Engine & Swarm Controls -->
+      <div class="hud-system-config-bar">
+        <!-- Font Engine Selector -->
+        <div class="hud-config-group">
+          <span class="hud-config-label">AEROSPACE FONT:</span>
+          <div class="hud-config-chips">
+            <button class="font-switch-btn active" data-font="'Ethnocentric', sans-serif">ETHNOCENTRIC</button>
+            <button class="font-switch-btn" data-font="'Paladins', sans-serif">PALADINS</button>
+            <button class="font-switch-btn" data-font="'Airstrike', sans-serif">AIRSTRIKE</button>
+            <button class="font-switch-btn" data-font="'Nasalization', sans-serif">NASALIZATION</button>
+            <button class="font-switch-btn" data-font="'Space Grotesk', sans-serif">SPACE GROTESK</button>
+          </div>
+        </div>
+
+        <!-- Swarm Telemetry Control -->
+        <div class="hud-config-group">
+          <span class="hud-config-label">3D SWARM ENGINE:</span>
+          <div class="hud-config-chips">
+            <button class="hud-swarm-type-btn active" data-swarm-type="mixed">MIXED</button>
+            <button class="hud-swarm-type-btn" data-swarm-type="wireframe">WHITE WIRE</button>
+            <button class="hud-swarm-type-btn" data-swarm-type="purple">3D PURPLE</button>
+            <button class="hud-swarm-type-btn" data-swarm-type="glitch">RGB GLITCH</button>
+            <button class="hud-surge-trigger-btn" id="hudSurgeBtn">⚡ HYPERSURGE</button>
+          </div>
+        </div>
+      </div>
+
       <!-- Real-Time Telemetry Footer -->
       <div class="hud-telemetry-drawer">
         <div class="hud-telemetry-group">
@@ -2287,6 +2656,73 @@
       </div>
     </div>
   </div>
+
+  <!-- Floating Ambient 3D Swarm Controller HUD -->
+  <aside class="swarm-hud-widget" id="swarmHudWidget" aria-label="Ambient Background Swarm Controls">
+    <!-- Collapsed Pill -->
+    <button class="swarm-pill-btn" id="swarmHudPillBtn" aria-expanded="false" aria-controls="swarmHudPanel">
+      <span class="swarm-pill-led"></span>
+      <span>SWARM: <strong id="pillCount">14</strong> · <strong id="pillType">MIXED</strong></span>
+      <span style="font-size: 13px; opacity: 0.8;">⚙</span>
+    </button>
+
+    <!-- Expanded Tactical Panel -->
+    <div class="swarm-panel" id="swarmHudPanel" role="region" aria-label="Swarm Control Matrix">
+      <div class="swarm-panel-header">
+        <div class="swarm-panel-title">
+          <span style="color: var(--teal);">⚡</span>
+          <span>3D SWARM CONTROLS</span>
+        </div>
+        <button class="swarm-close-btn" id="swarmCloseBtn" aria-label="Minimize Swarm Controls">✕</button>
+      </div>
+
+      <!-- Count Slider -->
+      <div class="swarm-control-group">
+        <div class="swarm-group-label">
+          <span>DENSITY (1–50)</span>
+          <span>COUNT: <strong id="swarmCountDisplay">14</strong></span>
+        </div>
+        <input type="range" min="1" max="50" value="14" class="swarm-slider-track" id="swarmSlider" aria-label="Swarm Particle Count">
+        <div style="display: flex; justify-content: space-between; gap: 4px; margin-top: 4px;">
+          <button class="swarm-opt-btn swarm-preset-btn" data-preset="5">5 CALM</button>
+          <button class="swarm-opt-btn swarm-preset-btn" data-preset="14">14 OPT</button>
+          <button class="swarm-opt-btn swarm-preset-btn" data-preset="28">28 DENSE</button>
+          <button class="swarm-opt-btn swarm-preset-btn" data-preset="50">50 MAX</button>
+        </div>
+      </div>
+
+      <!-- Variant Selector -->
+      <div class="swarm-control-group">
+        <div class="swarm-group-label">
+          <span>MONOGRAM VARIANT</span>
+        </div>
+        <div class="swarm-btn-row">
+          <button class="swarm-opt-btn swarm-type-btn" data-swarm-type="wireframe">WHITE</button>
+          <button class="swarm-opt-btn swarm-type-btn" data-swarm-type="purple">PURPLE</button>
+          <button class="swarm-opt-btn swarm-type-btn" data-swarm-type="glitch">GLITCH</button>
+          <button class="swarm-opt-btn swarm-type-btn active" data-swarm-type="mixed">MIXED</button>
+        </div>
+      </div>
+
+      <!-- Speed Control -->
+      <div class="swarm-control-group">
+        <div class="swarm-group-label">
+          <span>DRIFT VELOCITY</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;">
+          <button class="swarm-opt-btn swarm-speed-btn" data-speed="0.5">0.5x DRIFT</button>
+          <button class="swarm-opt-btn swarm-speed-btn active" data-speed="1.0">1.0x NORMAL</button>
+          <button class="swarm-opt-btn swarm-speed-btn" data-speed="2.0">2.0x HYPER</button>
+        </div>
+      </div>
+
+      <!-- Hypersurge Trigger -->
+      <button class="swarm-surge-btn" id="swarmSurgeBtn" aria-label="Trigger Hypersurge">
+        <span>⚡</span>
+        <span>TRIGGER HYPERSURGE</span>
+      </button>
+    </div>
+  </aside>
 
   <footer>
     <p><strong>MRVH · FORGED IN CODE · PANIC RESPONSIBLY™</strong> — Built & Operated by Mr. vH (<a href="https://github.com/wilhewonthe" target="_blank" style="color: var(--gold); text-decoration: none;">@wilhewonthe</a>)</p>
@@ -2525,61 +2961,472 @@
     })();
 
     /* =====================================================================
-       AMBIENT FORGE PARTICLE FIELD (Warm Gold Embers)
+       MRVH AMBIENT 3D MONOGRAM SWARM ENGINE
+       Swirling, twirling 3D monograms (White, Purple, Glitch, Mixed)
+       with continuous full-viewport depth, sporadic hypersonic jumps,
+       and real-time density/type telemetry controls (1 - 50 units).
        ===================================================================== */
-    const forgeCanvas = document.getElementById('forgeParticles');
-    if (forgeCanvas) {
-      const ctx = forgeCanvas.getContext('2d');
-      let width, height;
-      const sparks = [];
-      const sparkCount = 38;
-
-      function resize() {
-        width = forgeCanvas.width = forgeCanvas.offsetWidth;
-        height = forgeCanvas.height = forgeCanvas.offsetHeight;
+    class MonogramParticle {
+      constructor(engine, initialSpawn = false) {
+        this.engine = engine;
+        this.reset(initialSpawn);
       }
-      window.addEventListener('resize', resize, { passive: true });
-      resize();
 
-      for (let i = 0; i < sparkCount; i++) {
-        sparks.push({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          vx: (Math.random() - 0.5) * 0.4,
-          vy: - (0.4 + Math.random() * 0.8),
-          size: 1 + Math.random() * 2,
-          alpha: 0.1 + Math.random() * 0.7,
-          decay: 0.003 + Math.random() * 0.006,
-          hue: 42 + Math.random() * 12 // Deep warm gold hue
+      reset(randomY = false) {
+        const w = this.engine.width;
+        const h = this.engine.height;
+
+        this.x = Math.random() * w;
+        this.y = randomY ? Math.random() * h : (Math.random() < 0.5 ? -60 : h + 60);
+
+        // 3D Depth layer (0.22 = distant background, 1.0 = foreground)
+        this.z = 0.22 + Math.random() * 0.78;
+        this.baseSize = 44 + this.z * 50; // 55px to 94px rendered size
+        this.alpha = 0.16 + this.z * 0.46; // 0.26 to 0.62 opacity
+
+        // Parallax velocity based on depth
+        const speed = (0.35 + Math.random() * 0.65) * this.z * this.engine.speed;
+        const angle = Math.random() * Math.PI * 2;
+        this.vx = Math.cos(angle) * speed;
+        this.vy = Math.sin(angle) * speed;
+
+        // 3D Euler Angles (Roll / Yaw / Pitch)
+        this.roll = Math.random() * Math.PI * 2;
+        this.yaw = Math.random() * Math.PI * 2;
+        this.pitch = Math.random() * Math.PI * 2;
+
+        // Rotational Angular Velocities
+        this.dRoll = (Math.random() - 0.5) * 0.012;
+        this.dYaw = (0.008 + Math.random() * 0.018) * (Math.random() < 0.5 ? 1 : -1);
+        this.dPitch = (Math.random() - 0.5) * 0.01;
+
+        this.type = this.engine.getParticleType();
+
+        // Hypersonic shooting / warp surge state
+        this.isShooting = false;
+        this.shootTimer = 0;
+        this.trail = [];
+        this.maxTrail = 6;
+      }
+
+      triggerShoot(targetAngle = null) {
+        this.isShooting = true;
+        this.shootTimer = 80 + Math.floor(Math.random() * 40);
+        const angle = targetAngle !== null ? targetAngle : (-0.35 + (Math.random() - 0.5) * 0.7);
+        const shootSpeed = (7.0 + Math.random() * 5.0) * this.engine.speed;
+        this.vx = Math.cos(angle) * shootSpeed;
+        this.vy = Math.sin(angle) * shootSpeed;
+        this.dYaw *= 3.5;
+        this.dRoll *= 2.5;
+        this.alpha = Math.min(0.92, this.alpha * 1.6);
+      }
+
+      update(t) {
+        if (!this.isShooting) {
+          // Atmospheric swirl curl physics
+          const swirlFreq = 0.0016;
+          this.vx += Math.sin(this.y * swirlFreq + t * 0.0009) * 0.035 * this.engine.speed;
+          this.vy += Math.cos(this.x * swirlFreq + t * 0.0009) * 0.035 * this.engine.speed;
+          const curSpeed = Math.hypot(this.vx, this.vy);
+          const maxSpeed = 1.65 * this.engine.speed;
+          if (curSpeed > maxSpeed) {
+            this.vx = (this.vx / curSpeed) * maxSpeed;
+            this.vy = (this.vy / curSpeed) * maxSpeed;
+          }
+        } else {
+          // Hypersonic surge update
+          this.shootTimer--;
+          this.trail.push({ x: this.x, y: this.y, roll: this.roll, yaw: this.yaw, pitch: this.pitch, alpha: this.alpha });
+          if (this.trail.length > this.maxTrail) this.trail.shift();
+
+          // Ion plume micro-sparks
+          if (Math.random() < 0.35 && this.engine.sparks.length < 50) {
+            this.engine.sparks.push({
+              x: this.x + (Math.random() - 0.5) * 12,
+              y: this.y + (Math.random() - 0.5) * 12,
+              vx: -this.vx * 0.12 + (Math.random() - 0.5) * 1.5,
+              vy: -this.vy * 0.12 + (Math.random() - 0.5) * 1.5,
+              size: 1.5 + Math.random() * 2.5,
+              alpha: 0.85,
+              decay: 0.035 + Math.random() * 0.02,
+              color: this.type === 'purple' ? '#a824ec' : (this.type === 'glitch' ? '#00ffff' : '#d4af37')
+            });
+          }
+
+          if (this.shootTimer <= 0) {
+            this.isShooting = false;
+            this.trail = [];
+            this.vx *= 0.22;
+            this.vy *= 0.22;
+            this.dYaw /= 3.5;
+            this.dRoll /= 2.5;
+          }
+        }
+
+        this.x += this.vx;
+        this.y += this.vy;
+        this.roll += this.dRoll * this.engine.speed;
+        this.yaw += this.dYaw * this.engine.speed;
+        this.pitch += this.dPitch * this.engine.speed;
+
+        // Viewport boundaries wrap-around
+        const pad = 90;
+        const w = this.engine.width;
+        const h = this.engine.height;
+        if (this.x < -pad) this.x = w + pad;
+        else if (this.x > w + pad) this.x = -pad;
+        if (this.y < -pad) this.y = h + pad;
+        else if (this.y > h + pad) this.y = -pad;
+      }
+
+      draw(ctx) {
+        const img = this.engine.images[this.type];
+        if (!img || !img.complete || img.naturalWidth === 0) return;
+
+        // Render hypersonic ion trail if shooting
+        if (this.isShooting && this.trail.length > 0) {
+          for (let i = 0; i < this.trail.length; i++) {
+            const pt = this.trail[i];
+            const trailAlpha = (i / this.trail.length) * this.alpha * 0.42;
+            this.renderSingle(ctx, img, pt.x, pt.y, pt.roll, pt.yaw, pt.pitch, trailAlpha, 0.9);
+          }
+        }
+        this.renderSingle(ctx, img, this.x, this.y, this.roll, this.yaw, this.pitch, this.alpha, 1.0);
+      }
+
+      renderSingle(ctx, img, x, y, roll, yaw, pitch, alpha, scaleMod) {
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(roll);
+
+        // Mathematical 3D projection: Cosine scaling models real 3D tumble
+        const cosYaw = Math.cos(yaw);
+        const cosPitch = Math.cos(pitch);
+        const aspect = img.naturalWidth / img.naturalHeight;
+        const renderW = this.baseSize * scaleMod;
+        const renderH = (this.baseSize / aspect) * scaleMod;
+
+        const safeSx = Math.abs(cosYaw) < 0.05 ? Math.sign(cosYaw || 1) * 0.05 : cosYaw;
+        const safeSy = Math.abs(cosPitch) < 0.05 ? Math.sign(cosPitch || 1) * 0.05 : cosPitch;
+
+        ctx.scale(safeSx, safeSy);
+        ctx.globalAlpha = Math.max(0.01, Math.min(1.0, alpha));
+
+        if (this.isShooting) {
+          ctx.shadowBlur = 18;
+          ctx.shadowColor = this.type === 'glitch' ? '#00ffff' : (this.type === 'purple' ? '#a824ec' : '#d4af37');
+        } else if (this.z > 0.7) {
+          ctx.shadowBlur = 8;
+          ctx.shadowColor = this.type === 'purple' ? 'rgba(168, 36, 236, 0.4)' : 'rgba(212, 175, 55, 0.3)';
+        }
+
+        ctx.drawImage(img, -renderW / 2, -renderH / 2, renderW, renderH);
+        ctx.restore();
+      }
+    }
+
+    class AmbientSwarmEngine {
+      constructor(canvasId) {
+        this.canvas = document.getElementById(canvasId);
+        if (!this.canvas) return;
+        this.ctx = this.canvas.getContext('2d');
+
+        // Restore user preferences or sensible defaults
+        this.count = parseInt(localStorage.getItem('mrvh_swarm_count') || '14', 10);
+        this.type = localStorage.getItem('mrvh_swarm_type') || 'mixed';
+        this.speed = parseFloat(localStorage.getItem('mrvh_swarm_speed') || '1.0');
+
+        if (isNaN(this.count) || this.count < 1) this.count = 14;
+        if (this.count > 50) this.count = 50;
+
+        // Preload monogram textures
+        this.images = {
+          wireframe: new Image(),
+          purple: new Image(),
+          glitch: new Image()
+        };
+        this.images.wireframe.src = '/assets/branding/mrvh-monogram-wireframe.png';
+        this.images.purple.src = '/assets/branding/mrvh-monogram-purple.png';
+        this.images.glitch.src = '/assets/branding/mrvh-monogram-glitch.png';
+
+        this.particles = [];
+        this.embers = [];
+        this.sparks = [];
+
+        this.nextShootTimer = 180 + Math.floor(Math.random() * 120);
+        this.tick = 0;
+
+        this.handleResize = this.handleResize.bind(this);
+        window.addEventListener('resize', this.handleResize, { passive: true });
+        this.handleResize();
+
+        this.initParticles();
+        this.initEmbers();
+
+        this.animate = this.animate.bind(this);
+        requestAnimationFrame(this.animate);
+
+        window.MRVH_Swarm = this;
+      }
+
+      handleResize() {
+        this.dpr = Math.min(window.devicePixelRatio || 1, 2);
+        this.width = window.innerWidth;
+        this.height = window.innerHeight;
+        this.canvas.width = this.width * this.dpr;
+        this.canvas.height = this.height * this.dpr;
+        this.ctx.scale(this.dpr, this.dpr);
+      }
+
+      getParticleType() {
+        if (this.type === 'mixed') {
+          const r = Math.random();
+          return r < 0.35 ? 'purple' : (r < 0.70 ? 'wireframe' : 'glitch');
+        }
+        return this.type;
+      }
+
+      initParticles() {
+        this.particles = [];
+        for (let i = 0; i < this.count; i++) {
+          this.particles.push(new MonogramParticle(this, true));
+        }
+      }
+
+      initEmbers() {
+        const emberCount = 35;
+        this.embers = [];
+        for (let i = 0; i < emberCount; i++) {
+          this.embers.push({
+            x: Math.random() * this.width,
+            y: Math.random() * this.height,
+            vx: (Math.random() - 0.5) * 0.45,
+            vy: - (0.35 + Math.random() * 0.75),
+            size: 1.2 + Math.random() * 2.2,
+            alpha: 0.15 + Math.random() * 0.7,
+            decay: 0.003 + Math.random() * 0.005,
+            hue: Math.random() < 0.6 ? (42 + Math.random() * 10) : (275 + Math.random() * 25)
+          });
+        }
+      }
+
+      setCount(newCount) {
+        this.count = Math.max(1, Math.min(50, newCount));
+        localStorage.setItem('mrvh_swarm_count', this.count);
+        while (this.particles.length < this.count) {
+          this.particles.push(new MonogramParticle(this, false));
+        }
+        while (this.particles.length > this.count) {
+          this.particles.pop();
+        }
+        this.updateHUDReadouts();
+      }
+
+      setType(newType) {
+        this.type = newType;
+        localStorage.setItem('mrvh_swarm_type', this.type);
+        this.particles.forEach(p => {
+          p.type = this.getParticleType();
         });
+        this.updateHUDReadouts();
       }
 
-      function renderSparks() {
-        ctx.clearRect(0, 0, width, height);
-        for (let i = 0; i < sparks.length; i++) {
-          const s = sparks[i];
+      setSpeed(newSpeed) {
+        this.speed = newSpeed;
+        localStorage.setItem('mrvh_swarm_speed', this.speed);
+        this.updateHUDReadouts();
+      }
+
+      triggerHypersurge(count = 2) {
+        if (this.particles.length === 0) return;
+        const num = Math.min(count, this.particles.length);
+        for (let i = 0; i < num; i++) {
+          const idx = Math.floor(Math.random() * this.particles.length);
+          const angle = (Math.random() < 0.5 ? -0.35 : 0.35) + (Math.random() - 0.5) * 0.6;
+          this.particles[idx].triggerShoot(angle);
+        }
+        if (window.MRVH_Audio) {
+          window.MRVH_Audio.playWarp();
+        }
+      }
+
+      animate(t) {
+        this.tick++;
+        this.ctx.clearRect(0, 0, this.width, this.height);
+
+        // 1. Render Gold & Purple Atmospheric Embers
+        for (let i = 0; i < this.embers.length; i++) {
+          const e = this.embers[i];
+          e.x += e.vx;
+          e.y += e.vy;
+          e.alpha -= e.decay;
+          if (e.y < -15 || e.alpha <= 0) {
+            e.x = Math.random() * this.width;
+            e.y = this.height + 15;
+            e.alpha = 0.2 + Math.random() * 0.75;
+          }
+          this.ctx.beginPath();
+          this.ctx.arc(e.x, e.y, e.size, 0, Math.PI * 2);
+          this.ctx.fillStyle = `hsla(${e.hue}, 95%, 58%, ${e.alpha})`;
+          this.ctx.shadowBlur = 6;
+          this.ctx.shadowColor = `hsla(${e.hue}, 95%, 58%, 0.8)`;
+          this.ctx.fill();
+        }
+
+        // 2. Render Micro-Sparks from Shooting Trails
+        for (let i = this.sparks.length - 1; i >= 0; i--) {
+          const s = this.sparks[i];
           s.x += s.vx;
           s.y += s.vy;
           s.alpha -= s.decay;
-
-          if (s.y < 0 || s.alpha <= 0) {
-            s.x = Math.random() * width;
-            s.y = height + 10;
-            s.alpha = 0.2 + Math.random() * 0.8;
-            s.vy = - (0.4 + Math.random() * 0.8);
+          if (s.alpha <= 0) {
+            this.sparks.splice(i, 1);
+            continue;
           }
-
-          ctx.beginPath();
-          ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
-          ctx.fillStyle = `hsla(${s.hue}, 95%, 55%, ${s.alpha})`;
-          ctx.shadowBlur = 8;
-          ctx.shadowColor = 'rgba(212, 175, 55, 0.6)';
-          ctx.fill();
+          this.ctx.beginPath();
+          this.ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+          this.ctx.fillStyle = s.color;
+          this.ctx.shadowBlur = 4;
+          this.ctx.shadowColor = s.color;
+          this.ctx.globalAlpha = s.alpha;
+          this.ctx.fill();
+          this.ctx.globalAlpha = 1.0;
         }
-        requestAnimationFrame(renderSparks);
+
+        // 3. Sporadic Hypersonic Shooting Jump
+        if (this.tick >= this.nextShootTimer) {
+          this.tick = 0;
+          this.nextShootTimer = 160 + Math.floor(Math.random() * 150);
+          if (this.particles.length > 0) {
+            const p = this.particles[Math.floor(Math.random() * this.particles.length)];
+            if (!p.isShooting) {
+              p.triggerShoot();
+            }
+          }
+        }
+
+        // 4. Update & Render Monogram Particles
+        for (let i = 0; i < this.particles.length; i++) {
+          this.particles[i].update(t);
+          this.particles[i].draw(this.ctx);
+        }
+
+        requestAnimationFrame(this.animate);
       }
-      renderSparks();
+
+      updateHUDReadouts() {
+        const pillCount = document.getElementById('pillCount');
+        if (pillCount) pillCount.textContent = this.count;
+        const pillType = document.getElementById('pillType');
+        if (pillType) pillType.textContent = this.type.toUpperCase();
+
+        const countDisplay = document.getElementById('swarmCountDisplay');
+        if (countDisplay) countDisplay.textContent = this.count;
+        const slider = document.getElementById('swarmSlider');
+        if (slider) slider.value = this.count;
+
+        document.querySelectorAll('.swarm-type-btn, .hud-swarm-type-btn').forEach(b => {
+          b.classList.toggle('active', b.dataset.swarmType === this.type);
+        });
+
+        document.querySelectorAll('.swarm-speed-btn').forEach(b => {
+          b.classList.toggle('active', parseFloat(b.dataset.speed) === this.speed);
+        });
+      }
     }
+
+    // Launch Swarm Engine
+    const mrvhSwarmInstance = new AmbientSwarmEngine('ambientSwarmCanvas');
+
+    // Wire up HUD Controls
+    (function initSwarmHUDControls() {
+      const engine = window.MRVH_Swarm;
+      if (!engine) return;
+
+      const pillBtn = document.getElementById('swarmHudPillBtn');
+      const panel = document.getElementById('swarmHudPanel');
+      const closeBtn = document.getElementById('swarmCloseBtn');
+      const navBtn = document.getElementById('swarmNavToggleBtn');
+      const slider = document.getElementById('swarmSlider');
+      const countDisplay = document.getElementById('swarmCountDisplay');
+      const surgeBtn = document.getElementById('swarmSurgeBtn');
+      const hudSurgeBtn = document.getElementById('hudSurgeBtn');
+
+      function togglePanel(open) {
+        if (!panel) return;
+        const shouldOpen = open !== undefined ? open : !panel.classList.contains('active');
+        panel.classList.toggle('active', shouldOpen);
+        if (pillBtn) pillBtn.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
+        if (window.MRVH_Audio) {
+          if (shouldOpen) window.MRVH_Audio.playPowerUp(0.12, 0.08);
+          else window.MRVH_Audio.playClick();
+        }
+      }
+
+      if (pillBtn) pillBtn.addEventListener('click', (e) => { e.stopPropagation(); togglePanel(); });
+      if (closeBtn) closeBtn.addEventListener('click', (e) => { e.stopPropagation(); togglePanel(false); });
+      if (navBtn) navBtn.addEventListener('click', (e) => { e.stopPropagation(); togglePanel(); });
+
+      // Close panel if clicked outside
+      document.addEventListener('click', (e) => {
+        if (panel && panel.classList.contains('active') && !panel.contains(e.target) && e.target !== pillBtn && !pillBtn.contains(e.target) && e.target !== navBtn && !navBtn.contains(e.target)) {
+          togglePanel(false);
+        }
+      });
+
+      // Density Slider
+      if (slider) {
+        slider.addEventListener('input', (e) => {
+          const val = parseInt(e.target.value, 10);
+          if (countDisplay) countDisplay.textContent = val;
+          engine.setCount(val);
+        });
+        slider.addEventListener('change', () => {
+          if (window.MRVH_Audio) window.MRVH_Audio.playClick();
+        });
+      }
+
+      // Density Presets
+      document.querySelectorAll('.swarm-preset-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const val = parseInt(btn.dataset.preset, 10);
+          engine.setCount(val);
+          if (window.MRVH_Audio) window.MRVH_Audio.playClick();
+        });
+      });
+
+      // Variant Buttons
+      document.querySelectorAll('.swarm-type-btn, .hud-swarm-type-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const t = btn.dataset.swarmType;
+          engine.setType(t);
+          if (window.MRVH_Audio) {
+            if (t === 'glitch') window.MRVH_Audio.playGlitch();
+            else if (t === 'purple') window.MRVH_Audio.playPowerUp(0.18, 0.1);
+            else window.MRVH_Audio.playClick();
+          }
+        });
+      });
+
+      // Speed Buttons
+      document.querySelectorAll('.swarm-speed-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const s = parseFloat(btn.dataset.speed);
+          engine.setSpeed(s);
+          if (window.MRVH_Audio) window.MRVH_Audio.playClick();
+        });
+      });
+
+      // Hypersurge Buttons
+      if (surgeBtn) {
+        surgeBtn.addEventListener('click', () => engine.triggerHypersurge(2));
+      }
+      if (hudSurgeBtn) {
+        hudSurgeBtn.addEventListener('click', () => engine.triggerHypersurge(2));
+      }
+
+      engine.updateHUDReadouts();
+    })();
 
     /* =====================================================================
        OPERATION LEVIATHAN: 3D PROCEDURAL EXPEDITION RV (Three.js)
@@ -3001,7 +3848,7 @@
     searchInput.addEventListener('input', filterCards);
 
     // Audio feedback hooks on tactical wireframe-to-purple buttons
-    document.querySelectorAll('.btn-primary, .btn-secondary, .card-link, .hud-trigger-btn, .filter-btn, .stage-mode-btn, .hud-chip').forEach(btn => {
+    document.querySelectorAll('.btn-primary, .btn-secondary, .card-link, .hud-trigger-btn, .filter-btn, .stage-mode-btn, .hud-chip, .swarm-pill-btn, .swarm-opt-btn, .swarm-surge-btn, .swarm-nav-btn, .hud-swarm-type-btn, .hud-surge-trigger-btn, .font-switch-btn, .swarm-close-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         if (window.MRVH_Audio) window.MRVH_Audio.playClick();
       });

@@ -6,11 +6,59 @@
   <title>MRVH — Ventures & Systems Architecture | Command Deck</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Chakra+Petch:ital,wght@0,600;0,700;1,600;1,700&family=Oxanium:wght@600;700;800&family=Syne:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+
+    @font-face {
+      font-family: 'Ethnocentric';
+      src: url('/assets/fonts/Ethnocentric.woff2') format('woff2'),
+           url('/assets/fonts/Ethnocentric.woff') format('woff');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Airstrike';
+      src: url('/assets/fonts/AirstrikeBold.woff2') format('woff2'),
+           url('/assets/fonts/AirstrikeBold.woff') format('woff');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Paladins';
+      src: url('/assets/fonts/PaladinsSemiItalic.woff2') format('woff2'),
+           url('/assets/fonts/PaladinsSemiItalic.woff') format('woff');
+      font-weight: 700;
+      font-style: italic;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'PaladinsSuper';
+      src: url('/assets/fonts/PaladinsSuperItalic.woff2') format('woff2'),
+           url('/assets/fonts/PaladinsSuperItalic.woff') format('woff');
+      font-weight: 700;
+      font-style: italic;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Nasalization';
+      src: url('/assets/fonts/Nasalization.woff2') format('woff2'),
+           url('/assets/fonts/Nasalization.woff') format('woff');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
     :root {
-      /* Base Surface Palette: Sophisticated Dark Greys (No pitch black) */
+      /* Slate Titanium & Obsidian Dark Greys (No pitch black) */
       --bg: #111116;
       --bg-surface: #16161d;
       --charcoal: #1a1a23;
@@ -25,7 +73,7 @@
       --gold-pale: #f3cb50;
       --gold-glow: rgba(212, 175, 55, 0.35);
 
-      /* Backward compatibility mapping */
+      /* Backward-compat tokens */
       --molten: var(--gold);
       --molten-dim: var(--gold-dim);
       --molten-pale: var(--gold-pale);
@@ -35,6 +83,8 @@
       --purple-brand: #a824ec;
       --purple-glow: rgba(168, 36, 236, 0.45);
       --purple-deep: #581c87;
+      --cyan-glitch: #00ffff;
+      --magenta-glitch: #ff00ff;
       --teal: #14b8a6;
       --teal-glow: rgba(20, 184, 166, 0.3);
 
@@ -44,10 +94,14 @@
       --text-muted: #6b7280;
       --bone: #f3f4f6;
 
-      --font-display: 'Syne', sans-serif;
+      --font-brand-mrvh: 'Ethnocentric', 'Paladins', 'Airstrike', 'Chakra Petch', sans-serif;
+      --font-brand-normal: 'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mrvh: var(--font-brand-mrvh);
+      --font-display: 'Ethnocentric', 'Paladins', 'Airstrike', 'Chakra Petch', sans-serif;
       --font-mono: 'IBM Plex Mono', monospace;
     }
-@media (prefers-reduced-motion: reduce) {
+
+    @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
@@ -75,11 +129,11 @@
       top: 0;
       bottom: 0;
       width: 3px;
-      background: linear-gradient(180deg, var(--molten), var(--molten-pale));
+      background: linear-gradient(180deg, var(--gold), var(--purple-brand));
       z-index: 1001;
       transform-origin: top;
       transform: scaleY(0);
-      box-shadow: 0 0 10px var(--molten-glow);
+      box-shadow: 0 0 10px var(--gold-glow);
     }
 
     /* Top Command Navbar */
@@ -89,7 +143,7 @@
       left: 0;
       right: 0;
       height: 64px;
-      background: rgba(10, 10, 10, 0.92);
+      background: rgba(17, 17, 22, 0.94);
       backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--steel);
       z-index: 999;
@@ -104,13 +158,33 @@
       align-items: center;
       gap: 12px;
       text-decoration: none;
-      color: var(--bone);
+      height: 46px;
     }
 
-    .brand-lockup svg {
-      height: 34px;
+    .nav-standalone-monogram {
+      height: 38px;
       width: auto;
-      display: block;
+      object-fit: contain;
+      filter: drop-shadow(0 0 10px var(--purple-glow));
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+    }
+
+    .brand-lockup:hover .nav-standalone-monogram {
+      transform: scale(1.12) rotate(-3deg);
+      filter: drop-shadow(0 0 18px rgba(168, 36, 236, 0.85));
+    }
+
+    .nav-brand-code {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 15px;
+      letter-spacing: 0.18em;
+      color: var(--bone);
+      transition: color 0.2s;
+    }
+
+    .brand-lockup:hover .nav-brand-code {
+      color: var(--purple-brand);
     }
 
     .nav-links {
@@ -131,7 +205,7 @@
     }
 
     .nav-links a:hover {
-      color: var(--molten);
+      color: var(--gold);
     }
 
     /* Tactical HUD Trigger in Nav */
@@ -139,29 +213,32 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(212, 175, 55, 0.12);
+      background: rgba(212, 175, 55, 0.08);
       border: 1px solid rgba(212, 175, 55, 0.4);
       border-radius: 4px;
-      padding: 6px 12px;
+      padding: 6px 14px;
       color: var(--bone);
-      font-family: var(--font-mono);
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 700;
       font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.25s ease;
     }
 
     .hud-trigger-btn:hover {
-      background: var(--molten);
-      color: #111116;
-      border-color: var(--molten);
-      box-shadow: 0 0 16px var(--molten-glow);
+      background: rgba(168, 36, 236, 0.25);
+      color: #ffffff;
+      border-color: var(--purple-brand);
+      box-shadow: 0 0 20px rgba(168, 36, 236, 0.7);
+      text-shadow: 0 0 8px rgba(168, 36, 236, 0.9);
+      transform: translateY(-1px);
     }
 
     .hud-trigger-btn kbd {
-      background: rgba(0, 0, 0, 0.4);
+      background: rgba(0, 0, 0, 0.45);
       border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 3px;
       padding: 2px 5px;
@@ -213,8 +290,8 @@
     }
 
     .nav-cta:hover {
-      border-color: var(--molten);
-      color: var(--molten) !important;
+      border-color: var(--gold);
+      color: var(--gold) !important;
     }
 
     /* Scene 1: Hero */
@@ -231,12 +308,24 @@
       border-bottom: 1px solid var(--steel);
     }
 
-    .forge-canvas {
-      position: absolute;
-      inset: 0;
+    /* Full-Viewport Ambient 3D Monogram Swarm Canvas */
+    .ambient-swarm-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
       pointer-events: none;
+      z-index: 0;
+    }
+
+    .scene-hero,
+    .scene-command-deck,
+    .scene-leviathan,
+    .scene-homelab,
+    footer {
+      position: relative;
       z-index: 1;
-      opacity: 0.65;
     }
 
     .hero-content {
@@ -248,28 +337,219 @@
       align-items: center;
     }
 
-    .hero-emblem {
-      width: 100%;
-      max-width: 520px;
-      height: auto;
+    /* Hero Standalone 3D Monogram (Wireframe -> Hover Power-Up -> Click Glitch) */
+    .hero-brand-stage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       margin-bottom: 24px;
-      filter: drop-shadow(0 0 24px rgba(212, 175, 55, 0.15));
+      position: relative;
+    }
+
+    .hero-monogram-container {
+      position: relative;
+      width: 260px;
+      height: 270px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      user-select: none;
+      perspective: 1000px;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .hero-monogram-container:hover {
+      transform: translateY(-6px) scale(1.05);
+    }
+
+    .hero-monogram-layer {
+      position: absolute;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      pointer-events: none;
+      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), filter 0.45s ease;
+    }
+
+    /* 1. Resting Layer: Architectural Wireframe */
+    .wireframe-layer {
+      opacity: 0.95;
+      transform: scale(1);
+      filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.35)) drop-shadow(0 0 35px var(--gold-glow));
+    }
+
+    /* 2. Power-Up Layer: Solid 3D Purple Extrusion */
+    .purple-layer {
+      opacity: 0;
+      transform: scale(0.97);
+      filter: drop-shadow(0 0 35px rgba(168, 36, 236, 0.85)) drop-shadow(0 0 70px rgba(168, 36, 236, 0.5));
+    }
+
+    /* 3. Click Overdrive: Glitch Layer */
+    .glitch-layer {
+      opacity: 0;
+      transform: scale(0.98);
+      filter: drop-shadow(-4px 0 0 var(--magenta-glitch)) drop-shadow(4px 0 0 var(--cyan-glitch)) drop-shadow(0 0 28px rgba(168, 36, 236, 0.9));
+    }
+
+    /* Hover State -> Glows up to Purple */
+    .hero-monogram-container:hover .purple-layer {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .hero-monogram-container:hover .wireframe-layer {
+      opacity: 0.2;
+      transform: scale(1.02);
+      filter: drop-shadow(0 0 24px rgba(168, 36, 236, 0.8));
+    }
+
+    /* Click Glitch Overdrive State */
+    .hero-monogram-container.glitch-mode .purple-layer,
+    .hero-monogram-container.glitch-mode .wireframe-layer {
+      opacity: 0 !important;
+    }
+
+    .hero-monogram-container.glitch-mode .glitch-layer {
+      opacity: 1 !important;
+      animation: cyberGlitchJitter 0.22s infinite steps(2);
+    }
+
+    .hero-monogram-container.glitch-mode {
+      transform: translateY(-6px) scale(1.06);
+    }
+
+    @keyframes cyberGlitchJitter {
+      0% { transform: translate(0, 0) skew(0deg); }
+      25% { transform: translate(-4px, 2px) skew(-2.5deg); }
+      50% { transform: translate(4px, -2px) skew(2.5deg); }
+      75% { transform: translate(-3px, -3px) skew(1deg); }
+      100% { transform: translate(0, 0) skew(0deg); }
+    }
+
+    /* Atmospheric Plasma Aura on Hover / Click */
+    .monogram-reactor-aura {
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(168, 36, 236, 0.35) 0%, rgba(212, 175, 55, 0.12) 45%, transparent 70%);
+      opacity: 0;
+      transform: scale(0.8);
+      pointer-events: none;
+      transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: -1;
+    }
+
+    .hero-monogram-container:hover .monogram-reactor-aura {
+      opacity: 1;
+      transform: scale(1.35);
+      animation: pulseAura 2.5s infinite alternate ease-in-out;
+    }
+
+    .hero-monogram-container.glitch-mode .monogram-reactor-aura {
+      opacity: 1;
+      transform: scale(1.5);
+      background: radial-gradient(circle, rgba(255, 0, 255, 0.4) 0%, rgba(0, 255, 255, 0.25) 40%, transparent 70%);
+      animation: pulseGlitchAura 0.15s infinite alternate steps(2);
+    }
+
+    @keyframes pulseAura {
+      0% { transform: scale(1.3); opacity: 0.8; }
+      100% { transform: scale(1.45); opacity: 1; }
+    }
+
+    @keyframes pulseGlitchAura {
+      0% { transform: scale(1.4) rotate(0deg); opacity: 0.7; }
+      100% { transform: scale(1.55) rotate(5deg); opacity: 1; }
+    }
+
+    .monogram-hud-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 14px;
+      background: rgba(26, 26, 35, 0.8);
+      border: 1px solid var(--steel);
+      border-radius: 20px;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-top: 10px;
+      margin-bottom: 16px;
+      transition: all 0.25s ease;
+    }
+
+    .monogram-hud-status .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--steel-light);
+      transition: all 0.25s ease;
+    }
+
+    .hero-monogram-container:hover + .monogram-hud-status {
+      border-color: var(--purple-brand);
+      color: var(--bone);
+      background: rgba(168, 36, 236, 0.15);
+      box-shadow: 0 0 16px rgba(168, 36, 236, 0.3);
+    }
+
+    .hero-monogram-container:hover + .monogram-hud-status .status-dot {
+      background: var(--purple-brand);
+      box-shadow: 0 0 8px var(--purple-brand);
+    }
+
+    .hero-monogram-container.glitch-mode + .monogram-hud-status {
+      border-color: var(--magenta-glitch);
+      color: var(--cyan-glitch);
+      background: rgba(255, 0, 255, 0.15);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+    }
+
+    .hero-monogram-container.glitch-mode + .monogram-hud-status .status-dot {
+      background: var(--cyan-glitch);
+      box-shadow: 0 0 10px var(--cyan-glitch), 0 0 18px var(--magenta-glitch);
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 700;
+      font-size: clamp(32px, 5.2vw, 64px);
+      letter-spacing: 0.04em;
+      color: var(--bone);
+      line-height: 1.05;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #ffffff 0%, var(--gold) 45%, var(--purple-brand) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 25px rgba(168, 36, 236, 0.45));
+      transition: filter 0.3s ease, letter-spacing 0.3s ease;
+    }
+
+    .hero-title:hover {
+      filter: drop-shadow(0 0 40px rgba(168, 36, 236, 0.85)) drop-shadow(0 0 80px rgba(0, 255, 255, 0.35));
+      letter-spacing: 0.1em;
     }
 
     .tagline {
       font-family: var(--font-mono);
       font-size: 11px;
-      letter-spacing: 0.28em;
+      letter-spacing: 0.24em;
       text-transform: uppercase;
-      color: var(--molten);
+      color: var(--gold);
       margin-bottom: 18px;
       font-weight: 600;
     }
 
     .hero-sub {
-      font-size: 16px;
+      font-size: 15px;
       line-height: 1.7;
-      color: var(--bone);
+      color: var(--text-dim);
       max-width: 760px;
       margin-bottom: 34px;
     }
@@ -304,8 +584,8 @@
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: var(--molten);
-      box-shadow: 0 0 10px var(--molten);
+      background: var(--gold);
+      box-shadow: 0 0 10px var(--gold);
     }
 
     .stat-pill strong {
@@ -321,44 +601,64 @@
     }
 
     .btn-primary, .btn-secondary {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.14em;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      padding: 13px 24px;
+      padding: 13px 26px;
       border-radius: 4px;
       text-decoration: none;
-      transition: all 0.2s ease;
+      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(8px);
+      user-select: none;
     }
 
+    /* Primary: Industrial Gold Wireframe Resting -> Glowing Ultraviolet Hover */
     .btn-primary {
-      background: var(--molten);
-      color: #111116;
-      border: 1px solid var(--molten);
+      background: rgba(212, 175, 55, 0.08);
+      color: var(--bone);
+      border: 1px solid rgba(212, 175, 55, 0.45);
+      box-shadow: 0 0 12px rgba(212, 175, 55, 0.1);
     }
 
     .btn-primary:hover {
-      background: var(--molten-pale);
-      border-color: var(--molten-pale);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(212, 175, 55, 0.35);
+      border-color: var(--purple-brand);
+      color: #ffffff;
+      background: linear-gradient(135deg, rgba(168, 36, 236, 0.3) 0%, rgba(35, 12, 50, 0.85) 100%);
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 0 25px rgba(168, 36, 236, 0.75), 0 0 50px rgba(168, 36, 236, 0.35), inset 0 0 14px rgba(168, 36, 236, 0.3);
+      text-shadow: 0 0 10px rgba(168, 36, 236, 0.9), 0 0 20px rgba(168, 36, 236, 0.5);
     }
 
+    /* Secondary: Titanium Dark Wireframe Resting -> Glowing Ultraviolet Hover */
     .btn-secondary {
-      background: var(--charcoal);
-      color: var(--bone);
-      border: 1px solid var(--steel-light);
+      background: rgba(17, 17, 22, 0.85);
+      color: var(--text-dim);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     }
 
     .btn-secondary:hover {
-      border-color: var(--molten);
-      color: var(--molten);
-      transform: translateY(-2px);
+      border-color: var(--purple-brand);
+      color: #ffffff;
+      background: linear-gradient(135deg, rgba(168, 36, 236, 0.22) 0%, rgba(22, 10, 30, 0.8) 100%);
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 0 22px rgba(168, 36, 236, 0.65), 0 0 45px rgba(168, 36, 236, 0.25), inset 0 0 12px rgba(168, 36, 236, 0.25);
+      text-shadow: 0 0 8px rgba(168, 36, 236, 0.8);
+    }
+
+    .btn-primary:active, .btn-secondary:active {
+      transform: translateY(0) scale(0.98);
+      border-color: var(--cyan-glitch);
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.6), inset 0 0 16px rgba(0, 255, 255, 0.4);
     }
 
     /* Scene Headers */
@@ -371,17 +671,25 @@
       font-size: 11px;
       letter-spacing: 0.24em;
       text-transform: uppercase;
-      color: var(--molten);
+      color: var(--gold);
       margin-bottom: 8px;
       font-weight: 600;
     }
 
     .scene-title {
       font-family: var(--font-display);
-      font-weight: 800;
-      font-size: clamp(28px, 4vw, 42px);
-      letter-spacing: -0.02em;
+      font-style: italic;
+      font-weight: 700;
+      font-size: clamp(26px, 3.6vw, 40px);
+      letter-spacing: 0.06em;
       color: var(--bone);
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+    }
+
+    .scene-title:hover {
+      color: #ffffff;
+      text-shadow: 0 0 18px rgba(168, 36, 236, 0.75);
     }
 
     /* Scene 2: Master Venture Command Deck */
@@ -409,25 +717,35 @@
     }
 
     .filter-btn {
-      background: var(--charcoal);
-      border: 1px solid var(--steel);
+      background: rgba(26, 26, 35, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       color: var(--text-dim);
-      font-family: var(--font-mono);
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 700;
       font-size: 11px;
-      font-weight: 500;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      padding: 8px 14px;
+      padding: 9px 16px;
       border-radius: 3px;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.25s ease;
     }
 
-    .filter-btn:hover,
+    .filter-btn:hover {
+      border-color: var(--purple-brand);
+      color: #ffffff;
+      background: rgba(168, 36, 236, 0.2);
+      box-shadow: 0 0 16px rgba(168, 36, 236, 0.5);
+      text-shadow: 0 0 8px rgba(168, 36, 236, 0.8);
+      transform: translateY(-1px);
+    }
+
     .filter-btn.active {
-      border-color: var(--molten);
+      border-color: var(--gold);
       color: var(--bone);
-      background: rgba(212, 175, 55, 0.15);
+      background: rgba(212, 175, 55, 0.2);
+      box-shadow: 0 0 14px rgba(212, 175, 55, 0.35);
     }
 
     .search-box {
@@ -444,7 +762,7 @@
     }
 
     .search-box:focus {
-      border-color: var(--molten);
+      border-color: var(--gold);
     }
 
     .projects-grid {
@@ -476,7 +794,7 @@
       padding: 1px;
       background: radial-gradient(
         320px circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
-        rgba(212, 175, 55, 0.4),
+        rgba(212, 175, 55, 0.35),
         transparent 70%
       );
       -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -498,7 +816,7 @@
       left: 0;
       right: 0;
       height: 2px;
-      background: var(--molten);
+      background: var(--gold);
       transform: scaleX(0);
       transform-origin: left;
       transition: transform 0.35s ease;
@@ -506,8 +824,8 @@
 
     .project-card:hover {
       transform: translateY(-4px);
-      border-color: var(--molten);
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+      border-color: var(--gold);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
     }
 
     .project-card:hover::before {
@@ -515,8 +833,8 @@
     }
 
     .project-card.featured {
-      border-color: rgba(212, 175, 55, 0.55);
-      background: linear-gradient(160deg, rgba(212, 175, 55, 0.08) 0%, var(--charcoal) 45%);
+      border-color: rgba(212, 175, 55, 0.45);
+      background: linear-gradient(160deg, rgba(212, 175, 55, 0.06) 0%, var(--charcoal) 45%);
     }
 
     .card-top {
@@ -531,7 +849,7 @@
       font-size: 10px;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--molten);
+      color: var(--gold);
       font-weight: 600;
     }
 
@@ -554,10 +872,19 @@
 
     .project-card h3 {
       font-family: var(--font-display);
-      font-size: 20px;
+      font-style: italic;
       font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 0.06em;
       color: var(--bone);
       margin-bottom: 10px;
+      text-transform: uppercase;
+      transition: color 0.25s, text-shadow 0.25s;
+    }
+
+    .project-card:hover h3 {
+      color: #ffffff;
+      text-shadow: 0 0 14px rgba(168, 36, 236, 0.7);
     }
 
     .project-card p {
@@ -606,20 +933,20 @@
     }
 
     .card-link:hover {
-      border-color: var(--molten);
-      color: var(--molten);
+      border-color: var(--gold);
+      color: var(--gold);
     }
 
     .card-link.primary {
-      background: var(--molten);
+      background: var(--gold);
       color: #111116 !important;
-      border-color: var(--molten);
+      border-color: var(--gold);
       font-weight: 600;
     }
 
     .card-link.primary:hover {
-      background: var(--molten-pale);
-      border-color: var(--molten-pale);
+      background: var(--gold-pale);
+      border-color: var(--gold-pale);
     }
 
     /* Scene 3: Upgraded Operation Leviathan 3D Showcase */
@@ -680,14 +1007,14 @@
     }
 
     .stage-hud-badge {
-      background: rgba(10, 10, 10, 0.75);
+      background: rgba(17, 17, 22, 0.85);
       border: 1px solid var(--steel);
       border-radius: 3px;
       padding: 5px 10px;
       font-size: 10px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--molten);
+      color: var(--gold);
       display: flex;
       align-items: center;
       gap: 6px;
@@ -713,24 +1040,36 @@
     }
 
     .stage-mode-btn {
-      background: rgba(16, 16, 16, 0.85);
+      background: rgba(22, 22, 30, 0.88);
       backdrop-filter: blur(8px);
-      border: 1px solid var(--steel);
+      border: 1px solid rgba(255, 255, 255, 0.18);
       border-radius: 3px;
-      padding: 6px 12px;
-      font-family: var(--font-mono);
-      font-size: 10px;
+      padding: 7px 14px;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 700;
+      font-size: 11px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--text-dim);
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.25s ease;
     }
 
-    .stage-mode-btn:hover, .stage-mode-btn.active {
-      border-color: var(--molten);
+    .stage-mode-btn:hover {
+      border-color: var(--purple-brand);
+      color: #ffffff;
+      background: rgba(168, 36, 236, 0.25);
+      box-shadow: 0 0 16px rgba(168, 36, 236, 0.6);
+      text-shadow: 0 0 8px rgba(168, 36, 236, 0.9);
+      transform: translateY(-1px);
+    }
+
+    .stage-mode-btn.active {
+      border-color: var(--gold);
       color: var(--bone);
-      background: rgba(212, 175, 55, 0.2);
+      background: rgba(212, 175, 55, 0.22);
+      box-shadow: 0 0 14px rgba(212, 175, 55, 0.4);
     }
 
     .leviathan-info-panel {
@@ -746,7 +1085,7 @@
     .leviathan-info-panel h3 {
       font-family: var(--font-display);
       font-size: 26px;
-      color: var(--molten);
+      color: var(--gold);
       margin-bottom: 12px;
     }
 
@@ -773,7 +1112,7 @@
       font-family: var(--font-display);
       font-weight: 800;
       font-size: 22px;
-      color: var(--molten);
+      color: var(--gold);
       line-height: 1.1;
       margin-bottom: 4px;
     }
@@ -814,7 +1153,7 @@
 
     .rack-header {
       padding: 16px 22px;
-      background: #111;
+      background: #15151c;
       border-bottom: 1px solid var(--steel);
       font-family: var(--font-display);
       font-weight: 700;
@@ -870,7 +1209,7 @@
     }
 
     .rack-spec a {
-      color: var(--molten);
+      color: var(--gold);
       text-decoration: none;
     }
 
@@ -882,7 +1221,7 @@
     .command-hud-modal {
       position: fixed;
       inset: 0;
-      background: rgba(8, 8, 8, 0.94);
+      background: rgba(14, 14, 18, 0.94);
       backdrop-filter: blur(24px);
       z-index: 99999;
       display: flex;
@@ -909,12 +1248,12 @@
       border: 1px solid var(--steel-light);
       border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.8), 0 0 40px rgba(212, 175, 55, 0.12);
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.8), 0 0 40px rgba(168, 36, 236, 0.15);
     }
 
     .hud-topbar {
       padding: 16px 24px;
-      background: #111;
+      background: #14141b;
       border-bottom: 1px solid var(--steel);
       display: flex;
       justify-content: space-between;
@@ -937,7 +1276,7 @@
 
     .hud-clock-ticker {
       font-size: 11px;
-      color: var(--molten);
+      color: var(--gold);
       letter-spacing: 0.1em;
     }
 
@@ -956,13 +1295,13 @@
     }
 
     .hud-close-btn:hover {
-      border-color: var(--molten);
-      color: var(--molten);
+      border-color: var(--gold);
+      color: var(--gold);
     }
 
     .hud-search-section {
       padding: 20px 24px 14px;
-      background: #141414;
+      background: #16161e;
       border-bottom: 1px solid var(--steel);
       display: flex;
       flex-direction: column;
@@ -977,7 +1316,7 @@
 
     .hud-search-input {
       width: 100%;
-      background: #0d0d0d;
+      background: #101015;
       border: 1px solid var(--steel-light);
       border-radius: 5px;
       padding: 14px 18px 14px 44px;
@@ -989,14 +1328,14 @@
     }
 
     .hud-search-input:focus {
-      border-color: var(--molten);
-      box-shadow: 0 0 12px rgba(212, 175, 55, 0.25);
+      border-color: var(--gold);
+      box-shadow: 0 0 12px var(--gold-glow);
     }
 
     .hud-search-icon {
       position: absolute;
       left: 16px;
-      color: var(--molten);
+      color: var(--gold);
       font-size: 16px;
       pointer-events: none;
     }
@@ -1008,22 +1347,34 @@
     }
 
     .hud-chip {
-      background: #1c1c1c;
-      border: 1px solid var(--steel);
+      background: #1e1e28;
+      border: 1px solid rgba(255, 255, 255, 0.15);
       color: var(--text-dim);
-      padding: 6px 12px;
+      padding: 6px 14px;
       border-radius: 3px;
+      font-family: var(--font-mrvh);
       font-size: 11px;
+      font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.12em;
       cursor: pointer;
-      transition: all 0.15s;
+      transition: all 0.2s ease;
     }
 
-    .hud-chip:hover, .hud-chip.active {
-      border-color: var(--molten);
+    .hud-chip:hover {
+      border-color: var(--purple-brand);
+      color: #ffffff;
+      background: rgba(168, 36, 236, 0.25);
+      box-shadow: 0 0 16px rgba(168, 36, 236, 0.5);
+      text-shadow: 0 0 8px rgba(168, 36, 236, 0.8);
+      transform: translateY(-1px);
+    }
+
+    .hud-chip.active {
+      border-color: var(--gold);
       color: var(--bone);
-      background: rgba(212, 175, 55, 0.18);
+      background: rgba(212, 175, 55, 0.2);
+      box-shadow: 0 0 12px rgba(212, 175, 55, 0.35);
     }
 
     .hud-matrix-body {
@@ -1036,7 +1387,7 @@
     }
 
     .hud-matrix-item {
-      background: #0f0f0f;
+      background: #131319;
       border: 1px solid var(--steel);
       border-radius: 4px;
       padding: 16px;
@@ -1048,14 +1399,14 @@
     }
 
     .hud-matrix-item:hover {
-      border-color: var(--molten);
-      background: #161616;
+      border-color: var(--gold);
+      background: #1b1b24;
       transform: translateY(-2px);
     }
 
     .hud-matrix-item .node-id {
       font-size: 10px;
-      color: var(--molten);
+      color: var(--gold);
       letter-spacing: 0.14em;
       margin-bottom: 6px;
     }
@@ -1087,7 +1438,7 @@
 
     .hud-telemetry-drawer {
       padding: 14px 24px;
-      background: #101010;
+      background: #131319;
       border-top: 1px solid var(--steel);
       display: flex;
       flex-wrap: wrap;
@@ -1125,223 +1476,554 @@
       color: var(--text-dim);
       font-size: 12px;
     }
-
-
-    /* Sovereign Standalone Monogram in Navbar */
-    .brand-lockup {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-      height: 48px;
-    }
-
-    .nav-standalone-monogram {
-      height: 40px;
-      width: auto;
-      object-fit: contain;
-      filter: drop-shadow(0 0 12px rgba(168, 36, 236, 0.5));
-      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
-    }
-
-    .brand-lockup:hover .nav-standalone-monogram {
-      transform: scale(1.12) rotate(-3deg);
-      filter: drop-shadow(0 0 20px rgba(168, 36, 236, 0.9));
-    }
-
-    .nav-brand-code {
-      font-family: var(--font-display);
-      font-weight: 800;
-      font-size: 15px;
-      letter-spacing: 0.18em;
-      color: var(--bone);
-      transition: color 0.2s;
-    }
-
-    .brand-lockup:hover .nav-brand-code {
-      color: var(--purple-brand);
-    }
-
-    /* Sovereign 3D Monogram Hero Stage */
-    .hero-brand-stage {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 32px;
-      position: relative;
-    }
-
-    .hero-monogram-container {
-      position: relative;
-      width: 260px;
-      height: 270px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 20px;
-      transition: transform 0.3s ease;
-    }
-
-    .hero-monogram-container:hover {
-      transform: translateY(-4px) scale(1.02);
-    }
-
-    .hero-monogram-img {
-      position: absolute;
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-      opacity: 0;
-      transform: scale(0.92);
-      transition: opacity 0.35s ease, transform 0.35s ease, filter 0.35s ease;
-      pointer-events: none;
-    }
-
-    .hero-monogram-img.active {
-      opacity: 1;
-      transform: scale(1);
-      pointer-events: auto;
-    }
-
-    .hero-title {
-      font-family: var(--font-display);
-      font-weight: 800;
-      font-size: clamp(36px, 5.5vw, 64px);
-      letter-spacing: -0.02em;
-      color: var(--bone);
-      line-height: 1.05;
-      margin-bottom: 12px;
-      text-transform: uppercase;
-      background: linear-gradient(180deg, #ffffff 30%, #9a9892 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    /* MRVH Rebrand Styles */
-    :root {
-      --purple-brand: #a824ec;
-      --purple-glow: rgba(168, 36, 236, 0.45);
-      --purple-deep: #581c87;
-      --cyan-glitch: #00ffff;
-      --cyan-glow: rgba(0, 255, 255, 0.35);
-      --magenta-glitch: #ff00ff;
-    }
-
-    .brand-lockup {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-      height: 46px;
-    }
-
-    .nav-logo-monogram {
-      height: 38px;
-      width: auto;
-      filter: drop-shadow(0 0 10px var(--purple-glow));
-      transition: transform 0.25s ease, filter 0.25s ease;
-    }
-
-    .brand-lockup:hover .nav-logo-monogram {
-      transform: scale(1.08) rotate(-3deg);
-      filter: drop-shadow(0 0 18px rgba(168, 36, 236, 0.85));
-    }
-
-    .nav-logo-wordmark {
-      height: 22px;
-      width: auto;
-      filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.35));
-    }
-
-    /* Hero Rebrand Centerpiece */
-    .hero-brand-stage {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 28px;
-      position: relative;
-    }
-
-    .hero-monogram-container {
-      position: relative;
-      width: 220px;
-      height: 230px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 18px;
-    }
-
-    .hero-monogram-img {
-      position: absolute;
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-      opacity: 0;
-      transform: scale(0.92);
-      transition: opacity 0.35s ease, transform 0.35s ease, filter 0.35s ease;
-      pointer-events: none;
-    }
-
-    .hero-monogram-img.active {
-      opacity: 1;
-      transform: scale(1);
-      pointer-events: auto;
-    }
-
-    .hero-monogram-img.purple-glow {
-      filter: drop-shadow(0 0 32px rgba(168, 36, 236, 0.65)) drop-shadow(0 0 12px rgba(168, 36, 236, 0.9));
-    }
-
-    .hero-monogram-img.wireframe-glow {
-      filter: drop-shadow(0 0 24px rgba(255, 255, 255, 0.5)) drop-shadow(0 0 40px rgba(0, 255, 255, 0.25));
-    }
-
-    .hero-monogram-img.glitch-glow {
-      filter: drop-shadow(-3px 0 12px rgba(255, 0, 255, 0.7)) drop-shadow(3px 0 12px rgba(0, 255, 255, 0.7));
-    }
-
-    .hero-wordmark-container {
-      max-width: 440px;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      margin-bottom: 14px;
-    }
-
-    .hero-wordmark-img {
-      width: 100%;
-      max-width: 360px;
-      height: auto;
-      filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.55));
-    }
-
-    .hero-brand-variants {
-      display: flex;
-      gap: 8px;
-      margin-top: 10px;
-      margin-bottom: 14px;
-    }
-
-    .variant-chip {
-      background: rgba(18, 18, 24, 0.85);
-      border: 1px solid var(--steel);
-      border-radius: 3px;
-      padding: 4px 10px;
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+  
+    .font-switch-btn {
+      background: #171822;
+      border: 1px solid rgba(255, 255, 255, 0.14);
       color: var(--text-dim);
+      padding: 5px 12px;
+      border-radius: 3px;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
       cursor: pointer;
       transition: all 0.2s ease;
     }
 
-    .variant-chip:hover, .variant-chip.active {
+    .font-switch-btn:hover {
       border-color: var(--purple-brand);
       color: #fff;
-      background: rgba(168, 36, 236, 0.22);
-      box-shadow: 0 0 12px rgba(168, 36, 236, 0.35);
+      background: rgba(168, 36, 236, 0.25);
+      box-shadow: 0 0 14px var(--purple-glow);
+    }
+
+    .font-switch-btn.active {
+      border-color: var(--gold);
+      color: var(--bone);
+      background: rgba(212, 175, 55, 0.22);
+      box-shadow: 0 0 12px rgba(212, 175, 55, 0.35);
+    }
+
+    /* Ambient Swarm Navigation Trigger */
+    .swarm-nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(168, 36, 236, 0.12);
+      border: 1px solid rgba(168, 36, 236, 0.45);
+      border-radius: 4px;
+      padding: 6px 12px;
+      color: var(--bone);
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .swarm-nav-btn:hover {
+      background: rgba(168, 36, 236, 0.35);
+      border-color: var(--purple-brand);
+      box-shadow: 0 0 18px var(--purple-glow);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    /* Floating Ambient Swarm Controller Widget */
+    .swarm-hud-widget {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 998;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+      font-family: var(--font-mono);
+      pointer-events: auto;
+    }
+
+    .swarm-pill-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(15, 16, 22, 0.94);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(212, 175, 55, 0.45);
+      border-radius: 30px;
+      padding: 8px 16px;
+      color: var(--text);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 0 14px rgba(212, 175, 55, 0.2);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .swarm-pill-btn:hover {
+      border-color: var(--purple-brand);
+      color: #fff;
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.8), 0 0 20px var(--purple-glow);
+      transform: translateY(-2px);
+    }
+
+    .swarm-pill-led {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--purple-brand);
+      box-shadow: 0 0 8px var(--purple-brand);
+      animation: pulseLed 2s infinite ease-in-out;
+    }
+
+    /* Swarm Controller Expanded Panel */
+    .swarm-panel {
+      width: 330px;
+      max-width: calc(100vw - 32px);
+      background: rgba(14, 15, 21, 0.96);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(212, 175, 55, 0.45);
+      border-radius: 8px;
+      padding: 18px;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.85), 0 0 30px rgba(168, 36, 236, 0.22);
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+      animation: slideUpPanel 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .swarm-panel.active {
+      display: flex;
+    }
+
+    @keyframes slideUpPanel {
+      from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.97);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .swarm-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .swarm-panel-title {
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .swarm-close-btn {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 3px;
+      color: var(--text-dim);
+      font-size: 11px;
+      cursor: pointer;
+      padding: 2px 7px;
+      transition: all 0.2s;
+    }
+
+    .swarm-close-btn:hover {
+      border-color: #ff4444;
+      color: #fff;
+    }
+
+    .swarm-control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .swarm-group-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .swarm-group-label strong {
+      color: var(--gold);
+    }
+
+    .swarm-slider-track {
+      width: 100%;
+      height: 6px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #1e1f2b;
+      border-radius: 3px;
+      outline: none;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .swarm-slider-track::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 10px var(--gold-glow);
+      cursor: pointer;
+      border: 2px solid #0d0e12;
+      transition: all 0.2s;
+    }
+
+    .swarm-slider-track::-webkit-slider-thumb:hover {
+      transform: scale(1.25);
+      background: var(--purple-brand);
+      box-shadow: 0 0 14px var(--purple-glow);
+    }
+
+    .swarm-btn-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+
+    .swarm-opt-btn {
+      background: #171822;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-dim);
+      padding: 6px 4px;
+      border-radius: 3px;
+      font-size: 9px;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-align: center;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .swarm-opt-btn:hover {
+      border-color: var(--purple-brand);
+      color: #fff;
+      background: rgba(168, 36, 236, 0.2);
+    }
+
+    .swarm-opt-btn.active {
+      border-color: var(--gold);
+      color: var(--bone);
+      background: rgba(212, 175, 55, 0.22);
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+    }
+
+    .swarm-surge-btn {
+      background: linear-gradient(135deg, rgba(168, 36, 236, 0.25) 0%, rgba(212, 175, 55, 0.2) 100%);
+      border: 1px solid var(--purple-brand);
+      color: #ffffff;
+      padding: 8px 14px;
+      border-radius: 4px;
+      font-family: var(--font-display);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.25s;
+    }
+
+    .swarm-surge-btn:hover {
+      background: linear-gradient(135deg, rgba(168, 36, 236, 0.5) 0%, rgba(212, 175, 55, 0.4) 100%);
+      box-shadow: 0 0 20px var(--purple-glow);
+      transform: translateY(-1px);
+    }
+
+    /* Command HUD System Config Bar (Font Engine + Swarm) */
+    .hud-system-config-bar {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 14px 24px;
+      background: #14151d;
+      border-top: 1px solid var(--steel);
+      border-bottom: 1px solid var(--steel);
+      font-size: 11px;
+    }
+
+    .hud-config-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .hud-config-label {
+      color: var(--gold);
+      font-family: var(--font-display);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-style: italic;
+      font-weight: 700;
+      min-width: 170px;
+    }
+
+    .hud-config-chips {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .hud-swarm-type-btn,
+    .hud-surge-trigger-btn {
+      background: #1a1a24;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: var(--text-dim);
+      padding: 5px 12px;
+      border-radius: 3px;
+      font-size: 10px;
+      font-family: var(--font-mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .hud-swarm-type-btn:hover,
+    .hud-surge-trigger-btn:hover {
+      border-color: var(--purple-brand);
+      color: #fff;
+      background: rgba(168, 36, 236, 0.25);
+    }
+
+    .hud-swarm-type-btn.active {
+      border-color: var(--gold);
+      color: var(--bone);
+      background: rgba(212, 175, 55, 0.22);
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+    }
+
+    .hud-surge-trigger-btn {
+      border-color: var(--purple-brand);
+      color: #ffffff;
+      background: rgba(168, 36, 236, 0.2);
+    }
+
+  
+    /* Typographic Juxtaposition: Hyper-Stylized MRVH + Refined Normal VENTURES */
+    .brand-stem {
+      font-family: var(--font-brand-mrvh);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    .brand-normal {
+      font-family: var(--font-brand-normal);
+      font-weight: 400;
+      font-style: normal !important;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      display: inline-block;
+      opacity: 0.88;
+      transition: all 0.3s ease;
+    }
+
+    /* Hero Lockup Juxtaposition */
+    .hero-title {
+      font-size: clamp(34px, 5.5vw, 68px);
+      line-height: 1.1;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+    }
+
+    .hero-title .brand-stem {
+      background: linear-gradient(135deg, #ffffff 0%, var(--gold) 45%, var(--purple-brand) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 25px rgba(168, 36, 236, 0.45));
+    }
+
+    .hero-title .brand-normal {
+      color: var(--bone);
+      font-size: 0.48em;
+      letter-spacing: 0.36em;
+      padding-left: 18px;
+      border-left: 2px solid rgba(212, 175, 55, 0.4);
+      transform: translateY(-4px);
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
+    }
+
+    .hero-title:hover .brand-stem {
+      filter: drop-shadow(0 0 40px rgba(168, 36, 236, 0.85)) drop-shadow(0 0 80px rgba(0, 255, 255, 0.35));
+      transform: translateY(-2px);
+    }
+
+    .hero-title:hover .brand-normal {
+      color: #ffffff;
+      border-left-color: var(--purple-brand);
+      letter-spacing: 0.40em;
+      opacity: 1;
+      text-shadow: 0 0 16px rgba(168, 36, 236, 0.6);
+    }
+
+    /* Navbar Lockup Juxtaposition */
+    .nav-brand-code {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-brand-code .brand-stem {
+      font-size: 15px;
+      color: var(--bone);
+      transition: color 0.2s;
+    }
+
+    .nav-brand-code .brand-normal {
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      color: var(--text-dim);
+      padding-left: 8px;
+      border-left: 1px solid rgba(255, 255, 255, 0.2);
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .brand-lockup:hover .nav-brand-code .brand-stem {
+      color: var(--gold);
+    }
+
+    .brand-lockup:hover .nav-brand-code .brand-normal {
+      color: #ffffff;
+      border-left-color: var(--purple-brand);
+    }
+
+  
+    /* Meticulous Brand Lockup: MRVH on top, VENTURES right underneath from R/V gap to H end */
+    .mrvh-stacked-lockup {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-end;
+      position: relative;
+      text-align: right;
+      user-select: none;
+    }
+
+    .lockup-mrvh {
+      font-family: var(--font-brand-mrvh);
+      font-weight: 700;
+      font-size: clamp(48px, 8.5vw, 96px);
+      line-height: 0.95;
+      letter-spacing: 0.04em;
+      background: linear-gradient(135deg, #ffffff 0%, var(--gold) 45%, var(--purple-brand) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 25px rgba(168, 36, 236, 0.45));
+      transition: all 0.3s ease;
+      display: block;
+    }
+
+    .lockup-sub-bar {
+      width: 48%; /* Starts between R and V, extends to outer right edge of H */
+      display: flex;
+      flex-direction: column;
+      margin-top: 6px; /* Right up against the bottom */
+      border-top: 2px solid rgba(212, 175, 55, 0.45);
+      padding-top: 5px;
+      transition: border-color 0.3s ease;
+    }
+
+    .lockup-ventures {
+      font-family: var(--font-brand-normal);
+      font-weight: 600;
+      font-style: normal !important;
+      font-size: clamp(12px, 2vw, 20px);
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--bone);
+      text-align: right;
+      padding-right: 0.08em;
+      opacity: 0.9;
+      transition: all 0.3s ease;
+    }
+
+    .mrvh-stacked-lockup:hover .lockup-mrvh {
+      filter: drop-shadow(0 0 40px rgba(168, 36, 236, 0.85)) drop-shadow(0 0 80px rgba(0, 255, 255, 0.35));
+      transform: translateY(-2px);
+    }
+
+    .mrvh-stacked-lockup:hover .lockup-sub-bar {
+      border-top-color: var(--purple-brand);
+    }
+
+    .mrvh-stacked-lockup:hover .lockup-ventures {
+      color: #ffffff;
+      letter-spacing: 0.42em;
+      text-shadow: 0 0 14px rgba(168, 36, 236, 0.7);
+    }
+
+    /* Navbar Stacked Lockup */
+    .nav-stacked-lockup {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      text-align: right;
+      line-height: 1;
+    }
+
+    .nav-mrvh {
+      font-family: var(--font-brand-mrvh);
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--bone);
+      transition: color 0.2s;
+    }
+
+    .nav-ventures {
+      font-family: var(--font-brand-normal);
+      font-size: 7.5px;
+      font-weight: 600;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 3px;
+      width: 52%;
+      border-top: 1px solid rgba(212, 175, 55, 0.35);
+      padding-top: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .brand-lockup:hover .nav-mrvh {
+      color: var(--gold);
+    }
+
+    .brand-lockup:hover .nav-ventures {
+      color: #ffffff;
+      border-top-color: var(--purple-brand);
     }
 
   </style>
@@ -1355,10 +2037,18 @@
   <header class="top-nav">
     <a href="#top" class="brand-lockup" aria-label="MRVH Home">
       <img src="/assets/branding/mrvh-monogram-purple.png" alt="MRVH 3D Monogram" class="nav-standalone-monogram">
-      <span class="nav-brand-code">MRVH</span>
+      <div class="nav-stacked-lockup">
+        <span class="nav-mrvh">MRVH</span>
+        <span class="nav-ventures">VENTURES</span>
+      </div>
     </a>
 
-    <div style="display: flex; align-items: center; gap: 14px;">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <button class="swarm-nav-btn" id="swarmNavToggleBtn" aria-label="Toggle Ambient 3D Swarm Controls">
+        <span class="swarm-pill-led"></span>
+        <span>3D SWARM</span>
+      </button>
+
       <button class="hud-trigger-btn" id="hudTriggerBtn" aria-label="Open Tactical Command HUD">
         <span class="hud-led"></span>
         <span>COMMAND HUD</span>
@@ -1380,38 +2070,49 @@
     </nav>
   </header>
 
+  <!-- Full-Viewport Ambient 3D Monogram Swarm Canvas -->
+  <canvas id="ambientSwarmCanvas" class="ambient-swarm-canvas" aria-hidden="true"></canvas>
+
   <!-- Scene 1: Hero -->
   <section class="scene-hero" id="top">
-    <canvas id="forgeParticles" class="forge-canvas"></canvas>
     <div class="hero-content">
+
+      <!-- Sovereign 3D Monogram: Wireframe Resting -> Hover Power-Up Purple -> Click Glitch Overdrive -->
       <div class="hero-brand-stage">
-        <!-- Standalone 3D Isometric Monogram Sculpture -->
-        <div class="hero-monogram-container">
-          <img src="/assets/branding/mrvh-monogram-purple.png" alt="MRVH 3D Isometric Monogram" class="hero-monogram-img purple-glow active" id="heroBrandPurple">
-          <img src="/assets/branding/mrvh-monogram-wireframe.png" alt="MRVH Wireframe Monogram" class="hero-monogram-img wireframe-glow" id="heroBrandWire">
-          <img src="/assets/branding/mrvh-industries-rgb-glitch.png" alt="MRVH RGB Glitch" class="hero-monogram-img glitch-glow" id="heroBrandGlitch">
+        <div class="hero-monogram-container" id="heroMonogramContainer" role="button" aria-label="MRVH Monogram - Hover to Energize, Click for Glitch Overdrive" tabindex="0">
+          <img src="/assets/branding/mrvh-monogram-wireframe.png" alt="MRVH Wireframe Monogram" class="hero-monogram-layer wireframe-layer" id="monogramWire">
+          <img src="/assets/branding/mrvh-monogram-purple.png" alt="MRVH 3D Purple Monogram" class="hero-monogram-layer purple-layer" id="monogramPurple">
+          <img src="/assets/branding/mrvh-monogram-glitch.png" alt="MRVH Glitch Overdrive Monogram" class="hero-monogram-layer glitch-layer" id="monogramGlitch">
+          <div class="monogram-reactor-aura"></div>
         </div>
 
-        <!-- Standalone 3D Variant Switcher -->
-        <div class="hero-brand-variants">
-          <button class="variant-chip active" data-v="purple">3D PURPLE</button>
-          <button class="variant-chip" data-v="wire">WIREFRAME</button>
-          <button class="variant-chip" data-v="glitch">RGB GLITCH</button>
+        <div class="monogram-hud-status" id="monogramStatus">
+          <span class="status-dot"></span>
+          <span class="status-text">HOVER TO ENERGIZE · CLICK FOR OVERDRIVE</span>
         </div>
 
-        <!-- Independent Entity Stature -->
-        <h1 class="hero-title">MRVH VENTURES</h1>
+        <h1 class="hero-title">
+          <div class="mrvh-stacked-lockup" id="heroBrandLockup">
+            <span class="lockup-mrvh">MRVH</span>
+            <div class="lockup-sub-bar">
+              <span class="lockup-ventures">VENTURES</span>
+            </div>
+          </div>
+        </h1>
       </div>
-      <p class="tagline">MRVH VENTURES // FORGED IN CODE · SYSTEMS ARCHITECTURE · COMMAND DECK</p>
+
+      <p class="tagline">FORGED IN CODE · SYSTEMS ARCHITECTURE · COMMAND DECK</p>
       <p class="hero-sub">
         Off-grid mobile energy engineering, autonomous multi-agent systems, client-side privacy tools, additive manufacturing, and quantitative market telemetry. Built and operated by Mr. vH.
       </p>
+
       <div class="hero-stats-bar">
         <div class="stat-pill"><span class="dot"></span><strong>14+</strong> Active Ventures & Tools</div>
         <div class="stat-pill"><span class="dot"></span><strong>48V / 3.6kW+</strong> Alfa See Ya Micro-Grid</div>
         <div class="stat-pill"><span class="dot"></span><strong>590+</strong> Unified Agent Skills & MCPs</div>
         <div class="stat-pill"><span class="dot"></span><strong>Bambu P1S</strong> Additive Fab Hub</div>
       </div>
+
       <div class="hero-actions">
         <a href="#projects" class="btn-primary">Explore All Projects ↓</a>
         <button class="btn-secondary" onclick="window.MRVH_HUD.open()">Launch Command HUD ↗</button>
@@ -1455,7 +2156,7 @@
           </div>
         </div>
         <div class="card-actions">
-          <a href="https://wilhewonthe.github.io/leviathan/" target="_blank" class="card-link primary">Launch 3D Panel ↗</a>
+          <a href="/projects/leviathan/" class="card-link primary">Open Dossier & 3D Lab ↗</a>
           <a href="https://wilhewonthe.github.io/leviathan/?photoreal=1" target="_blank" class="card-link">Photoreal Mode ↗</a>
           <a href="https://github.com/wilhewonthe/leviathan" target="_blank" class="card-link">GitHub Repo</a>
         </div>
@@ -1797,7 +2498,7 @@
         </div>
 
         <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px;">
-          <a href="https://wilhewonthe.github.io/leviathan/" target="_blank" class="btn-primary">Launch Full 3D Twin ↗</a>
+          <a href="/projects/leviathan/" class="btn-primary">Launch Dedicated Dossier & 3D Lab ↗</a>
           <a href="https://wilhewonthe.github.io/tiamat/" target="_blank" class="btn-secondary">View Power Ledger ↗</a>
         </div>
       </div>
@@ -1874,8 +2575,8 @@
       <div class="hud-topbar">
         <div class="hud-title-lockup">
           <span class="hud-led" style="width: 8px; height: 8px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 8px var(--teal);"></span>
-          <span class="title">MR. vH // TACTICAL COMMAND HUD</span>
-          <span style="font-size: 10px; color: var(--text-dim); background: #1a1a1a; padding: 2px 8px; border-radius: 3px;">SYSTEM MATRIX v2.4</span>
+          <span class="title">MRVH // TACTICAL COMMAND HUD</span>
+          <span style="font-size: 10px; color: var(--text-dim); background: #1c1c26; padding: 2px 8px; border-radius: 3px;">SYSTEM MATRIX v2.4</span>
         </div>
         <div style="display: flex; align-items: center; gap: 16px;">
           <div class="hud-clock-ticker" id="hudClock">UTC --:--:-- | PST --:--:--</div>
@@ -1904,6 +2605,33 @@
         <!-- Rendered dynamically via JS for ultra-fast filtering -->
       </div>
 
+      <!-- Tactical System Configuration: Type Engine & Swarm Controls -->
+      <div class="hud-system-config-bar">
+        <!-- Font Engine Selector -->
+        <div class="hud-config-group">
+          <span class="hud-config-label">AEROSPACE FONT:</span>
+          <div class="hud-config-chips">
+            <button class="font-switch-btn active" data-font="'Ethnocentric', sans-serif">ETHNOCENTRIC</button>
+            <button class="font-switch-btn" data-font="'Paladins', sans-serif">PALADINS</button>
+            <button class="font-switch-btn" data-font="'Airstrike', sans-serif">AIRSTRIKE</button>
+            <button class="font-switch-btn" data-font="'Nasalization', sans-serif">NASALIZATION</button>
+            <button class="font-switch-btn" data-font="'Space Grotesk', sans-serif">SPACE GROTESK</button>
+          </div>
+        </div>
+
+        <!-- Swarm Telemetry Control -->
+        <div class="hud-config-group">
+          <span class="hud-config-label">3D SWARM ENGINE:</span>
+          <div class="hud-config-chips">
+            <button class="hud-swarm-type-btn active" data-swarm-type="mixed">MIXED</button>
+            <button class="hud-swarm-type-btn" data-swarm-type="wireframe">WHITE WIRE</button>
+            <button class="hud-swarm-type-btn" data-swarm-type="purple">3D PURPLE</button>
+            <button class="hud-swarm-type-btn" data-swarm-type="glitch">RGB GLITCH</button>
+            <button class="hud-surge-trigger-btn" id="hudSurgeBtn">⚡ HYPERSURGE</button>
+          </div>
+        </div>
+      </div>
+
       <!-- Real-Time Telemetry Footer -->
       <div class="hud-telemetry-drawer">
         <div class="hud-telemetry-group">
@@ -1921,7 +2649,7 @@
           </div>
         </div>
         <div class="hud-telemetry-group">
-          <span style="color: var(--molten);">HERMES: ONLINE (127.0.0.1:9119)</span>
+          <span style="color: var(--gold);">HERMES: ONLINE (127.0.0.1:9119)</span>
           <span>·</span>
           <span style="color: var(--teal);">OLLAMA: READY (127.0.0.1:11434)</span>
         </div>
@@ -1929,13 +2657,80 @@
     </div>
   </div>
 
+  <!-- Floating Ambient 3D Swarm Controller HUD -->
+  <aside class="swarm-hud-widget" id="swarmHudWidget" aria-label="Ambient Background Swarm Controls">
+    <!-- Collapsed Pill -->
+    <button class="swarm-pill-btn" id="swarmHudPillBtn" aria-expanded="false" aria-controls="swarmHudPanel">
+      <span class="swarm-pill-led"></span>
+      <span>SWARM: <strong id="pillCount">14</strong> · <strong id="pillType">MIXED</strong></span>
+      <span style="font-size: 13px; opacity: 0.8;">⚙</span>
+    </button>
+
+    <!-- Expanded Tactical Panel -->
+    <div class="swarm-panel" id="swarmHudPanel" role="region" aria-label="Swarm Control Matrix">
+      <div class="swarm-panel-header">
+        <div class="swarm-panel-title">
+          <span style="color: var(--teal);">⚡</span>
+          <span>3D SWARM CONTROLS</span>
+        </div>
+        <button class="swarm-close-btn" id="swarmCloseBtn" aria-label="Minimize Swarm Controls">✕</button>
+      </div>
+
+      <!-- Count Slider -->
+      <div class="swarm-control-group">
+        <div class="swarm-group-label">
+          <span>DENSITY (1–50)</span>
+          <span>COUNT: <strong id="swarmCountDisplay">14</strong></span>
+        </div>
+        <input type="range" min="1" max="50" value="14" class="swarm-slider-track" id="swarmSlider" aria-label="Swarm Particle Count">
+        <div style="display: flex; justify-content: space-between; gap: 4px; margin-top: 4px;">
+          <button class="swarm-opt-btn swarm-preset-btn" data-preset="5">5 CALM</button>
+          <button class="swarm-opt-btn swarm-preset-btn" data-preset="14">14 OPT</button>
+          <button class="swarm-opt-btn swarm-preset-btn" data-preset="28">28 DENSE</button>
+          <button class="swarm-opt-btn swarm-preset-btn" data-preset="50">50 MAX</button>
+        </div>
+      </div>
+
+      <!-- Variant Selector -->
+      <div class="swarm-control-group">
+        <div class="swarm-group-label">
+          <span>MONOGRAM VARIANT</span>
+        </div>
+        <div class="swarm-btn-row">
+          <button class="swarm-opt-btn swarm-type-btn" data-swarm-type="wireframe">WHITE</button>
+          <button class="swarm-opt-btn swarm-type-btn" data-swarm-type="purple">PURPLE</button>
+          <button class="swarm-opt-btn swarm-type-btn" data-swarm-type="glitch">GLITCH</button>
+          <button class="swarm-opt-btn swarm-type-btn active" data-swarm-type="mixed">MIXED</button>
+        </div>
+      </div>
+
+      <!-- Speed Control -->
+      <div class="swarm-control-group">
+        <div class="swarm-group-label">
+          <span>DRIFT VELOCITY</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;">
+          <button class="swarm-opt-btn swarm-speed-btn" data-speed="0.5">0.5x DRIFT</button>
+          <button class="swarm-opt-btn swarm-speed-btn active" data-speed="1.0">1.0x NORMAL</button>
+          <button class="swarm-opt-btn swarm-speed-btn" data-speed="2.0">2.0x HYPER</button>
+        </div>
+      </div>
+
+      <!-- Hypersurge Trigger -->
+      <button class="swarm-surge-btn" id="swarmSurgeBtn" aria-label="Trigger Hypersurge">
+        <span>⚡</span>
+        <span>TRIGGER HYPERSURGE</span>
+      </button>
+    </div>
+  </aside>
+
   <footer>
-    <p><strong>MR. vH · FORGED IN CODE · PANIC RESPONSIBLY™</strong> — Built & Operated by Mr. vH (<a href="https://github.com/wilhewonthe" target="_blank" style="color: var(--molten); text-decoration: none;">@wilhewonthe</a>)</p>
+    <p><strong>MRVH · FORGED IN CODE · PANIC RESPONSIBLY™</strong> — Built & Operated by Mr. vH (<a href="https://github.com/wilhewonthe" target="_blank" style="color: var(--gold); text-decoration: none;">@wilhewonthe</a>)</p>
   </footer>
 
   <script>
     /* =====================================================================
-       MR. vH PROCEDURAL AUDIO ENGINE (Web Audio API)
+       MRVH PROCEDURAL AUDIO ENGINE (Web Audio API)
        ===================================================================== */
     class TacticalAudioEngine {
       constructor() {
@@ -2005,6 +2800,104 @@
         osc.stop(this.ctx.currentTime + 0.25);
       }
 
+      playPowerUp(duration = 0.42, maxGain = 0.12) {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+
+        // 1. Rising Capacitor / Reactor Whine
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        const filter = this.ctx.createBiquadFilter();
+
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(110, now);
+        osc.frequency.exponentialRampToValueAtTime(880, now + 0.42);
+
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(220, now);
+        filter.frequency.exponentialRampToValueAtTime(1760, now + 0.42);
+        filter.Q.setValueAtTime(4.5, now);
+
+        gain.gain.setValueAtTime(0.01, now);
+        gain.gain.linearRampToValueAtTime(0.12, now + 0.15);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.48);
+
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(this.ctx.destination);
+
+        osc.start(now);
+        osc.stop(now + 0.5);
+
+        // 2. Sub-bass Reactor Resonance
+        const subOsc = this.ctx.createOscillator();
+        const subGain = this.ctx.createGain();
+        subOsc.type = 'sine';
+        subOsc.frequency.setValueAtTime(55, now);
+        subOsc.frequency.linearRampToValueAtTime(110, now + 0.35);
+
+        subGain.gain.setValueAtTime(0.14, now);
+        subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+
+        subOsc.connect(subGain);
+        subGain.connect(this.ctx.destination);
+        subOsc.start(now);
+        subOsc.stop(now + 0.48);
+      }
+
+      playPowerDown() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(440, now);
+        osc.frequency.exponentialRampToValueAtTime(70, now + 0.28);
+
+        gain.gain.setValueAtTime(0.08, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.32);
+      }
+
+      playGlitch() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+
+        // Rapid digital glitch burst
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sawtooth';
+
+        // Frequency hopping
+        osc.frequency.setValueAtTime(140, now);
+        osc.frequency.setValueAtTime(980, now + 0.04);
+        osc.frequency.setValueAtTime(320, now + 0.08);
+        osc.frequency.setValueAtTime(1640, now + 0.12);
+        osc.frequency.setValueAtTime(220, now + 0.16);
+        osc.frequency.setValueAtTime(80, now + 0.22);
+
+        gain.gain.setValueAtTime(0.18, now);
+        gain.gain.setValueAtTime(0.08, now + 0.06);
+        gain.gain.setValueAtTime(0.16, now + 0.12);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.26);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.28);
+      }
+
       toggle() {
         this.enabled = !this.enabled;
         localStorage.setItem('mrvh_audio', this.enabled);
@@ -2034,61 +2927,506 @@
     document.getElementById('audioToggleBtn')?.addEventListener('click', () => window.MRVH_Audio.toggle());
 
     /* =====================================================================
-       AMBIENT FORGE PARTICLE FIELD (HTML5 Canvas)
+       INTERACTIVE MONOGRAM (Hover Power-Up -> Click Cyber Glitch)
        ===================================================================== */
-    const forgeCanvas = document.getElementById('forgeParticles');
-    if (forgeCanvas) {
-      const ctx = forgeCanvas.getContext('2d');
-      let width, height;
-      const sparks = [];
-      const sparkCount = 38;
+    (function initMonogramInteraction() {
+      const monogramBox = document.getElementById('heroMonogramContainer');
+      const statusText = document.getElementById('monogramStatus');
+      if (!monogramBox) return;
 
-      function resize() {
-        width = forgeCanvas.width = forgeCanvas.offsetWidth;
-        height = forgeCanvas.height = forgeCanvas.offsetHeight;
+      monogramBox.addEventListener('mouseenter', () => {
+        if (!monogramBox.classList.contains('glitch-mode')) {
+          window.MRVH_Audio.playPowerUp();
+          if (statusText) statusText.querySelector('.status-text').textContent = 'MRVH CORE: FULLY ENERGIZED (48V)';
+        }
+      });
+
+      monogramBox.addEventListener('mouseleave', () => {
+        if (!monogramBox.classList.contains('glitch-mode')) {
+          window.MRVH_Audio.playPowerDown();
+          if (statusText) statusText.querySelector('.status-text').textContent = 'HOVER TO ENERGIZE · CLICK FOR OVERDRIVE';
+        }
+      });
+
+      monogramBox.addEventListener('click', () => {
+        const isGlitch = monogramBox.classList.toggle('glitch-mode');
+        if (isGlitch) {
+          window.MRVH_Audio.playGlitch();
+          if (statusText) statusText.querySelector('.status-text').textContent = '⚡ OVERDRIVE ACTIVE // CYBER GLITCH MODE [CLICK TO RESET]';
+        } else {
+          window.MRVH_Audio.playPowerDown();
+          if (statusText) statusText.querySelector('.status-text').textContent = 'HOVER TO ENERGIZE · CLICK FOR OVERDRIVE';
+        }
+      });
+    })();
+
+    /* =====================================================================
+       MRVH AMBIENT 3D MONOGRAM SWARM ENGINE
+       Swirling, twirling 3D monograms (White, Purple, Glitch, Mixed)
+       with continuous full-viewport depth, sporadic hypersonic jumps,
+       and real-time density/type telemetry controls (1 - 50 units).
+       ===================================================================== */
+    class MonogramParticle {
+      constructor(engine, initialSpawn = false) {
+        this.engine = engine;
+        this.reset(initialSpawn);
       }
-      window.addEventListener('resize', resize, { passive: true });
-      resize();
 
-      for (let i = 0; i < sparkCount; i++) {
-        sparks.push({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          vx: (Math.random() - 0.5) * 0.4,
-          vy: - (0.4 + Math.random() * 0.8),
-          size: 1 + Math.random() * 2,
-          alpha: 0.1 + Math.random() * 0.7,
-          decay: 0.003 + Math.random() * 0.006,
-          hue: 42 + Math.random() * 12 // Molten orange/gold hue
+      reset(randomY = false) {
+        const w = this.engine.width;
+        const h = this.engine.height;
+
+        this.x = Math.random() * w;
+        this.y = randomY ? Math.random() * h : (Math.random() < 0.5 ? -60 : h + 60);
+
+        // 3D Depth layer (0.22 = distant background, 1.0 = foreground)
+        this.z = 0.22 + Math.random() * 0.78;
+        this.baseSize = 44 + this.z * 50; // 55px to 94px rendered size
+        this.alpha = 0.16 + this.z * 0.46; // 0.26 to 0.62 opacity
+
+        // Parallax velocity based on depth
+        const speed = (0.35 + Math.random() * 0.65) * this.z * this.engine.speed;
+        const angle = Math.random() * Math.PI * 2;
+        this.vx = Math.cos(angle) * speed;
+        this.vy = Math.sin(angle) * speed;
+
+        // 3D Euler Angles (Roll / Yaw / Pitch)
+        this.roll = Math.random() * Math.PI * 2;
+        this.yaw = Math.random() * Math.PI * 2;
+        this.pitch = Math.random() * Math.PI * 2;
+
+        // Rotational Angular Velocities
+        this.dRoll = (Math.random() - 0.5) * 0.012;
+        this.dYaw = (0.008 + Math.random() * 0.018) * (Math.random() < 0.5 ? 1 : -1);
+        this.dPitch = (Math.random() - 0.5) * 0.01;
+
+        this.type = this.engine.getParticleType();
+
+        // Hypersonic shooting / warp surge state
+        this.isShooting = false;
+        this.shootTimer = 0;
+        this.trail = [];
+        this.maxTrail = 6;
+      }
+
+      triggerShoot(targetAngle = null) {
+        this.isShooting = true;
+        this.shootTimer = 80 + Math.floor(Math.random() * 40);
+        const angle = targetAngle !== null ? targetAngle : (-0.35 + (Math.random() - 0.5) * 0.7);
+        const shootSpeed = (7.0 + Math.random() * 5.0) * this.engine.speed;
+        this.vx = Math.cos(angle) * shootSpeed;
+        this.vy = Math.sin(angle) * shootSpeed;
+        this.dYaw *= 3.5;
+        this.dRoll *= 2.5;
+        this.alpha = Math.min(0.92, this.alpha * 1.6);
+      }
+
+      update(t) {
+        if (!this.isShooting) {
+          // Atmospheric swirl curl physics
+          const swirlFreq = 0.0016;
+          this.vx += Math.sin(this.y * swirlFreq + t * 0.0009) * 0.035 * this.engine.speed;
+          this.vy += Math.cos(this.x * swirlFreq + t * 0.0009) * 0.035 * this.engine.speed;
+          const curSpeed = Math.hypot(this.vx, this.vy);
+          const maxSpeed = 1.65 * this.engine.speed;
+          if (curSpeed > maxSpeed) {
+            this.vx = (this.vx / curSpeed) * maxSpeed;
+            this.vy = (this.vy / curSpeed) * maxSpeed;
+          }
+        } else {
+          // Hypersonic surge update
+          this.shootTimer--;
+          this.trail.push({ x: this.x, y: this.y, roll: this.roll, yaw: this.yaw, pitch: this.pitch, alpha: this.alpha });
+          if (this.trail.length > this.maxTrail) this.trail.shift();
+
+          // Ion plume micro-sparks
+          if (Math.random() < 0.35 && this.engine.sparks.length < 50) {
+            this.engine.sparks.push({
+              x: this.x + (Math.random() - 0.5) * 12,
+              y: this.y + (Math.random() - 0.5) * 12,
+              vx: -this.vx * 0.12 + (Math.random() - 0.5) * 1.5,
+              vy: -this.vy * 0.12 + (Math.random() - 0.5) * 1.5,
+              size: 1.5 + Math.random() * 2.5,
+              alpha: 0.85,
+              decay: 0.035 + Math.random() * 0.02,
+              color: this.type === 'purple' ? '#a824ec' : (this.type === 'glitch' ? '#00ffff' : '#d4af37')
+            });
+          }
+
+          if (this.shootTimer <= 0) {
+            this.isShooting = false;
+            this.trail = [];
+            this.vx *= 0.22;
+            this.vy *= 0.22;
+            this.dYaw /= 3.5;
+            this.dRoll /= 2.5;
+          }
+        }
+
+        this.x += this.vx;
+        this.y += this.vy;
+        this.roll += this.dRoll * this.engine.speed;
+        this.yaw += this.dYaw * this.engine.speed;
+        this.pitch += this.dPitch * this.engine.speed;
+
+        // Viewport boundaries wrap-around
+        const pad = 90;
+        const w = this.engine.width;
+        const h = this.engine.height;
+        if (this.x < -pad) this.x = w + pad;
+        else if (this.x > w + pad) this.x = -pad;
+        if (this.y < -pad) this.y = h + pad;
+        else if (this.y > h + pad) this.y = -pad;
+      }
+
+      draw(ctx) {
+        const img = this.engine.images[this.type];
+        if (!img || !img.complete || img.naturalWidth === 0) return;
+
+        // Render hypersonic ion trail if shooting
+        if (this.isShooting && this.trail.length > 0) {
+          for (let i = 0; i < this.trail.length; i++) {
+            const pt = this.trail[i];
+            const trailAlpha = (i / this.trail.length) * this.alpha * 0.42;
+            this.renderSingle(ctx, img, pt.x, pt.y, pt.roll, pt.yaw, pt.pitch, trailAlpha, 0.9);
+          }
+        }
+        this.renderSingle(ctx, img, this.x, this.y, this.roll, this.yaw, this.pitch, this.alpha, 1.0);
+      }
+
+      renderSingle(ctx, img, x, y, roll, yaw, pitch, alpha, scaleMod) {
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(roll);
+
+        // Mathematical 3D projection: Cosine scaling models real 3D tumble
+        const cosYaw = Math.cos(yaw);
+        const cosPitch = Math.cos(pitch);
+        const aspect = img.naturalWidth / img.naturalHeight;
+        const renderW = this.baseSize * scaleMod;
+        const renderH = (this.baseSize / aspect) * scaleMod;
+
+        const safeSx = Math.abs(cosYaw) < 0.05 ? Math.sign(cosYaw || 1) * 0.05 : cosYaw;
+        const safeSy = Math.abs(cosPitch) < 0.05 ? Math.sign(cosPitch || 1) * 0.05 : cosPitch;
+
+        ctx.scale(safeSx, safeSy);
+        ctx.globalAlpha = Math.max(0.01, Math.min(1.0, alpha));
+
+        if (this.isShooting) {
+          ctx.shadowBlur = 18;
+          ctx.shadowColor = this.type === 'glitch' ? '#00ffff' : (this.type === 'purple' ? '#a824ec' : '#d4af37');
+        } else if (this.z > 0.7) {
+          ctx.shadowBlur = 8;
+          ctx.shadowColor = this.type === 'purple' ? 'rgba(168, 36, 236, 0.4)' : 'rgba(212, 175, 55, 0.3)';
+        }
+
+        ctx.drawImage(img, -renderW / 2, -renderH / 2, renderW, renderH);
+        ctx.restore();
+      }
+    }
+
+    class AmbientSwarmEngine {
+      constructor(canvasId) {
+        this.canvas = document.getElementById(canvasId);
+        if (!this.canvas) return;
+        this.ctx = this.canvas.getContext('2d');
+
+        // Restore user preferences or sensible defaults
+        this.count = parseInt(localStorage.getItem('mrvh_swarm_count') || '14', 10);
+        this.type = localStorage.getItem('mrvh_swarm_type') || 'mixed';
+        this.speed = parseFloat(localStorage.getItem('mrvh_swarm_speed') || '1.0');
+
+        if (isNaN(this.count) || this.count < 1) this.count = 14;
+        if (this.count > 50) this.count = 50;
+
+        // Preload monogram textures
+        this.images = {
+          wireframe: new Image(),
+          purple: new Image(),
+          glitch: new Image()
+        };
+        this.images.wireframe.src = '/assets/branding/mrvh-monogram-wireframe.png';
+        this.images.purple.src = '/assets/branding/mrvh-monogram-purple.png';
+        this.images.glitch.src = '/assets/branding/mrvh-monogram-glitch.png';
+
+        this.particles = [];
+        this.embers = [];
+        this.sparks = [];
+
+        this.nextShootTimer = 180 + Math.floor(Math.random() * 120);
+        this.tick = 0;
+
+        this.handleResize = this.handleResize.bind(this);
+        window.addEventListener('resize', this.handleResize, { passive: true });
+        this.handleResize();
+
+        this.initParticles();
+        this.initEmbers();
+
+        this.animate = this.animate.bind(this);
+        requestAnimationFrame(this.animate);
+
+        window.MRVH_Swarm = this;
+      }
+
+      handleResize() {
+        this.dpr = Math.min(window.devicePixelRatio || 1, 2);
+        this.width = window.innerWidth;
+        this.height = window.innerHeight;
+        this.canvas.width = this.width * this.dpr;
+        this.canvas.height = this.height * this.dpr;
+        this.ctx.scale(this.dpr, this.dpr);
+      }
+
+      getParticleType() {
+        if (this.type === 'mixed') {
+          const r = Math.random();
+          return r < 0.35 ? 'purple' : (r < 0.70 ? 'wireframe' : 'glitch');
+        }
+        return this.type;
+      }
+
+      initParticles() {
+        this.particles = [];
+        for (let i = 0; i < this.count; i++) {
+          this.particles.push(new MonogramParticle(this, true));
+        }
+      }
+
+      initEmbers() {
+        const emberCount = 35;
+        this.embers = [];
+        for (let i = 0; i < emberCount; i++) {
+          this.embers.push({
+            x: Math.random() * this.width,
+            y: Math.random() * this.height,
+            vx: (Math.random() - 0.5) * 0.45,
+            vy: - (0.35 + Math.random() * 0.75),
+            size: 1.2 + Math.random() * 2.2,
+            alpha: 0.15 + Math.random() * 0.7,
+            decay: 0.003 + Math.random() * 0.005,
+            hue: Math.random() < 0.6 ? (42 + Math.random() * 10) : (275 + Math.random() * 25)
+          });
+        }
+      }
+
+      setCount(newCount) {
+        this.count = Math.max(1, Math.min(50, newCount));
+        localStorage.setItem('mrvh_swarm_count', this.count);
+        while (this.particles.length < this.count) {
+          this.particles.push(new MonogramParticle(this, false));
+        }
+        while (this.particles.length > this.count) {
+          this.particles.pop();
+        }
+        this.updateHUDReadouts();
+      }
+
+      setType(newType) {
+        this.type = newType;
+        localStorage.setItem('mrvh_swarm_type', this.type);
+        this.particles.forEach(p => {
+          p.type = this.getParticleType();
         });
+        this.updateHUDReadouts();
       }
 
-      function renderSparks() {
-        ctx.clearRect(0, 0, width, height);
-        for (let i = 0; i < sparks.length; i++) {
-          const s = sparks[i];
+      setSpeed(newSpeed) {
+        this.speed = newSpeed;
+        localStorage.setItem('mrvh_swarm_speed', this.speed);
+        this.updateHUDReadouts();
+      }
+
+      triggerHypersurge(count = 2) {
+        if (this.particles.length === 0) return;
+        const num = Math.min(count, this.particles.length);
+        for (let i = 0; i < num; i++) {
+          const idx = Math.floor(Math.random() * this.particles.length);
+          const angle = (Math.random() < 0.5 ? -0.35 : 0.35) + (Math.random() - 0.5) * 0.6;
+          this.particles[idx].triggerShoot(angle);
+        }
+        if (window.MRVH_Audio) {
+          window.MRVH_Audio.playWarp();
+        }
+      }
+
+      animate(t) {
+        this.tick++;
+        this.ctx.clearRect(0, 0, this.width, this.height);
+
+        // 1. Render Gold & Purple Atmospheric Embers
+        for (let i = 0; i < this.embers.length; i++) {
+          const e = this.embers[i];
+          e.x += e.vx;
+          e.y += e.vy;
+          e.alpha -= e.decay;
+          if (e.y < -15 || e.alpha <= 0) {
+            e.x = Math.random() * this.width;
+            e.y = this.height + 15;
+            e.alpha = 0.2 + Math.random() * 0.75;
+          }
+          this.ctx.beginPath();
+          this.ctx.arc(e.x, e.y, e.size, 0, Math.PI * 2);
+          this.ctx.fillStyle = `hsla(${e.hue}, 95%, 58%, ${e.alpha})`;
+          this.ctx.shadowBlur = 6;
+          this.ctx.shadowColor = `hsla(${e.hue}, 95%, 58%, 0.8)`;
+          this.ctx.fill();
+        }
+
+        // 2. Render Micro-Sparks from Shooting Trails
+        for (let i = this.sparks.length - 1; i >= 0; i--) {
+          const s = this.sparks[i];
           s.x += s.vx;
           s.y += s.vy;
           s.alpha -= s.decay;
-
-          if (s.y < 0 || s.alpha <= 0) {
-            s.x = Math.random() * width;
-            s.y = height + 10;
-            s.alpha = 0.2 + Math.random() * 0.8;
-            s.vy = - (0.4 + Math.random() * 0.8);
+          if (s.alpha <= 0) {
+            this.sparks.splice(i, 1);
+            continue;
           }
-
-          ctx.beginPath();
-          ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
-          ctx.fillStyle = `hsla(${s.hue}, 100%, 55%, ${s.alpha})`;
-          ctx.shadowBlur = 8;
-          ctx.shadowColor = 'rgba(212, 175, 55, 0.6)';
-          ctx.fill();
+          this.ctx.beginPath();
+          this.ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+          this.ctx.fillStyle = s.color;
+          this.ctx.shadowBlur = 4;
+          this.ctx.shadowColor = s.color;
+          this.ctx.globalAlpha = s.alpha;
+          this.ctx.fill();
+          this.ctx.globalAlpha = 1.0;
         }
-        requestAnimationFrame(renderSparks);
+
+        // 3. Sporadic Hypersonic Shooting Jump
+        if (this.tick >= this.nextShootTimer) {
+          this.tick = 0;
+          this.nextShootTimer = 160 + Math.floor(Math.random() * 150);
+          if (this.particles.length > 0) {
+            const p = this.particles[Math.floor(Math.random() * this.particles.length)];
+            if (!p.isShooting) {
+              p.triggerShoot();
+            }
+          }
+        }
+
+        // 4. Update & Render Monogram Particles
+        for (let i = 0; i < this.particles.length; i++) {
+          this.particles[i].update(t);
+          this.particles[i].draw(this.ctx);
+        }
+
+        requestAnimationFrame(this.animate);
       }
-      renderSparks();
+
+      updateHUDReadouts() {
+        const pillCount = document.getElementById('pillCount');
+        if (pillCount) pillCount.textContent = this.count;
+        const pillType = document.getElementById('pillType');
+        if (pillType) pillType.textContent = this.type.toUpperCase();
+
+        const countDisplay = document.getElementById('swarmCountDisplay');
+        if (countDisplay) countDisplay.textContent = this.count;
+        const slider = document.getElementById('swarmSlider');
+        if (slider) slider.value = this.count;
+
+        document.querySelectorAll('.swarm-type-btn, .hud-swarm-type-btn').forEach(b => {
+          b.classList.toggle('active', b.dataset.swarmType === this.type);
+        });
+
+        document.querySelectorAll('.swarm-speed-btn').forEach(b => {
+          b.classList.toggle('active', parseFloat(b.dataset.speed) === this.speed);
+        });
+      }
     }
+
+    // Launch Swarm Engine
+    const mrvhSwarmInstance = new AmbientSwarmEngine('ambientSwarmCanvas');
+
+    // Wire up HUD Controls
+    (function initSwarmHUDControls() {
+      const engine = window.MRVH_Swarm;
+      if (!engine) return;
+
+      const pillBtn = document.getElementById('swarmHudPillBtn');
+      const panel = document.getElementById('swarmHudPanel');
+      const closeBtn = document.getElementById('swarmCloseBtn');
+      const navBtn = document.getElementById('swarmNavToggleBtn');
+      const slider = document.getElementById('swarmSlider');
+      const countDisplay = document.getElementById('swarmCountDisplay');
+      const surgeBtn = document.getElementById('swarmSurgeBtn');
+      const hudSurgeBtn = document.getElementById('hudSurgeBtn');
+
+      function togglePanel(open) {
+        if (!panel) return;
+        const shouldOpen = open !== undefined ? open : !panel.classList.contains('active');
+        panel.classList.toggle('active', shouldOpen);
+        if (pillBtn) pillBtn.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
+        if (window.MRVH_Audio) {
+          if (shouldOpen) window.MRVH_Audio.playPowerUp(0.12, 0.08);
+          else window.MRVH_Audio.playClick();
+        }
+      }
+
+      if (pillBtn) pillBtn.addEventListener('click', (e) => { e.stopPropagation(); togglePanel(); });
+      if (closeBtn) closeBtn.addEventListener('click', (e) => { e.stopPropagation(); togglePanel(false); });
+      if (navBtn) navBtn.addEventListener('click', (e) => { e.stopPropagation(); togglePanel(); });
+
+      // Close panel if clicked outside
+      document.addEventListener('click', (e) => {
+        if (panel && panel.classList.contains('active') && !panel.contains(e.target) && e.target !== pillBtn && !pillBtn.contains(e.target) && e.target !== navBtn && !navBtn.contains(e.target)) {
+          togglePanel(false);
+        }
+      });
+
+      // Density Slider
+      if (slider) {
+        slider.addEventListener('input', (e) => {
+          const val = parseInt(e.target.value, 10);
+          if (countDisplay) countDisplay.textContent = val;
+          engine.setCount(val);
+        });
+        slider.addEventListener('change', () => {
+          if (window.MRVH_Audio) window.MRVH_Audio.playClick();
+        });
+      }
+
+      // Density Presets
+      document.querySelectorAll('.swarm-preset-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const val = parseInt(btn.dataset.preset, 10);
+          engine.setCount(val);
+          if (window.MRVH_Audio) window.MRVH_Audio.playClick();
+        });
+      });
+
+      // Variant Buttons
+      document.querySelectorAll('.swarm-type-btn, .hud-swarm-type-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const t = btn.dataset.swarmType;
+          engine.setType(t);
+          if (window.MRVH_Audio) {
+            if (t === 'glitch') window.MRVH_Audio.playGlitch();
+            else if (t === 'purple') window.MRVH_Audio.playPowerUp(0.18, 0.1);
+            else window.MRVH_Audio.playClick();
+          }
+        });
+      });
+
+      // Speed Buttons
+      document.querySelectorAll('.swarm-speed-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const s = parseFloat(btn.dataset.speed);
+          engine.setSpeed(s);
+          if (window.MRVH_Audio) window.MRVH_Audio.playClick();
+        });
+      });
+
+      // Hypersurge Buttons
+      if (surgeBtn) {
+        surgeBtn.addEventListener('click', () => engine.triggerHypersurge(2));
+      }
+      if (hudSurgeBtn) {
+        hudSurgeBtn.addEventListener('click', () => engine.triggerHypersurge(2));
+      }
+
+      engine.updateHUDReadouts();
+    })();
 
     /* =====================================================================
        OPERATION LEVIATHAN: 3D PROCEDURAL EXPEDITION RV (Three.js)
@@ -2111,7 +3449,7 @@
       const controls = new THREE.OrbitControls(camera, renderer.domElement);
       controls.enableDamping = true;
       controls.dampingFactor = 0.06;
-      controls.maxPolarAngle = Math.PI / 2 - 0.02; // Don't go below ground
+      controls.maxPolarAngle = Math.PI / 2 - 0.02;
       controls.minDistance = 4;
       controls.maxDistance = 22;
 
@@ -2123,12 +3461,12 @@
       dirLight.position.set(12, 18, 10);
       scene.add(dirLight);
 
-      const moltenRimLight = new THREE.DirectionalLight(0xd4af37, 1.8);
-      moltenRimLight.position.set(-10, -4, -10);
-      scene.add(moltenRimLight);
+      const goldRimLight = new THREE.DirectionalLight(0xd4af37, 1.8);
+      goldRimLight.position.set(-10, -4, -10);
+      scene.add(goldRimLight);
 
-      // Ground Grid
-      const grid = new THREE.GridHelper(26, 26, 0xd4af37, 0x1f1f1f);
+      // Ground Grid in Gold
+      const grid = new THREE.GridHelper(26, 26, 0xd4af37, 0x242432);
       grid.position.y = -0.01;
       scene.add(grid);
 
@@ -2138,7 +3476,7 @@
 
       // Base Materials
       const coachBodyMat = new THREE.MeshStandardMaterial({
-        color: 0x181818,
+        color: 0x181822,
         roughness: 0.25,
         metalness: 0.85
       });
@@ -2146,12 +3484,12 @@
       const accentStripeMat = new THREE.MeshStandardMaterial({
         color: 0xd4af37,
         emissive: 0xd4af37,
-        emissiveIntensity: 0.5,
+        emissiveIntensity: 0.45,
         roughness: 0.2
       });
 
       const glassMat = new THREE.MeshStandardMaterial({
-        color: 0x051522,
+        color: 0x091b2c,
         roughness: 0.05,
         metalness: 0.95,
         transparent: true,
@@ -2166,13 +3504,13 @@
       });
 
       const metalMat = new THREE.MeshStandardMaterial({
-        color: 0x333333,
+        color: 0x3a3a4c,
         roughness: 0.4,
         metalness: 0.9
       });
 
       const tireMat = new THREE.MeshStandardMaterial({
-        color: 0x0e0e0e,
+        color: 0x121216,
         roughness: 0.9
       });
 
@@ -2182,7 +3520,7 @@
       coachBody.position.y = 1.65;
       rvGroup.add(coachBody);
 
-      // Molten Pinstripe
+      // Gold Pinstripe
       const stripeGeom = new THREE.BoxGeometry(7.62, 0.1, 2.42);
       const stripe = new THREE.Mesh(stripeGeom, accentStripeMat);
       stripe.position.y = 1.35;
@@ -2219,7 +3557,7 @@
         wheel.position.set(pos[0], pos[1], pos[2]);
         rvGroup.add(wheel);
 
-        // Center hub cap in copper
+        // Center hub cap in gold
         const hubGeom = new THREE.CylinderGeometry(0.18, 0.18, 0.36, 16);
         hubGeom.rotateX(Math.PI / 2);
         const hub = new THREE.Mesh(hubGeom, accentStripeMat);
@@ -2227,12 +3565,11 @@
         rvGroup.add(hub);
       });
 
-      // 3. Elevated Over-Roof Bifacial Solar Array (3.6kW Unistrut)
+      // 3. Elevated Over-Roof Bifacial Solar Array
       const solarRack = new THREE.Group();
       solarRack.position.set(0, 2.9, 0);
       rvGroup.add(solarRack);
 
-      // Unistrut rails
       const railGeom = new THREE.BoxGeometry(7.2, 0.08, 0.08);
       const rail1 = new THREE.Mesh(railGeom, metalMat);
       rail1.position.z = 1.05;
@@ -2240,7 +3577,6 @@
       rail2.position.z = -1.05;
       solarRack.add(rail1, rail2);
 
-      // 10 Bifacial Panels
       const panelGeom = new THREE.BoxGeometry(0.65, 0.04, 2.15);
       for (let i = -4; i <= 4; i++) {
         const panel = new THREE.Mesh(panelGeom, solarMat);
@@ -2279,7 +3615,6 @@
       }
       rvGroup.add(ledRow);
 
-      // Handle Resize
       function onResize() {
         const w = canvas.parentElement.clientWidth;
         const h = canvas.parentElement.clientHeight || 460;
@@ -2335,18 +3670,12 @@
         accentStripeMat.wireframe = val;
       }
 
-      // Animation Loop
       function animate() {
         requestAnimationFrame(animate);
-
-        // Spin wind turbine
         turbine.rotation.y += 0.04;
-
-        // Smooth camera transitions
         camera.position.lerp(targetCameraPos, 0.04);
         controls.target.lerp(targetLookAt, 0.04);
         controls.update();
-
         renderer.render(scene, camera);
       }
       animate();
@@ -2364,7 +3693,6 @@
       const matrixBody = document.getElementById('hudMatrixBody');
       const clockElem = document.getElementById('hudClock');
 
-      // Extract raw data from all project cards
       const cards = Array.from(document.querySelectorAll('.project-card'));
       const projectsData = cards.map((card, idx) => {
         const title = card.querySelector('h3')?.innerText || `PROJECT_${idx+1}`;
@@ -2374,7 +3702,7 @@
         const tags = Array.from(card.querySelectorAll('.tech-tag')).map(t => t.innerText);
         const link = card.querySelector('.card-link.primary')?.getAttribute('href') || '#';
         const isExternal = link.startsWith('http');
-        return { id: `NODE_${String(idx+1).padStart(2, '0')}`, title, cat, catLabel, desc, tags, link, isExternal, domId: card.id || `card-${idx}` };
+        return { id: `NODE_${String(idx+1).padStart(2, '0')}`, title, cat, catLabel, desc, tags, link, isExternal };
       });
 
       function renderMatrix(items) {
@@ -2388,7 +3716,7 @@
             </div>
             <div class="node-footer">
               <span>STACK: ${p.tags.slice(0, 2).join(' · ')}</span>
-              <span style="color: var(--molten); font-weight: 600;">${p.isExternal ? 'LAUNCH ↗' : 'NAVIGATE ↓'}</span>
+              <span style="color: var(--gold); font-weight: 600;">${p.isExternal ? 'LAUNCH ↗' : 'NAVIGATE ↓'}</span>
             </div>
           </div>
         `).join('');
@@ -2420,7 +3748,6 @@
         });
       });
 
-      // Live UTC / PST Clock
       function updateClock() {
         if (!clockElem) return;
         const now = new Date();
@@ -2460,7 +3787,6 @@
       triggerBtn?.addEventListener('click', () => window.MRVH_HUD.open());
       closeBtn?.addEventListener('click', () => window.MRVH_HUD.close());
 
-      // Spacebar and Esc Hotkeys
       window.addEventListener('keydown', (e) => {
         const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
         const isInput = activeTag === 'input' || activeTag === 'textarea';
@@ -2521,32 +3847,45 @@
 
     searchInput.addEventListener('input', filterCards);
 
-    // Hero Rebrand Variant Switcher
-    const variantChips = document.querySelectorAll('.variant-chip');
-    const heroPurple = document.getElementById('heroBrandPurple');
-    const heroWire = document.getElementById('heroBrandWire');
-    const heroGlitch = document.getElementById('heroBrandGlitch');
-
-    variantChips.forEach(chip => {
-      chip.addEventListener('click', () => {
-        variantChips.forEach(c => c.classList.remove('active'));
-        chip.classList.add('active');
-        window.MRVH_Audio.playClick();
-        const v = chip.dataset.v;
-
-        [heroPurple, heroWire, heroGlitch].forEach(img => img?.classList.remove('active'));
-
-        if (v === 'purple') heroPurple?.classList.add('active');
-        else if (v === 'wire') heroWire?.classList.add('active');
-        else if (v === 'glitch') heroGlitch?.classList.add('active');
+    // Audio feedback hooks on tactical wireframe-to-purple buttons
+    document.querySelectorAll('.btn-primary, .btn-secondary, .card-link, .hud-trigger-btn, .filter-btn, .stage-mode-btn, .hud-chip, .swarm-pill-btn, .swarm-opt-btn, .swarm-surge-btn, .swarm-nav-btn, .hud-swarm-type-btn, .hud-surge-trigger-btn, .font-switch-btn, .swarm-close-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (window.MRVH_Audio) window.MRVH_Audio.playClick();
+      });
+      btn.addEventListener('mouseenter', () => {
+        if (window.MRVH_Audio && !window.MRVH_Audio.muted) {
+          window.MRVH_Audio.playPowerUp(0.08, 0.05); // subtle micro-charge chirp
+        }
       });
     });
-
-
-    // Audio click hooks on primary buttons
-    document.querySelectorAll('.btn-primary, .btn-secondary, .card-link').forEach(btn => {
-      btn.addEventListener('click', () => window.MRVH_Audio.playClick());
-    });
   </script>
+<script>
+    // Interactive Live Font Engine Switcher
+    (function initFontSwitcher() {
+      const savedFont = localStorage.getItem('mrvh_active_font') || "'Ethnocentric', sans-serif";
+      document.documentElement.style.setProperty('--font-brand-mrvh', savedFont);
+      document.documentElement.style.setProperty('--font-display', savedFont);
+      document.documentElement.style.setProperty('--font-mrvh', savedFont);
+
+      const btns = document.querySelectorAll('.font-switch-btn');
+      btns.forEach(btn => {
+        if (btn.dataset.font === savedFont) {
+          btns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        }
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          btns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const chosen = btn.dataset.font;
+          document.documentElement.style.setProperty('--font-brand-mrvh', chosen);
+          document.documentElement.style.setProperty('--font-display', chosen);
+          document.documentElement.style.setProperty('--font-mrvh', chosen);
+          localStorage.setItem('mrvh_active_font', chosen);
+          if (window.MRVH_Audio) window.MRVH_Audio.playClick();
+        });
+      });
+    })();
+</script>
 </body>
 </html>
