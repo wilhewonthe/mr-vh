@@ -6,7 +6,7 @@
   <title>MRVH — Ventures & Systems Architecture | Command Deck</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,600;0,700;1,600;1,700&family=Oxanium:wght@600;700;800&family=Syne:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Chakra+Petch:ital,wght@0,600;0,700;1,600;1,700&family=Oxanium:wght@600;700;800&family=Syne:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
 
     @font-face {
@@ -94,7 +94,9 @@
       --text-muted: #6b7280;
       --bone: #f3f4f6;
 
-      --font-mrvh: 'Ethnocentric', 'Paladins', 'Airstrike', 'Chakra Petch', sans-serif;
+      --font-brand-mrvh: 'Ethnocentric', 'Paladins', 'Airstrike', 'Chakra Petch', sans-serif;
+      --font-brand-normal: 'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mrvh: var(--font-brand-mrvh);
       --font-display: 'Ethnocentric', 'Paladins', 'Airstrike', 'Chakra Petch', sans-serif;
       --font-mono: 'IBM Plex Mono', monospace;
     }
@@ -1490,6 +1492,100 @@
       box-shadow: 0 0 12px rgba(212, 175, 55, 0.35);
     }
 
+  
+    /* Typographic Juxtaposition: Hyper-Stylized MRVH + Refined Normal VENTURES */
+    .brand-stem {
+      font-family: var(--font-brand-mrvh);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    .brand-normal {
+      font-family: var(--font-brand-normal);
+      font-weight: 400;
+      font-style: normal !important;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      display: inline-block;
+      opacity: 0.88;
+      transition: all 0.3s ease;
+    }
+
+    /* Hero Lockup Juxtaposition */
+    .hero-title {
+      font-size: clamp(34px, 5.5vw, 68px);
+      line-height: 1.1;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+    }
+
+    .hero-title .brand-stem {
+      background: linear-gradient(135deg, #ffffff 0%, var(--gold) 45%, var(--purple-brand) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 25px rgba(168, 36, 236, 0.45));
+    }
+
+    .hero-title .brand-normal {
+      color: var(--bone);
+      font-size: 0.48em;
+      letter-spacing: 0.36em;
+      padding-left: 18px;
+      border-left: 2px solid rgba(212, 175, 55, 0.4);
+      transform: translateY(-4px);
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
+    }
+
+    .hero-title:hover .brand-stem {
+      filter: drop-shadow(0 0 40px rgba(168, 36, 236, 0.85)) drop-shadow(0 0 80px rgba(0, 255, 255, 0.35));
+      transform: translateY(-2px);
+    }
+
+    .hero-title:hover .brand-normal {
+      color: #ffffff;
+      border-left-color: var(--purple-brand);
+      letter-spacing: 0.40em;
+      opacity: 1;
+      text-shadow: 0 0 16px rgba(168, 36, 236, 0.6);
+    }
+
+    /* Navbar Lockup Juxtaposition */
+    .nav-brand-code {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-brand-code .brand-stem {
+      font-size: 15px;
+      color: var(--bone);
+      transition: color 0.2s;
+    }
+
+    .nav-brand-code .brand-normal {
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      color: var(--text-dim);
+      padding-left: 8px;
+      border-left: 1px solid rgba(255, 255, 255, 0.2);
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .brand-lockup:hover .nav-brand-code .brand-stem {
+      color: var(--gold);
+    }
+
+    .brand-lockup:hover .nav-brand-code .brand-normal {
+      color: #ffffff;
+      border-left-color: var(--purple-brand);
+    }
+
   </style>
   <script src="/js/three.min.js"></script>
   <script src="/js/OrbitControls.js"></script>
@@ -1501,7 +1597,7 @@
   <header class="top-nav">
     <a href="#top" class="brand-lockup" aria-label="MRVH Home">
       <img src="/assets/branding/mrvh-monogram-purple.png" alt="MRVH 3D Monogram" class="nav-standalone-monogram">
-      <span class="nav-brand-code">MRVH</span>
+      <span class="nav-brand-code"><span class="brand-stem">MRVH</span><span class="brand-normal">VENTURES</span></span>
     </a>
 
     <div style="display: flex; align-items: center; gap: 14px;">
@@ -1545,7 +1641,7 @@
           <span class="status-text">HOVER TO ENERGIZE · CLICK FOR OVERDRIVE</span>
         </div>
 
-        <h1 class="hero-title">MRVH VENTURES</h1>
+        <h1 class="hero-title"><span class="brand-stem">MRVH</span><span class="brand-normal">VENTURES</span></h1>
       </div>
 
       <p class="tagline">FORGED IN CODE · SYSTEMS ARCHITECTURE · COMMAND DECK</p>
@@ -2805,6 +2901,7 @@
     // Interactive Live Font Engine Switcher
     (function initFontSwitcher() {
       const savedFont = localStorage.getItem('mrvh_active_font') || "'Ethnocentric', sans-serif";
+      document.documentElement.style.setProperty('--font-brand-mrvh', savedFont);
       document.documentElement.style.setProperty('--font-display', savedFont);
       document.documentElement.style.setProperty('--font-mrvh', savedFont);
 
@@ -2819,6 +2916,7 @@
           btns.forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
           const chosen = btn.dataset.font;
+          document.documentElement.style.setProperty('--font-brand-mrvh', chosen);
           document.documentElement.style.setProperty('--font-display', chosen);
           document.documentElement.style.setProperty('--font-mrvh', chosen);
           localStorage.setItem('mrvh_active_font', chosen);
