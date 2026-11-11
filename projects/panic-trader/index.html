@@ -912,6 +912,34 @@
 
     .tip-desc { font-size: 10px; color: var(--text-dim); }
 
+    .fiat-methods-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .fiat-method-btn {
+      background: #0d0e16;
+      border: 1px solid var(--steel);
+      border-radius: 4px;
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--bone);
+      text-decoration: none;
+      font-size: 11px;
+      transition: all 0.2s;
+    }
+
+    .fiat-method-btn:hover {
+      border-color: var(--gold);
+      background: rgba(212, 175, 55, 0.1);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
     .crypto-address-row {
       display: flex;
       flex-direction: column;
@@ -1364,19 +1392,63 @@
           </button>
         </div>
 
+        <!-- Mainstream No-Crypto Fiat Methods -->
+        <div style="font-size: 10px; letter-spacing: 0.12em; color: var(--gold); text-transform: uppercase; margin-bottom: 8px;">
+          💳 NO-CRYPTO OPTIONS (INSTANT):
+        </div>
+
+        <div class="fiat-methods-grid">
+          <a href="https://ko-fi.com/mrvh" target="_blank" class="fiat-method-btn" rel="noopener">
+            <span>☕</span>
+            <div>
+              <strong style="color: #fff; display: block;">Ko-fi (0% Fee)</strong>
+              <span style="font-size: 9px; color: var(--text-dim);">Cards / Apple & Google Pay</span>
+            </div>
+          </a>
+
+          <a href="https://buymeacoffee.com/wilhewonthe" target="_blank" class="fiat-method-btn" rel="noopener">
+            <span>⚡</span>
+            <div>
+              <strong style="color: #fff; display: block;">Buy Me A Coffee</strong>
+              <span style="font-size: 9px; color: var(--text-dim);">One-click cards</span>
+            </div>
+          </a>
+
+          <a href="https://paypal.me/mrvhventures" target="_blank" class="fiat-method-btn" rel="noopener">
+            <span>🅿️</span>
+            <div>
+              <strong style="color: #fff; display: block;">PayPal</strong>
+              <span style="font-size: 9px; color: var(--text-dim);">paypal.me/mrvhventures</span>
+            </div>
+          </a>
+
+          <a href="https://cash.app/$wilhewonthe" target="_blank" class="fiat-method-btn" rel="noopener">
+            <span>🟢</span>
+            <div>
+              <strong style="color: #fff; display: block;">Cash App</strong>
+              <span style="font-size: 9px; color: var(--text-dim);">$wilhewonthe</span>
+            </div>
+          </a>
+
+          <a href="https://venmo.com/wilhewonthe" target="_blank" class="fiat-method-btn" rel="noopener" style="grid-column: span 2;">
+            <span>💙</span>
+            <div style="flex: 1;">
+              <strong style="color: #fff; display: block;">Venmo</strong>
+              <span style="font-size: 9px; color: var(--text-dim);">@wilhewonthe · Instant P2P</span>
+            </div>
+            <span style="font-size: 9px; color: var(--cyan);">SEND ↗</span>
+          </a>
+        </div>
+
         <!-- Crypto Addresses with One-Click Copy -->
+        <div style="font-size: 10px; letter-spacing: 0.12em; color: var(--purple); text-transform: uppercase; margin-bottom: 8px;">
+          🪙 SOVEREIGN CRYPTO & $WIL:
+        </div>
+
         <div class="crypto-address-row">
           <div class="crypto-item">
             <div>
-              <strong style="color: var(--gold);">BITCOIN (BTC):</strong>
-              <span style="color: var(--text-dim); font-size: 10px; margin-left: 6px;">bc1qmrvhquant928471...</span>
-            </div>
-            <button class="copy-chip-btn" data-copy="bc1qmrvhquantpanic9274829471928491">COPY</button>
-          </div>
-
-          <div class="crypto-item">
-            <div>
-              <strong style="color: var(--cyan);">LIGHTNING (SATs):</strong>
+              <strong style="color: var(--cyan);">LIGHTNING:</strong>
               <span style="color: var(--text-dim); font-size: 10px; margin-left: 6px;">mrvh@getalby.com</span>
             </div>
             <button class="copy-chip-btn" data-copy="mrvh@getalby.com">COPY</button>
@@ -1384,10 +1456,34 @@
 
           <div class="crypto-item">
             <div>
+              <strong style="color: var(--gold);">BTC:</strong>
+              <span style="color: var(--text-dim); font-size: 10px; margin-left: 6px;">bc1qmrvh40ftalfa37fdcompute9842710</span>
+            </div>
+            <button class="copy-chip-btn" data-copy="bc1qmrvh40ftalfa37fdcompute9842710">COPY</button>
+          </div>
+
+          <div class="crypto-item">
+            <div>
               <strong style="color: var(--purple);">ETH / USDC:</strong>
-              <span style="color: var(--text-dim); font-size: 10px; margin-left: 6px;">0x71C...mrvh927</span>
+              <span style="color: var(--text-dim); font-size: 10px; margin-left: 6px;">0x71C2b8471948291837194829471928491</span>
             </div>
             <button class="copy-chip-btn" data-copy="0x71C2b8471948291837194829471928491">COPY</button>
+          </div>
+
+          <div class="crypto-item">
+            <div>
+              <strong style="color: #2dd4bf;">SOLANA:</strong>
+              <span style="color: var(--text-dim); font-size: 10px; margin-left: 6px;">Wil7hEwOnTheGpuSoVereiGnComPuteMesh99</span>
+            </div>
+            <button class="copy-chip-btn" data-copy="Wil7hEwOnTheGpuSoVereiGnComPuteMesh99">COPY</button>
+          </div>
+
+          <div class="crypto-item" style="border-color: rgba(212, 175, 55, 0.4); background: rgba(212, 175, 55, 0.05);">
+            <div>
+              <strong style="color: #fff;">$WIL COIN:</strong>
+              <span style="color: var(--gold); font-size: 10px; margin-left: 6px;">Genesis Reserve · Compute Pledge</span>
+            </div>
+            <button class="copy-chip-btn" style="border-color: var(--gold); color: var(--gold);" data-copy="Wil7hEwOnTheGpuSoVereiGnComPuteMesh99">PLEDGE</button>
           </div>
         </div>
 

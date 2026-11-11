@@ -667,6 +667,245 @@
     .brand-breadcrumb:hover .nav-mrvh { color: var(--solar-gold); }
     .brand-breadcrumb:hover .nav-ventures { color: #fff; border-top-color: var(--purple-brand); }
 
+    /* Expedition Tip Matrix Styles */
+    .tips-master-card {
+      background: #111218;
+      border: 1px solid var(--steel);
+      border-radius: 8px;
+      padding: 38px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
+      margin: 60px 0 30px;
+    }
+
+    .tips-master-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--solar-gold) 0%, var(--purple-brand) 50%, var(--lithium-green) 100%);
+    }
+
+    .tips-grid-columns {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 36px;
+      margin-top: 28px;
+    }
+
+    @media (max-width: 960px) {
+      .tips-grid-columns { grid-template-columns: 1fr; }
+      .tips-master-card { padding: 24px; }
+    }
+
+    .tip-tier-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 600px) {
+      .tip-tier-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .tip-card-btn {
+      background: #0f1018;
+      border: 1px solid var(--steel);
+      border-radius: 5px;
+      padding: 14px 12px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.22s ease;
+    }
+
+    .tip-card-btn:hover,
+    .tip-card-btn.active {
+      border-color: var(--solar-gold);
+      background: rgba(212, 175, 55, 0.12);
+      box-shadow: 0 0 16px rgba(212, 175, 55, 0.35);
+      transform: translateY(-2px);
+    }
+
+    .tip-amount {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--solar-gold);
+      margin-bottom: 4px;
+    }
+
+    .tip-desc {
+      font-size: 11px;
+      color: var(--text-dim);
+      line-height: 1.4;
+    }
+
+    .fiat-methods-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 500px) {
+      .fiat-methods-grid { grid-template-columns: 1fr; }
+    }
+
+    .fiat-method-btn {
+      background: #151620;
+      border: 1px solid var(--steel-light);
+      border-radius: 6px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--bone);
+      text-decoration: none;
+      transition: all 0.22s ease;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .fiat-method-btn:hover {
+      border-color: var(--solar-gold);
+      background: rgba(212, 175, 55, 0.12);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+      color: #ffffff;
+    }
+
+    .fiat-icon {
+      font-size: 18px;
+      width: 32px;
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .crypto-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .crypto-item {
+      background: #151620;
+      border: 1px solid var(--steel);
+      border-radius: 5px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+
+    .crypto-item .symbol {
+      color: var(--solar-gold);
+      font-weight: 600;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .crypto-item .addr {
+      color: var(--text-dim);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 260px;
+    }
+
+    .copy-chip-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--steel-light);
+      color: var(--bone);
+      padding: 5px 12px;
+      border-radius: 3px;
+      font-size: 10px;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      letter-spacing: 0.06em;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .copy-chip-btn:hover {
+      border-color: var(--purple-brand);
+      color: #fff;
+      background: rgba(168, 36, 236, 0.25);
+    }
+
+    .copy-chip-btn.copied {
+      border-color: #10b981;
+      color: #10b981;
+      background: rgba(16, 185, 129, 0.15);
+    }
+
+    .simulate-tip-btn {
+      width: 100%;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.3) 0%, rgba(168, 36, 236, 0.3) 100%);
+      border: 1px solid var(--solar-gold);
+      color: #ffffff;
+      padding: 14px 20px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.25s ease;
+      margin-top: 18px;
+    }
+
+    .simulate-tip-btn:hover {
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.5) 0%, rgba(168, 36, 236, 0.5) 100%);
+      box-shadow: 0 0 24px rgba(212, 175, 55, 0.45);
+      transform: translateY(-2px);
+    }
+
+    .tip-toast-banner {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #151622;
+      border: 1px solid var(--solar-gold);
+      border-radius: 6px;
+      padding: 16px 20px;
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 175, 55, 0.35);
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transform: translateY(120%);
+      opacity: 0;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+      pointer-events: none;
+    }
+
+    .tip-toast-banner.show {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
   </style>
 </head>
 <body>
@@ -692,6 +931,7 @@
         <span class="dot"></span>
         <span>48V BUS ACTIVE</span>
       </div>
+      <a href="#tips" class="hud-back-btn" style="border-color: rgba(212, 175, 55, 0.4); color: var(--solar-gold); background: rgba(212, 175, 55, 0.08);">☕ Fuel Expedition</a>
       <a href="/" class="hud-back-btn">← Master Deck</a>
     </div>
   </header>
@@ -844,6 +1084,156 @@
         <span class="next-title">PANIC TRADER v.9 // QUANT MATRIX</span>
       </a>
     </section>
+
+    <!-- Expedition Backer & Fuel Matrix -->
+    <section class="tips-master-card" id="tips">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 14px; margin-bottom: 24px;">
+        <div>
+          <h3 style="font-family: var(--font-display); font-size: 22px; color: var(--bone); margin-bottom: 8px; letter-spacing: 0.04em;">
+            FUEL THE EXPEDITION // 40FT ALFA 37FD RIG & INDIE R&D
+          </h3>
+          <p style="color: var(--text-dim); font-size: 13px; line-height: 1.6; max-width: 820px;">
+            Operation Leviathan operates as a 100% self-funded mobile research station. Every contribution fuels ultra-low sulfur diesel for the CAT C7 350HP engine, 48V LiFePO4 battery cell expansions, Bambu Lab ASA 3D printer filament for Bermuda Solar Shutters, and Starlink telemetry. Zero crypto knowledge required to tip.
+          </p>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.4); padding: 6px 12px; border-radius: 4px; font-size: 11px; color: var(--lithium-green); font-family: var(--font-mono);">
+          <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--lithium-green); box-shadow: 0 0 8px var(--lithium-green);"></span>
+          EXPEDITION PILOT: MR. VH
+        </div>
+      </div>
+
+      <!-- Quick Amount Tiers -->
+      <div class="tip-tier-grid">
+        <button class="tip-card-btn active" data-tip-amount="5" data-tip-title="1 Gal Diesel">
+          <div class="tip-amount">$5.00</div>
+          <div class="tip-desc">☕ 1 Gal Diesel / Pilot Coffee</div>
+        </button>
+
+        <button class="tip-card-btn" data-tip-amount="15" data-tip-title="1 kWh Solar Storage">
+          <div class="tip-amount">$15.00</div>
+          <div class="tip-desc">⚡ 1 kWh Off-Grid Storage</div>
+        </button>
+
+        <button class="tip-card-btn" data-tip-amount="50" data-tip-title="Starlink & Bambu ASA">
+          <div class="tip-amount">$50.00</div>
+          <div class="tip-desc">🛰️ Starlink Day / ASA Spool</div>
+        </button>
+
+        <button class="tip-card-btn" data-tip-amount="100" data-tip-title="Expedition Patron">
+          <div class="tip-amount">$100.00</div>
+          <div class="tip-desc">👑 Expedition Benefactor</div>
+        </button>
+      </div>
+
+      <!-- Dual Channel Grid -->
+      <div class="tips-grid-columns">
+        <!-- Left: Instant No-Wallet Fiat Options -->
+        <div>
+          <div style="font-size: 11px; letter-spacing: 0.14em; color: var(--solar-gold); font-family: var(--font-mono); text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+            <span>💳 MAINSTREAM // NO CRYPTO WALLET NEEDED</span>
+            <span style="background: rgba(212, 175, 55, 0.15); border: 1px solid rgba(212, 175, 55, 0.4); padding: 1px 6px; border-radius: 3px; font-size: 9px;">INSTANT</span>
+          </div>
+
+          <div class="fiat-methods-grid">
+            <a href="https://ko-fi.com/mrvh" target="_blank" class="fiat-method-btn" rel="noopener">
+              <span class="fiat-icon">☕</span>
+              <div>
+                <strong style="display: block; color: #fff;">Ko-fi (0% Fee)</strong>
+                <span style="font-size: 10px; color: var(--text-dim);">Cards, Apple/Google Pay, PayPal</span>
+              </div>
+            </a>
+
+            <a href="https://buymeacoffee.com/wilhewonthe" target="_blank" class="fiat-method-btn" rel="noopener">
+              <span class="fiat-icon">⚡</span>
+              <div>
+                <strong style="display: block; color: #fff;">Buy Me A Coffee</strong>
+                <span style="font-size: 10px; color: var(--text-dim);">One-click cards & wallet</span>
+              </div>
+            </a>
+
+            <a href="https://paypal.me/mrvhventures" target="_blank" class="fiat-method-btn" rel="noopener">
+              <span class="fiat-icon">🅿️</span>
+              <div>
+                <strong style="display: block; color: #fff;">PayPal Direct</strong>
+                <span style="font-size: 10px; color: var(--text-dim);">paypal.me/mrvhventures</span>
+              </div>
+            </a>
+
+            <a href="https://cash.app/$wilhewonthe" target="_blank" class="fiat-method-btn" rel="noopener">
+              <span class="fiat-icon">🟢</span>
+              <div>
+                <strong style="display: block; color: #fff;">Cash App</strong>
+                <span style="font-size: 10px; color: var(--text-dim);">$wilhewonthe</span>
+              </div>
+            </a>
+
+            <a href="https://venmo.com/wilhewonthe" target="_blank" class="fiat-method-btn" rel="noopener" style="grid-column: span 2;">
+              <span class="fiat-icon">💙</span>
+              <div style="flex: 1;">
+                <strong style="display: block; color: #fff;">Venmo</strong>
+                <span style="font-size: 10px; color: var(--text-dim);">@wilhewonthe · Mobile P2P Transfer</span>
+              </div>
+              <span style="font-size: 10px; color: var(--lithium-green); font-family: var(--font-mono);">SEND ↗</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: Sovereign Crypto & Web3 -->
+        <div>
+          <div style="font-size: 11px; letter-spacing: 0.14em; color: var(--purple-brand); font-family: var(--font-mono); text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+            <span>🪙 SOVEREIGN CRYPTO & $WIL GENESIS</span>
+            <span style="background: rgba(168, 36, 236, 0.15); border: 1px solid rgba(168, 36, 236, 0.4); padding: 1px 6px; border-radius: 3px; font-size: 9px;">DECENTRALIZED</span>
+          </div>
+
+          <div class="crypto-grid">
+            <div class="crypto-item">
+              <span class="symbol">⚡ LIGHTNING</span>
+              <span class="addr">mrvh@getalby.com</span>
+              <button class="copy-chip-btn" data-copy="mrvh@getalby.com">COPY</button>
+            </div>
+
+            <div class="crypto-item">
+              <span class="symbol">₿ BTC</span>
+              <span class="addr">bc1qmrvh40ftalfa37fdcompute9842710</span>
+              <button class="copy-chip-btn" data-copy="bc1qmrvh40ftalfa37fdcompute9842710">COPY</button>
+            </div>
+
+            <div class="crypto-item">
+              <span class="symbol">⟠ ETH / USDC</span>
+              <span class="addr">0x71C2b8471948291837194829471928491</span>
+              <button class="copy-chip-btn" data-copy="0x71C2b8471948291837194829471928491">COPY</button>
+            </div>
+
+            <div class="crypto-item">
+              <span class="symbol">◎ SOLANA</span>
+              <span class="addr">Wil7hEwOnTheGpuSoVereiGnComPuteMesh99</span>
+              <button class="copy-chip-btn" data-copy="Wil7hEwOnTheGpuSoVereiGnComPuteMesh99">COPY</button>
+            </div>
+
+            <div class="crypto-item" style="border-color: rgba(212, 175, 55, 0.4); background: rgba(212, 175, 55, 0.05);">
+              <span class="symbol" style="color: #fff;">🪙 $WIL COIN</span>
+              <span class="addr" style="color: var(--solar-gold);">Genesis Reserve · Alfa 37FD Hardware Credit</span>
+              <button class="copy-chip-btn" style="border-color: var(--solar-gold); color: var(--solar-gold);" data-copy="Wil7hEwOnTheGpuSoVereiGnComPuteMesh99">PLEDGE</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Tip Simulation Trigger -->
+      <button class="simulate-tip-btn" id="simulateTipBtn">
+        <span>🎉</span>
+        <span id="simulateTipBtnText">SIMULATE $5 EXPEDITION TIP & FIRE CHIME</span>
+      </button>
+    </section>
+
+    <!-- Celebratory Toast Banner -->
+    <div class="tip-toast-banner" id="tipToast">
+      <span style="font-size: 20px;">⚡</span>
+      <div>
+        <div id="tipToastTitle" style="font-weight: 700; color: var(--solar-gold);">TIP SIMULATED: $5.00</div>
+        <div id="tipToastDesc" style="color: var(--text-dim); font-size: 11px;">CAT C7 fuel tank topped up & Alfa 37FD expedition log updated!</div>
+      </div>
+    </div>
 
     <footer class="project-footer">
       MRVH VENTURES // OPERATION LEVIATHAN // FORGED FOR COMPLETE AUTONOMY // WILHEWONTHE
@@ -1100,6 +1490,98 @@
       if (savedFont) {
         document.documentElement.style.setProperty('--font-brand-mrvh', savedFont);
         document.documentElement.style.setProperty('--font-display', savedFont);
+      }
+    })();
+  </script>
+
+  <script>
+    /* =====================================================================
+       OPERATION LEVIATHAN TIP & EXPEDITION FUEL ENGINE
+       ===================================================================== */
+    (function initLeviathanTipping() {
+      let activeTipAmount = 5;
+      const tipBtns = document.querySelectorAll('.tips-master-card .tip-card-btn');
+      const simBtn = document.getElementById('simulateTipBtn');
+      const simBtnText = document.getElementById('simulateTipBtnText');
+      const toast = document.getElementById('tipToast');
+      const toastTitle = document.getElementById('tipToastTitle');
+      const toastDesc = document.getElementById('tipToastDesc');
+      let toastTimer = null;
+
+      // Audio engine
+      let audioCtx = null;
+      function playChime() {
+        try {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (!audioCtx && AudioContext) audioCtx = new AudioContext();
+          if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+          if (!audioCtx) return;
+          const now = audioCtx.currentTime;
+          const notes = [523.25, 659.25, 783.99, 1046.50];
+          notes.forEach((freq, idx) => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, now + idx * 0.07);
+            gain.gain.setValueAtTime(0.001, now + idx * 0.07);
+            gain.gain.linearRampToValueAtTime(0.12, now + idx * 0.07 + 0.02);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.07 + 0.42);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(now + idx * 0.07);
+            osc.stop(now + idx * 0.07 + 0.45);
+          });
+        } catch (e) {}
+      }
+
+      tipBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          tipBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          activeTipAmount = parseInt(btn.dataset.tipAmount, 10);
+          if (simBtnText) {
+            simBtnText.textContent = `SIMULATE $${activeTipAmount} EXPEDITION TIP & FIRE CHIME`;
+          }
+        });
+      });
+
+      // Copy crypto addresses with feedback
+      document.querySelectorAll('.copy-chip-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const text = btn.dataset.copy;
+          if (!text) return;
+          navigator.clipboard.writeText(text).then(() => {
+            const original = btn.textContent;
+            btn.textContent = 'COPIED!';
+            btn.classList.add('copied');
+            setTimeout(() => {
+              btn.textContent = original;
+              btn.classList.remove('copied');
+            }, 2000);
+          }).catch(() => {
+            prompt('Copy Address:', text);
+          });
+        });
+      });
+
+      // Interactive Tip Simulation
+      if (simBtn) {
+        simBtn.addEventListener('click', () => {
+          playChime();
+
+          if (toast && toastTitle && toastDesc) {
+            toastTitle.textContent = `⚡ EXPEDITION FUEL TIP: $${activeTipAmount}.00`;
+            toastDesc.textContent = `CAT C7 fuel tank topped up & Alfa 37FD expedition log updated! Thank you!`;
+            toast.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+              toast.classList.remove('show');
+            }, 4500);
+          }
+
+          simBtn.style.transform = 'scale(1.03)';
+          setTimeout(() => { simBtn.style.transform = ''; }, 220);
+        });
       }
     })();
   </script>

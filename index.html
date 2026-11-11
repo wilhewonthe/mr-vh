@@ -772,18 +772,171 @@
       padding: 0 24px;
     }
 
-    /* Dynamic Molten Mouse Tracking on Cards */
+    /* Dynamic Bespoke Project Card Themes & Blurred Backdrops */
     .project-card {
       background: var(--charcoal);
       border: 1px solid var(--steel);
-      border-radius: 5px;
+      border-radius: 6px;
       padding: 28px 26px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       position: relative;
       overflow: hidden;
-      transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), 
+                  border-color 0.28s ease, 
+                  box-shadow 0.28s ease;
+    }
+
+    /* Content wrapper sits cleanly above blurred themed backdrop */
+    .project-card > div:not(.card-theme-backdrop),
+    .project-card > .card-actions {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Blurred Thematic Backdrop Container */
+    .card-theme-backdrop {
+      position: absolute;
+      inset: -15px;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0;
+      filter: blur(14px);
+      transform: scale(0.92);
+      transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .project-card:hover .card-theme-backdrop {
+      opacity: 0.34;
+      transform: scale(1.0);
+    }
+
+    /* 1. Panic Trader v.9 Theme (Bloomberg Amber + Cyber Cyan) */
+    .project-card[data-theme="panic-trader"]:hover {
+      border-color: rgba(0, 240, 255, 0.75);
+      box-shadow: 0 16px 44px rgba(0, 0, 0, 0.75), 0 0 30px rgba(0, 240, 255, 0.22), 0 0 16px rgba(245, 158, 11, 0.2);
+    }
+    .project-card[data-theme="panic-trader"] .card-theme-backdrop {
+      background: 
+        linear-gradient(rgba(0, 240, 255, 0.2) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(245, 158, 11, 0.2) 1px, transparent 1px),
+        radial-gradient(ellipse at 85% 20%, rgba(0, 240, 255, 0.6) 0%, transparent 60%),
+        radial-gradient(ellipse at 15% 85%, rgba(245, 158, 11, 0.5) 0%, transparent 60%);
+      background-size: 24px 24px, 24px 24px, 100% 100%, 100% 100%;
+    }
+    .project-card[data-theme="panic-trader"]:hover h3 {
+      text-shadow: 0 0 16px rgba(0, 240, 255, 0.8), 0 0 8px rgba(245, 158, 11, 0.5);
+    }
+
+    /* 2. Operation Leviathan Theme (Solar Gold + Lithium Green) */
+    .project-card[data-theme="leviathan"]:hover {
+      border-color: rgba(212, 175, 55, 0.85);
+      box-shadow: 0 16px 44px rgba(0, 0, 0, 0.75), 0 0 30px rgba(212, 175, 55, 0.25), 0 0 16px rgba(16, 185, 129, 0.2);
+    }
+    .project-card[data-theme="leviathan"] .card-theme-backdrop {
+      background: 
+        linear-gradient(rgba(212, 175, 55, 0.2) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16, 185, 129, 0.18) 1px, transparent 1px),
+        radial-gradient(ellipse at 25% 25%, rgba(212, 175, 55, 0.55) 0%, transparent 60%),
+        radial-gradient(ellipse at 75% 80%, rgba(16, 185, 129, 0.45) 0%, transparent 60%);
+      background-size: 28px 28px, 28px 28px, 100% 100%, 100% 100%;
+    }
+    .project-card[data-theme="leviathan"]:hover h3 {
+      text-shadow: 0 0 16px rgba(212, 175, 55, 0.8), 0 0 8px rgba(16, 185, 129, 0.5);
+    }
+
+    /* 3. Wilhewonthe Coin ($WIL) Theme (Gold Coin Hologram + Sovereign Purple) */
+    .project-card[data-theme="wil-coin"]:hover {
+      border-color: rgba(212, 175, 55, 0.9);
+      box-shadow: 0 16px 44px rgba(0, 0, 0, 0.75), 0 0 35px rgba(168, 36, 236, 0.4), 0 0 20px rgba(212, 175, 55, 0.3);
+    }
+    .project-card[data-theme="wil-coin"] .card-theme-backdrop {
+      background: 
+        radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.6) 0%, rgba(168, 36, 236, 0.5) 45%, transparent 75%),
+        repeating-radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.2) 0, rgba(212, 175, 55, 0.2) 14px, transparent 15px, transparent 28px);
+    }
+    .project-card[data-theme="wil-coin"]:hover h3 {
+      text-shadow: 0 0 18px rgba(212, 175, 55, 0.9), 0 0 12px rgba(168, 36, 236, 0.7);
+    }
+
+    /* 4. Closet AI Theme (Fashion Magenta + Electric Purple) */
+    .project-card[data-theme="closet-ai"]:hover {
+      border-color: rgba(236, 72, 153, 0.85);
+      box-shadow: 0 16px 44px rgba(0, 0, 0, 0.75), 0 0 32px rgba(236, 72, 153, 0.35), 0 0 16px rgba(139, 92, 246, 0.25);
+    }
+    .project-card[data-theme="closet-ai"] .card-theme-backdrop {
+      background: 
+        linear-gradient(rgba(236, 72, 153, 0.18) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(139, 92, 246, 0.18) 1px, transparent 1px),
+        radial-gradient(ellipse at 80% 30%, rgba(236, 72, 153, 0.55) 0%, transparent 65%),
+        radial-gradient(ellipse at 20% 70%, rgba(139, 92, 246, 0.45) 0%, transparent 65%);
+      background-size: 22px 22px, 22px 22px, 100% 100%, 100% 100%;
+    }
+    .project-card[data-theme="closet-ai"]:hover h3 {
+      text-shadow: 0 0 16px rgba(236, 72, 153, 0.85), 0 0 10px rgba(139, 92, 246, 0.6);
+    }
+
+    /* 5. Hermes Mesh Theme (Phosphor Radio Green + RF Sine) */
+    .project-card[data-theme="hermes"]:hover {
+      border-color: rgba(45, 212, 191, 0.85);
+      box-shadow: 0 16px 44px rgba(0, 0, 0, 0.75), 0 0 30px rgba(45, 212, 191, 0.3);
+    }
+    .project-card[data-theme="hermes"] .card-theme-backdrop {
+      background: 
+        radial-gradient(circle at 50% 40%, rgba(45, 212, 191, 0.5) 0%, rgba(59, 130, 246, 0.4) 50%, transparent 75%),
+        repeating-linear-gradient(0deg, rgba(45, 212, 191, 0.14) 0, rgba(45, 212, 191, 0.14) 2px, transparent 3px, transparent 16px);
+    }
+
+    /* 6. Tiamat Energy Matrix Theme (Volt Yellow + Cyan Arc) */
+    .project-card[data-theme="tiamat"]:hover {
+      border-color: rgba(234, 179, 8, 0.85);
+      box-shadow: 0 16px 44px rgba(0, 0, 0, 0.75), 0 0 30px rgba(234, 179, 8, 0.3), 0 0 16px rgba(6, 182, 212, 0.2);
+    }
+    .project-card[data-theme="tiamat"] .card-theme-backdrop {
+      background: 
+        radial-gradient(ellipse at 30% 70%, rgba(234, 179, 8, 0.5) 0%, transparent 60%),
+        radial-gradient(ellipse at 70% 30%, rgba(6, 182, 212, 0.45) 0%, transparent 60%),
+        repeating-linear-gradient(45deg, rgba(234, 179, 8, 0.08) 0, rgba(234, 179, 8, 0.08) 4px, transparent 5px, transparent 18px);
+    }
+
+    /* 7. GPU Hustle Theme (Tensor Blue + Compute Violet) */
+    .project-card[data-theme="gpu-hustle"]:hover {
+      border-color: rgba(59, 130, 246, 0.85);
+      box-shadow: 0 16px 44px rgba(0, 0, 0, 0.75), 0 0 30px rgba(59, 130, 246, 0.35), 0 0 16px rgba(168, 36, 236, 0.25);
+    }
+    .project-card[data-theme="gpu-hustle"] .card-theme-backdrop {
+      background: 
+        linear-gradient(rgba(59, 130, 246, 0.2) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(168, 36, 236, 0.2) 1px, transparent 1px),
+        radial-gradient(circle at 60% 40%, rgba(59, 130, 246, 0.55) 0%, rgba(168, 36, 236, 0.45) 50%, transparent 75%);
+      background-size: 16px 16px, 16px 16px, 100% 100%;
+    }
+
+    /* 8. FileCraft / Cryptographic Theme (Emerald + Cyan Hashes) */
+    .project-card[data-theme="filecraft"]:hover {
+      border-color: rgba(16, 185, 129, 0.85);
+      box-shadow: 0 16px 44px rgba(0, 0, 0, 0.75), 0 0 30px rgba(16, 185, 129, 0.3);
+    }
+    .project-card[data-theme="filecraft"] .card-theme-backdrop {
+      background: 
+        radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.45) 0%, rgba(6, 182, 212, 0.35) 50%, transparent 75%),
+        repeating-linear-gradient(45deg, rgba(16, 185, 129, 0.1) 0, rgba(16, 185, 129, 0.1) 4px, transparent 5px, transparent 20px);
+    }
+
+    /* Fallback theme for any other cards */
+    .project-card:not([data-theme]) .card-theme-backdrop,
+    .project-card[data-theme="digest"] .card-theme-backdrop,
+    .project-card[data-theme="virtual-cabinet"] .card-theme-backdrop,
+    .project-card[data-theme="print-hub"] .card-theme-backdrop,
+    .project-card[data-theme="brand-suite"] .card-theme-backdrop,
+    .project-card[data-theme="ai-bridge"] .card-theme-backdrop,
+    .project-card[data-theme="agent-erste"] .card-theme-backdrop,
+    .project-card[data-theme="smart-car"] .card-theme-backdrop,
+    .project-card[data-theme="stargazer"] .card-theme-backdrop {
+      background: 
+        radial-gradient(ellipse at 80% 20%, rgba(168, 36, 236, 0.45) 0%, transparent 60%),
+        radial-gradient(ellipse at 20% 80%, rgba(212, 175, 55, 0.45) 0%, transparent 60%);
     }
 
     .project-card::after {
@@ -824,8 +977,6 @@
 
     .project-card:hover {
       transform: translateY(-4px);
-      border-color: var(--gold);
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
     }
 
     .project-card:hover::before {
@@ -2026,6 +2177,259 @@
       border-top-color: var(--purple-brand);
     }
 
+    /* Scene 5: Global Backer & Tip Matrix */
+    .scene-tips {
+      padding: 96px 24px;
+      max-width: 1320px;
+      margin: 0 auto;
+      border-top: 1px solid var(--steel);
+    }
+
+    .tips-master-card {
+      background: var(--charcoal);
+      border: 1px solid var(--steel);
+      border-radius: 8px;
+      padding: 38px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
+    }
+
+    .tips-master-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold) 0%, var(--purple-brand) 50%, var(--teal) 100%);
+    }
+
+    .tips-grid-columns {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 36px;
+      margin-top: 28px;
+    }
+
+    @media (max-width: 960px) {
+      .tips-grid-columns {
+        grid-template-columns: 1fr;
+      }
+      .tips-master-card {
+        padding: 24px;
+      }
+    }
+
+    .tip-tier-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 600px) {
+      .tip-tier-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .tip-card-btn {
+      background: #0f1018;
+      border: 1px solid var(--steel);
+      border-radius: 5px;
+      padding: 14px 12px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.22s ease;
+    }
+
+    .tip-card-btn:hover,
+    .tip-card-btn.active {
+      border-color: var(--gold);
+      background: rgba(212, 175, 55, 0.12);
+      box-shadow: 0 0 16px rgba(212, 175, 55, 0.35);
+      transform: translateY(-2px);
+    }
+
+    .tip-amount {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+
+    .tip-desc {
+      font-size: 11px;
+      color: var(--text-dim);
+      line-height: 1.4;
+    }
+
+    .fiat-methods-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 500px) {
+      .fiat-methods-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .fiat-method-btn {
+      background: #11121a;
+      border: 1px solid var(--steel-light);
+      border-radius: 6px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--bone);
+      text-decoration: none;
+      transition: all 0.22s ease;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .fiat-method-btn:hover {
+      border-color: var(--gold);
+      background: rgba(212, 175, 55, 0.12);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+      color: #ffffff;
+    }
+
+    .fiat-icon {
+      font-size: 18px;
+      width: 32px;
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .crypto-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .crypto-item {
+      background: #11121a;
+      border: 1px solid var(--steel);
+      border-radius: 5px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+
+    .crypto-item .symbol {
+      color: var(--gold);
+      font-weight: 600;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .crypto-item .addr {
+      color: var(--text-dim);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 260px;
+    }
+
+    .copy-chip-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--steel-light);
+      color: var(--bone);
+      padding: 5px 12px;
+      border-radius: 3px;
+      font-size: 10px;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      letter-spacing: 0.06em;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .copy-chip-btn:hover {
+      border-color: var(--purple-brand);
+      color: #fff;
+      background: rgba(168, 36, 236, 0.25);
+    }
+
+    .copy-chip-btn.copied {
+      border-color: #10b981;
+      color: #10b981;
+      background: rgba(16, 185, 129, 0.15);
+    }
+
+    .simulate-tip-btn {
+      width: 100%;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.3) 0%, rgba(168, 36, 236, 0.3) 100%);
+      border: 1px solid var(--gold);
+      color: #ffffff;
+      padding: 14px 20px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.25s ease;
+      margin-top: 18px;
+    }
+
+    .simulate-tip-btn:hover {
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.5) 0%, rgba(168, 36, 236, 0.5) 100%);
+      box-shadow: 0 0 24px rgba(212, 175, 55, 0.45);
+      transform: translateY(-2px);
+    }
+
+    .tip-toast-banner {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #151622;
+      border: 1px solid var(--gold);
+      border-radius: 6px;
+      padding: 16px 20px;
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 175, 55, 0.35);
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transform: translateY(120%);
+      opacity: 0;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+      pointer-events: none;
+    }
+
+    .tip-toast-banner.show {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
   </style>
   <script src="/js/three.min.js"></script>
   <script src="/js/OrbitControls.js"></script>
@@ -2064,8 +2468,9 @@
     <nav class="nav-links">
       <a href="#projects">Command Deck</a>
       <a href="#leviathan">Operation Leviathan</a>
+      <a href="/projects/panic-trader/">Panic Trader</a>
       <a href="#homelab">Homelab & Mesh</a>
-      <a href="https://wilhewonthe.github.io/leviathan/" target="_blank">3D RV Twin ↗</a>
+      <a href="#tips" style="color: var(--gold); border: 1px solid rgba(212, 175, 55, 0.4); padding: 5px 12px; border-radius: 4px; background: rgba(212, 175, 55, 0.08);">☕ Fuel Ventures</a>
       <a href="https://github.com/wilhewonthe" target="_blank" class="nav-cta">GitHub @wilhewonthe</a>
     </nav>
   </header>
@@ -2107,7 +2512,7 @@
       </p>
 
       <div class="hero-stats-bar">
-        <div class="stat-pill"><span class="dot"></span><strong>14+</strong> Active Ventures & Tools</div>
+        <div class="stat-pill"><span class="dot"></span><strong>16+</strong> Active Ventures & Tools</div>
         <div class="stat-pill"><span class="dot"></span><strong>48V / 3.6kW+</strong> Alfa See Ya Micro-Grid</div>
         <div class="stat-pill"><span class="dot"></span><strong>590+</strong> Unified Agent Skills & MCPs</div>
         <div class="stat-pill"><span class="dot"></span><strong>Bambu P1S</strong> Additive Fab Hub</div>
@@ -2130,7 +2535,7 @@
 
     <div class="deck-controls">
       <div class="filter-tabs" role="tablist">
-        <button class="filter-btn active" data-filter="all">All Projects (14)</button>
+        <button class="filter-btn active" data-filter="all">All Projects (16)</button>
         <button class="filter-btn" data-filter="energy">Off-Grid & Hardware</button>
         <button class="filter-btn" data-filter="quant">Quant & Systems</button>
         <button class="filter-btn" data-filter="apps">Privacy & Apps</button>
@@ -2139,8 +2544,9 @@
     </div>
 
     <div class="projects-grid" id="projectsGrid">
-<!-- 1. Operation Leviathan -->
-      <article class="project-card featured" data-category="energy">
+      <!-- 1. Operation Leviathan -->
+      <article class="project-card featured" data-theme="leviathan" data-category="energy">
+        <div class="card-theme-backdrop"></div>
         <div>
           <div class="card-top">
             <span class="card-category">Off-Grid Infrastructure · Flagship</span>
@@ -2163,7 +2569,8 @@
       </article>
 
       <!-- 2. Tiamat Venture Matrix -->
-      <article class="project-card featured" data-category="quant">
+      <article class="project-card featured" data-theme="tiamat" data-category="quant">
+        <div class="card-theme-backdrop"></div>
         <div>
           <div class="card-top">
             <span class="card-category">Venture Architecture · Energy Ledger</span>
@@ -2184,7 +2591,8 @@
       </article>
 
       <!-- 3. FileCraft Tools -->
-      <article class="project-card" data-category="apps">
+      <article class="project-card" data-theme="filecraft" data-category="apps">
+        <div class="card-theme-backdrop"></div>
         <div>
           <div class="card-top">
             <span class="card-category">Public Web Utility</span>
@@ -2205,7 +2613,8 @@
       </article>
 
       <!-- 4. Don't Sleep Digest -->
-      <article class="project-card" data-category="apps">
+      <article class="project-card" data-theme="digest" data-category="apps">
+        <div class="card-theme-backdrop"></div>
         <div>
           <div class="card-top">
             <span class="card-category">Editorial & Deals Engine</span>
@@ -2226,7 +2635,8 @@
       </article>
 
       <!-- 5. The GPU Hustle & Halo GPU Dashboard -->
-      <article class="project-card" data-category="energy">
+      <article class="project-card" data-theme="gpu-hustle" data-category="energy">
+        <div class="card-theme-backdrop"></div>
         <div>
           <div class="card-top">
             <span class="card-category">Compute Arbitrage · Telemetry</span>
@@ -2247,29 +2657,31 @@
       </article>
 
       <!-- 6. Panic Trader v.9 -->
-      <article class="project-card" data-category="quant">
+      <article class="project-card featured" data-theme="panic-trader" data-category="quant">
+        <div class="card-theme-backdrop"></div>
         <div>
           <div class="card-top">
-            <span class="card-category">Quantitative Paper Simulation</span>
-            <span class="card-badge sim">● Sim Daemon</span>
+            <span class="card-category">Quantitative Paper Simulation · Live Mark</span>
+            <span class="card-badge live">● Terminal v.9</span>
           </div>
           <h3>PANIC TRADER v.9</h3>
-          <p>Autonomous multi-market paper-trading simulation engine with hourly systemd execution, ROI calculator, macro regime detection, and strict risk-sized position telemetry.</p>
+          <p>Autonomous multi-market paper-trading simulation engine with hourly systemd execution, 4 core quant pillars (Current Quant, Current Trade, Last Trade, Next Trade), interactive 2D candlestick canvas, Alpha Wire comments, and fuel tip jar.</p>
           <div class="tech-tags">
-            <span class="tech-tag">Python</span>
-            <span class="tech-tag">Paper Sim Only</span>
+            <span class="tech-tag">Python Daemon</span>
+            <span class="tech-tag">Live Mark</span>
+            <span class="tech-tag">Macro Regime</span>
             <span class="tech-tag">Systemd Timer</span>
-            <span class="tech-tag">RiskState</span>
           </div>
         </div>
         <div class="card-actions">
           <a href="/projects/panic-trader/" class="card-link primary">Interactive Terminal ↗</a>
-          <a href="https://github.com/wilhewonthe/panic-trader-v9" target="_blank" class="card-link">GitHub (Private) ↗</a>
+          <a href="https://github.com/wilhewonthe/panic-trader-v9" target="_blank" class="card-link">GitHub (Private)</a>
         </div>
       </article>
 
       <!-- 7. Hermes Android & PC Mesh Companion -->
-      <article class="project-card" data-category="ai">
+      <article class="project-card" data-theme="hermes" data-category="ai">
+        <div class="card-theme-backdrop"></div>
         <div>
           <div class="card-top">
             <span class="card-category">Agentic Mesh · Mobile Bridge</span>
@@ -2290,7 +2702,8 @@
       </article>
 
       <!-- 8. VirtualCabinet (AI Board of Directors) -->
-      <article class="project-card" data-category="ai">
+      <article class="project-card" data-theme="virtual-cabinet" data-category="ai">
+        <div class="card-theme-backdrop"></div>
         <div>
           <div class="card-top">
             <span class="card-category">Real-Time Multimodal WebRTC</span>
@@ -2311,7 +2724,8 @@
       </article>
 
       <!-- 9. Youmadeit.gay & Hyper-Local 3D Print Hub -->
-      <article class="project-card" data-category="quant">
+      <article class="project-card" data-theme="print-hub" data-category="quant">
+        <div class="card-theme-backdrop"></div>
         <div>
           <div class="card-top">
             <span class="card-category">Additive Manufacturing · Micro-Biz</span>
@@ -2332,7 +2746,8 @@
       </article>
 
       <!-- 10. Panic Responsibly™ Brand & Maker Suite -->
-      <article class="project-card" data-category="apps">
+      <article class="project-card" data-theme="brand-suite" data-category="apps">
+        <div class="card-theme-backdrop"></div>
         <div>
           <div class="card-top">
             <span class="card-category">Brand Identity · Persona Engine</span>
@@ -2352,7 +2767,8 @@
       </article>
 
       <!-- 11. Universal AI Memory & WebDAV Bridge -->
-      <article class="project-card" data-category="ai">
+      <article class="project-card" data-theme="ai-bridge" data-category="ai">
+        <div class="card-theme-backdrop"></div>
         <div>
           <div class="card-top">
             <span class="card-category">Cross-Harness Memory Architecture</span>
@@ -2372,7 +2788,8 @@
       </article>
 
       <!-- 12. PanicAgentErste (LangSmith Deep Agent) -->
-      <article class="project-card" data-category="ai">
+      <article class="project-card" data-theme="agent-erste" data-category="ai">
+        <div class="card-theme-backdrop"></div>
         <div>
           <div class="card-top">
             <span class="card-category">Managed Deep Agent · Android Rig</span>
@@ -2392,7 +2809,8 @@
       </article>
 
       <!-- 13. Mark's Smart Car Plan -->
-      <article class="project-card" data-category="apps">
+      <article class="project-card" data-theme="smart-car" data-category="apps">
+        <div class="card-theme-backdrop"></div>
         <div>
           <div class="card-top">
             <span class="card-category">Interactive Story · Web App</span>
@@ -2412,7 +2830,8 @@
       </article>
 
       <!-- 14. APB Matrix & Stargazer -->
-      <article class="project-card" data-category="quant">
+      <article class="project-card" data-theme="stargazer" data-category="quant">
+        <div class="card-theme-backdrop"></div>
         <div>
           <div class="card-top">
             <span class="card-category">Private R&D Repositories</span>
@@ -2429,6 +2848,52 @@
         <div class="card-actions">
           <a href="https://github.com/wilhewonthe/stargazer" target="_blank" class="card-link primary">Stargazer Repo ↗</a>
           <a href="https://github.com/wilhewonthe/apb-matrix" target="_blank" class="card-link">APB-Matrix Repo</a>
+        </div>
+      </article>
+
+      <!-- 15. Wilhewonthe Coin ($WIL) -->
+      <article class="project-card featured" data-theme="wil-coin" data-category="quant">
+        <div class="card-theme-backdrop"></div>
+        <div>
+          <div class="card-top">
+            <span class="card-category">Sovereign Utility Token · Solana SPL</span>
+            <span class="card-badge live">● Genesis Token</span>
+          </div>
+          <h3>WILHEWONTHE COIN ($WIL)</h3>
+          <p>Decentralized ecosystem compute currency and micro-sponsorship token on Solana SPL. Powers autonomous agent inference scheduling, off-grid hardware sponsorship on the Alfa 37FD rig, and Panic Trader community alpha governance.</p>
+          <div class="tech-tags">
+            <span class="tech-tag">Solana SPL</span>
+            <span class="tech-tag">Token-2022</span>
+            <span class="tech-tag">Compute Credit</span>
+            <span class="tech-tag">Agent Mesh</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a href="#tips" class="card-link primary">Pledge & Reserve $WIL ↗</a>
+          <a href="https://solscan.io" target="_blank" class="card-link">SPL Radar</a>
+        </div>
+      </article>
+
+      <!-- 16. Closet AI // Dual-in-One -->
+      <article class="project-card featured" data-theme="closet-ai" data-category="apps">
+        <div class="card-theme-backdrop"></div>
+        <div>
+          <div class="card-top">
+            <span class="card-category">Computer Vision · Resale Engine</span>
+            <span class="card-badge live">● Prototype v1.0</span>
+          </div>
+          <h3>CLOSET AI // DUAL-IN-ONE</h3>
+          <p>Dual-in-one wardrobe cataloging and automated multi-channel resale cashflow engine. Gamified wardrobe digitization, AI styling suggestions, and automated cross-listing across eBay, Poshmark, and Mercari with zero inventory friction.</p>
+          <div class="tech-tags">
+            <span class="tech-tag">Vision AI</span>
+            <span class="tech-tag">eBay / Poshmark</span>
+            <span class="tech-tag">Resale Automation</span>
+            <span class="tech-tag">Dual-Loop</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a href="https://github.com/wilhewonthe/closet-ai" target="_blank" class="card-link primary">Launch Closet AI ↗</a>
+          <a href="https://mia.nl.tab.digital/apps/files/?dir=/Notes" target="_blank" class="card-link">Product Wiki</a>
         </div>
       </article>
     </div>
@@ -2594,7 +3059,7 @@
           <input type="text" id="hudSearchInput" class="hud-search-input" placeholder="Type to filter ventures, hardware, AI nodes, or tech stack..." autocomplete="off">
         </div>
         <div class="hud-filter-chips">
-          <button class="hud-chip active" data-hud-filter="all">All Ventures (14)</button>
+          <button class="hud-chip active" data-hud-filter="all">All Ventures (16)</button>
           <button class="hud-chip" data-hud-filter="energy">Off-Grid & Hardware</button>
           <button class="hud-chip" data-hud-filter="quant">Quant & Systems</button>
           <button class="hud-chip" data-hud-filter="apps">Privacy & Apps</button>
@@ -2724,6 +3189,163 @@
       </button>
     </div>
   </aside>
+
+  <!-- Scene 5: Global Backer & Tip Matrix -->
+  <section class="scene-tips" id="tips">
+    <div class="scene-header">
+      <p class="scene-label">05 // COMMUNITY BACKING & EXPEDITION FUEL</p>
+      <h2 class="scene-title">FUEL THE VENTURES</h2>
+    </div>
+
+    <div class="tips-master-card">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 14px; margin-bottom: 24px;">
+        <div>
+          <h3 style="font-family: var(--font-display); font-size: 22px; color: var(--bone); margin-bottom: 8px; letter-spacing: 0.04em;">
+            SOVEREIGN COMPUTE, EXPEDITION HARDWARE & INDIE R&D
+          </h3>
+          <p style="color: var(--text-dim); font-size: 13px; line-height: 1.6; max-width: 820px;">
+            MRVH is 100% self-funded sovereign engineering. Every dollar and satoshi directly powers off-grid Alfa 37FD micro-grid hardware, Bambu P1S ASA filament spools, 24/7 autonomous quant paper agents, and local GPU inference clusters. Support the fleet with your preferred method—no crypto wallet required.
+          </p>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px; background: rgba(20, 184, 166, 0.1); border: 1px solid rgba(20, 184, 166, 0.4); padding: 6px 12px; border-radius: 4px; font-size: 11px; color: #2dd4bf; font-family: var(--font-mono);">
+          <span style="width: 6px; height: 6px; border-radius: 50%; background: #2dd4bf; box-shadow: 0 0 8px #2dd4bf;"></span>
+          DIRECT BENEFICIARY: MR. VH
+        </div>
+      </div>
+
+      <!-- Quick Amount Tiers -->
+      <div class="tip-tier-grid">
+        <button class="tip-card-btn active" data-tip-amount="5" data-tip-title="1 Hour Compute">
+          <div class="tip-amount">$5.00</div>
+          <div class="tip-desc">☕ 1H Compute / Coffee</div>
+        </button>
+
+        <button class="tip-card-btn" data-tip-amount="15" data-tip-title="1 Gal Diesel / API Fund">
+          <div class="tip-amount">$15.00</div>
+          <div class="tip-desc">⚡ 1 Gal Diesel / API Fund</div>
+        </button>
+
+        <button class="tip-card-btn" data-tip-amount="50" data-tip-title="24H GPU Backtest / ASA Spool">
+          <div class="tip-amount">$50.00</div>
+          <div class="tip-desc">🚀 24H GPU / ASA Spool</div>
+        </button>
+
+        <button class="tip-card-btn" data-tip-amount="100" data-tip-title="Syndicate Benefactor">
+          <div class="tip-amount">$100.00</div>
+          <div class="tip-desc">👑 Fleet Benefactor</div>
+        </button>
+      </div>
+
+      <!-- Dual Channel Grid: Left = Instant No-Crypto Fiat / Right = Sovereign Web3 & Crypto -->
+      <div class="tips-grid-columns">
+        <!-- Left: Instant No-Wallet Fiat Options -->
+        <div>
+          <div style="font-size: 11px; letter-spacing: 0.14em; color: var(--gold); font-family: var(--font-mono); text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+            <span>💳 MAINSTREAM // NO CRYPTO WALLET NEEDED</span>
+            <span style="background: rgba(212, 175, 55, 0.15); border: 1px solid rgba(212, 175, 55, 0.4); padding: 1px 6px; border-radius: 3px; font-size: 9px;">INSTANT</span>
+          </div>
+
+          <div class="fiat-methods-grid">
+            <a href="https://ko-fi.com/mrvh" target="_blank" class="fiat-method-btn" rel="noopener">
+              <span class="fiat-icon">☕</span>
+              <div>
+                <strong style="display: block; color: #fff;">Ko-fi (0% Fee)</strong>
+                <span style="font-size: 10px; color: var(--text-dim);">Cards, Apple/Google Pay, PayPal</span>
+              </div>
+            </a>
+
+            <a href="https://buymeacoffee.com/wilhewonthe" target="_blank" class="fiat-method-btn" rel="noopener">
+              <span class="fiat-icon">⚡</span>
+              <div>
+                <strong style="display: block; color: #fff;">Buy Me A Coffee</strong>
+                <span style="font-size: 10px; color: var(--text-dim);">One-click cards & wallet</span>
+              </div>
+            </a>
+
+            <a href="https://paypal.me/mrvhventures" target="_blank" class="fiat-method-btn" rel="noopener">
+              <span class="fiat-icon">🅿️</span>
+              <div>
+                <strong style="display: block; color: #fff;">PayPal Direct</strong>
+                <span style="font-size: 10px; color: var(--text-dim);">paypal.me/mrvhventures</span>
+              </div>
+            </a>
+
+            <a href="https://cash.app/$wilhewonthe" target="_blank" class="fiat-method-btn" rel="noopener">
+              <span class="fiat-icon">🟢</span>
+              <div>
+                <strong style="display: block; color: #fff;">Cash App</strong>
+                <span style="font-size: 10px; color: var(--text-dim);">$wilhewonthe</span>
+              </div>
+            </a>
+
+            <a href="https://venmo.com/wilhewonthe" target="_blank" class="fiat-method-btn" rel="noopener" style="grid-column: span 2;">
+              <span class="fiat-icon">💙</span>
+              <div style="flex: 1;">
+                <strong style="display: block; color: #fff;">Venmo</strong>
+                <span style="font-size: 10px; color: var(--text-dim);">@wilhewonthe · Mobile P2P Transfer</span>
+              </div>
+              <span style="font-size: 10px; color: var(--teal); font-family: var(--font-mono);">SEND ↗</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: Sovereign Crypto & Web3 -->
+        <div>
+          <div style="font-size: 11px; letter-spacing: 0.14em; color: var(--purple-brand); font-family: var(--font-mono); text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+            <span>🪙 SOVEREIGN CRYPTO & $WIL GENESIS</span>
+            <span style="background: rgba(168, 36, 236, 0.15); border: 1px solid rgba(168, 36, 236, 0.4); padding: 1px 6px; border-radius: 3px; font-size: 9px;">DECENTRALIZED</span>
+          </div>
+
+          <div class="crypto-grid">
+            <div class="crypto-item">
+              <span class="symbol">⚡ LIGHTNING</span>
+              <span class="addr">mrvh@getalby.com</span>
+              <button class="copy-chip-btn" data-copy="mrvh@getalby.com">COPY</button>
+            </div>
+
+            <div class="crypto-item">
+              <span class="symbol">₿ BTC</span>
+              <span class="addr">bc1qmrvh40ftalfa37fdcompute9842710</span>
+              <button class="copy-chip-btn" data-copy="bc1qmrvh40ftalfa37fdcompute9842710">COPY</button>
+            </div>
+
+            <div class="crypto-item">
+              <span class="symbol">⟠ ETH / USDC</span>
+              <span class="addr">0x71C2b8471948291837194829471928491</span>
+              <button class="copy-chip-btn" data-copy="0x71C2b8471948291837194829471928491">COPY</button>
+            </div>
+
+            <div class="crypto-item">
+              <span class="symbol">◎ SOLANA</span>
+              <span class="addr">Wil7hEwOnTheGpuSoVereiGnComPuteMesh99</span>
+              <button class="copy-chip-btn" data-copy="Wil7hEwOnTheGpuSoVereiGnComPuteMesh99">COPY</button>
+            </div>
+
+            <div class="crypto-item" style="border-color: rgba(212, 175, 55, 0.4); background: rgba(212, 175, 55, 0.05);">
+              <span class="symbol" style="color: #fff;">🪙 $WIL COIN</span>
+              <span class="addr" style="color: var(--gold);">Genesis Reserve · Compute Credit Pledge</span>
+              <button class="copy-chip-btn" style="border-color: var(--gold); color: var(--gold);" data-copy="Wil7hEwOnTheGpuSoVereiGnComPuteMesh99">PLEDGE</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Tip Simulation Trigger -->
+      <button class="simulate-tip-btn" id="simulateTipBtn">
+        <span>🎉</span>
+        <span id="simulateTipBtnText">SIMULATE $5 TIP & FIRE CELEBRATION CHIME</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Celebratory Toast Banner -->
+  <div class="tip-toast-banner" id="tipToast">
+    <span style="font-size: 20px;">⚡</span>
+    <div>
+      <div id="tipToastTitle" style="font-weight: 700; color: var(--gold);">TIP SIMULATED: $5.00</div>
+      <div id="tipToastDesc" style="color: var(--text-dim); font-size: 11px;">Alfa 37FD battery banks topped up & compute cycle initiated. Thank you!</div>
+    </div>
+  </div>
 
   <footer>
     <p><strong>MRVH · FORGED IN CODE · PANIC RESPONSIBLY™</strong> — Built & Operated by Mr. vH (<a href="https://github.com/wilhewonthe" target="_blank" style="color: var(--gold); text-decoration: none;">@wilhewonthe</a>)</p>
@@ -2897,6 +3519,27 @@
         gain.connect(this.ctx.destination);
         osc.start(now);
         osc.stop(now + 0.28);
+      }
+
+      playChime() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+        notes.forEach((freq, idx) => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, now + idx * 0.07);
+          gain.gain.setValueAtTime(0.001, now + idx * 0.07);
+          gain.gain.linearRampToValueAtTime(0.12, now + idx * 0.07 + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.07 + 0.42);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now + idx * 0.07);
+          osc.stop(now + idx * 0.07 + 0.45);
+        });
       }
 
       toggle() {
@@ -3886,6 +4529,87 @@
           if (window.MRVH_Audio) window.MRVH_Audio.playClick();
         });
       });
+    })();
+</script>
+<script>
+    /* =====================================================================
+       GLOBAL TIP MATRIX & BACKER INTERACTION
+       ===================================================================== */
+    (function initTipMatrix() {
+      let activeTipAmount = 5;
+      const tipBtns = document.querySelectorAll('.scene-tips .tip-card-btn');
+      const simBtn = document.getElementById('simulateTipBtn');
+      const simBtnText = document.getElementById('simulateTipBtnText');
+      const toast = document.getElementById('tipToast');
+      const toastTitle = document.getElementById('tipToastTitle');
+      const toastDesc = document.getElementById('tipToastDesc');
+      let toastTimer = null;
+
+      tipBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          tipBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          activeTipAmount = parseInt(btn.dataset.tipAmount, 10);
+          if (simBtnText) {
+            simBtnText.textContent = `SIMULATE $${activeTipAmount} TIP & FIRE CELEBRATION CHIME`;
+          }
+          if (window.MRVH_Audio) window.MRVH_Audio.playClick();
+        });
+      });
+
+      // Copy crypto addresses with feedback
+      document.querySelectorAll('.copy-chip-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const text = btn.dataset.copy;
+          if (!text) return;
+          navigator.clipboard.writeText(text).then(() => {
+            const original = btn.textContent;
+            btn.textContent = 'COPIED!';
+            btn.classList.add('copied');
+            if (window.MRVH_Audio) window.MRVH_Audio.playClick();
+            setTimeout(() => {
+              btn.textContent = original;
+              btn.classList.remove('copied');
+            }, 2000);
+          }).catch(() => {
+            prompt('Copy Address:', text);
+          });
+        });
+      });
+
+      // Interactive Tip Simulation
+      if (simBtn) {
+        simBtn.addEventListener('click', () => {
+          // Play celebration chime
+          if (window.MRVH_Audio) {
+            if (typeof window.MRVH_Audio.playChime === 'function') {
+              window.MRVH_Audio.playChime();
+            } else {
+              window.MRVH_Audio.playGlitch();
+            }
+          }
+
+          // Trigger particle hypersurge across ambient swarm
+          if (window.MRVH_SWARM && typeof window.MRVH_SWARM.triggerHypersurge === 'function') {
+            window.MRVH_SWARM.triggerHypersurge(3);
+          }
+
+          // Show Toast Banner
+          if (toast && toastTitle && toastDesc) {
+            toastTitle.textContent = `⚡ TIP SIMULATED: $${activeTipAmount}.00`;
+            toastDesc.textContent = `Alfa 37FD battery banks topped up & compute cycle initiated. Thank you!`;
+            toast.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+              toast.classList.remove('show');
+            }, 4500);
+          }
+
+          // Button pop effect
+          simBtn.style.transform = 'scale(1.03)';
+          setTimeout(() => { simBtn.style.transform = ''; }, 220);
+        });
+      }
     })();
 </script>
 </body>
