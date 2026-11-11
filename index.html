@@ -9,8 +9,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
     :root {
-      /* Base Surface Palette: Sophisticated Dark Greys (No pitch black) */
+      /* Slate Titanium & Obsidian Dark Greys (No pitch black) */
       --bg: #111116;
       --bg-surface: #16161d;
       --charcoal: #1a1a23;
@@ -25,7 +26,7 @@
       --gold-pale: #f3cb50;
       --gold-glow: rgba(212, 175, 55, 0.35);
 
-      /* Backward compatibility mapping */
+      /* Backward-compat tokens */
       --molten: var(--gold);
       --molten-dim: var(--gold-dim);
       --molten-pale: var(--gold-pale);
@@ -35,6 +36,8 @@
       --purple-brand: #a824ec;
       --purple-glow: rgba(168, 36, 236, 0.45);
       --purple-deep: #581c87;
+      --cyan-glitch: #00ffff;
+      --magenta-glitch: #ff00ff;
       --teal: #14b8a6;
       --teal-glow: rgba(20, 184, 166, 0.3);
 
@@ -47,7 +50,8 @@
       --font-display: 'Syne', sans-serif;
       --font-mono: 'IBM Plex Mono', monospace;
     }
-@media (prefers-reduced-motion: reduce) {
+
+    @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
@@ -75,11 +79,11 @@
       top: 0;
       bottom: 0;
       width: 3px;
-      background: linear-gradient(180deg, var(--molten), var(--molten-pale));
+      background: linear-gradient(180deg, var(--gold), var(--purple-brand));
       z-index: 1001;
       transform-origin: top;
       transform: scaleY(0);
-      box-shadow: 0 0 10px var(--molten-glow);
+      box-shadow: 0 0 10px var(--gold-glow);
     }
 
     /* Top Command Navbar */
@@ -89,7 +93,7 @@
       left: 0;
       right: 0;
       height: 64px;
-      background: rgba(10, 10, 10, 0.92);
+      background: rgba(17, 17, 22, 0.94);
       backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--steel);
       z-index: 999;
@@ -104,13 +108,33 @@
       align-items: center;
       gap: 12px;
       text-decoration: none;
-      color: var(--bone);
+      height: 46px;
     }
 
-    .brand-lockup svg {
-      height: 34px;
+    .nav-standalone-monogram {
+      height: 38px;
       width: auto;
-      display: block;
+      object-fit: contain;
+      filter: drop-shadow(0 0 10px var(--purple-glow));
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+    }
+
+    .brand-lockup:hover .nav-standalone-monogram {
+      transform: scale(1.12) rotate(-3deg);
+      filter: drop-shadow(0 0 18px rgba(168, 36, 236, 0.85));
+    }
+
+    .nav-brand-code {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 15px;
+      letter-spacing: 0.18em;
+      color: var(--bone);
+      transition: color 0.2s;
+    }
+
+    .brand-lockup:hover .nav-brand-code {
+      color: var(--purple-brand);
     }
 
     .nav-links {
@@ -131,7 +155,7 @@
     }
 
     .nav-links a:hover {
-      color: var(--molten);
+      color: var(--gold);
     }
 
     /* Tactical HUD Trigger in Nav */
@@ -139,8 +163,8 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(212, 175, 55, 0.12);
-      border: 1px solid rgba(212, 175, 55, 0.4);
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid rgba(212, 175, 55, 0.35);
       border-radius: 4px;
       padding: 6px 12px;
       color: var(--bone);
@@ -154,14 +178,14 @@
     }
 
     .hud-trigger-btn:hover {
-      background: var(--molten);
+      background: var(--gold);
       color: #111116;
-      border-color: var(--molten);
-      box-shadow: 0 0 16px var(--molten-glow);
+      border-color: var(--gold);
+      box-shadow: 0 0 16px var(--gold-glow);
     }
 
     .hud-trigger-btn kbd {
-      background: rgba(0, 0, 0, 0.4);
+      background: rgba(0, 0, 0, 0.45);
       border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 3px;
       padding: 2px 5px;
@@ -213,8 +237,8 @@
     }
 
     .nav-cta:hover {
-      border-color: var(--molten);
-      color: var(--molten) !important;
+      border-color: var(--gold);
+      color: var(--gold) !important;
     }
 
     /* Scene 1: Hero */
@@ -248,28 +272,211 @@
       align-items: center;
     }
 
-    .hero-emblem {
-      width: 100%;
-      max-width: 520px;
-      height: auto;
+    /* Hero Standalone 3D Monogram (Wireframe -> Hover Power-Up -> Click Glitch) */
+    .hero-brand-stage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       margin-bottom: 24px;
-      filter: drop-shadow(0 0 24px rgba(212, 175, 55, 0.15));
+      position: relative;
+    }
+
+    .hero-monogram-container {
+      position: relative;
+      width: 260px;
+      height: 270px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      user-select: none;
+      perspective: 1000px;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .hero-monogram-container:hover {
+      transform: translateY(-6px) scale(1.05);
+    }
+
+    .hero-monogram-layer {
+      position: absolute;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      pointer-events: none;
+      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), filter 0.45s ease;
+    }
+
+    /* 1. Resting Layer: Architectural Wireframe */
+    .wireframe-layer {
+      opacity: 0.95;
+      transform: scale(1);
+      filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.35)) drop-shadow(0 0 35px var(--gold-glow));
+    }
+
+    /* 2. Power-Up Layer: Solid 3D Purple Extrusion */
+    .purple-layer {
+      opacity: 0;
+      transform: scale(0.97);
+      filter: drop-shadow(0 0 35px rgba(168, 36, 236, 0.85)) drop-shadow(0 0 70px rgba(168, 36, 236, 0.5));
+    }
+
+    /* 3. Click Overdrive: Glitch Layer */
+    .glitch-layer {
+      opacity: 0;
+      transform: scale(0.98);
+      filter: drop-shadow(-4px 0 0 var(--magenta-glitch)) drop-shadow(4px 0 0 var(--cyan-glitch)) drop-shadow(0 0 28px rgba(168, 36, 236, 0.9));
+    }
+
+    /* Hover State -> Glows up to Purple */
+    .hero-monogram-container:hover .purple-layer {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .hero-monogram-container:hover .wireframe-layer {
+      opacity: 0.2;
+      transform: scale(1.02);
+      filter: drop-shadow(0 0 24px rgba(168, 36, 236, 0.8));
+    }
+
+    /* Click Glitch Overdrive State */
+    .hero-monogram-container.glitch-mode .purple-layer,
+    .hero-monogram-container.glitch-mode .wireframe-layer {
+      opacity: 0 !important;
+    }
+
+    .hero-monogram-container.glitch-mode .glitch-layer {
+      opacity: 1 !important;
+      animation: cyberGlitchJitter 0.22s infinite steps(2);
+    }
+
+    .hero-monogram-container.glitch-mode {
+      transform: translateY(-6px) scale(1.06);
+    }
+
+    @keyframes cyberGlitchJitter {
+      0% { transform: translate(0, 0) skew(0deg); }
+      25% { transform: translate(-4px, 2px) skew(-2.5deg); }
+      50% { transform: translate(4px, -2px) skew(2.5deg); }
+      75% { transform: translate(-3px, -3px) skew(1deg); }
+      100% { transform: translate(0, 0) skew(0deg); }
+    }
+
+    /* Atmospheric Plasma Aura on Hover / Click */
+    .monogram-reactor-aura {
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(168, 36, 236, 0.35) 0%, rgba(212, 175, 55, 0.12) 45%, transparent 70%);
+      opacity: 0;
+      transform: scale(0.8);
+      pointer-events: none;
+      transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: -1;
+    }
+
+    .hero-monogram-container:hover .monogram-reactor-aura {
+      opacity: 1;
+      transform: scale(1.35);
+      animation: pulseAura 2.5s infinite alternate ease-in-out;
+    }
+
+    .hero-monogram-container.glitch-mode .monogram-reactor-aura {
+      opacity: 1;
+      transform: scale(1.5);
+      background: radial-gradient(circle, rgba(255, 0, 255, 0.4) 0%, rgba(0, 255, 255, 0.25) 40%, transparent 70%);
+      animation: pulseGlitchAura 0.15s infinite alternate steps(2);
+    }
+
+    @keyframes pulseAura {
+      0% { transform: scale(1.3); opacity: 0.8; }
+      100% { transform: scale(1.45); opacity: 1; }
+    }
+
+    @keyframes pulseGlitchAura {
+      0% { transform: scale(1.4) rotate(0deg); opacity: 0.7; }
+      100% { transform: scale(1.55) rotate(5deg); opacity: 1; }
+    }
+
+    .monogram-hud-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 14px;
+      background: rgba(26, 26, 35, 0.8);
+      border: 1px solid var(--steel);
+      border-radius: 20px;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-top: 10px;
+      margin-bottom: 16px;
+      transition: all 0.25s ease;
+    }
+
+    .monogram-hud-status .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--steel-light);
+      transition: all 0.25s ease;
+    }
+
+    .hero-monogram-container:hover + .monogram-hud-status {
+      border-color: var(--purple-brand);
+      color: var(--bone);
+      background: rgba(168, 36, 236, 0.15);
+      box-shadow: 0 0 16px rgba(168, 36, 236, 0.3);
+    }
+
+    .hero-monogram-container:hover + .monogram-hud-status .status-dot {
+      background: var(--purple-brand);
+      box-shadow: 0 0 8px var(--purple-brand);
+    }
+
+    .hero-monogram-container.glitch-mode + .monogram-hud-status {
+      border-color: var(--magenta-glitch);
+      color: var(--cyan-glitch);
+      background: rgba(255, 0, 255, 0.15);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+    }
+
+    .hero-monogram-container.glitch-mode + .monogram-hud-status .status-dot {
+      background: var(--cyan-glitch);
+      box-shadow: 0 0 10px var(--cyan-glitch), 0 0 18px var(--magenta-glitch);
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(36px, 5.5vw, 64px);
+      letter-spacing: -0.02em;
+      color: var(--bone);
+      line-height: 1.05;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      background: linear-gradient(180deg, #ffffff 30%, #9ca3af 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     .tagline {
       font-family: var(--font-mono);
       font-size: 11px;
-      letter-spacing: 0.28em;
+      letter-spacing: 0.24em;
       text-transform: uppercase;
-      color: var(--molten);
+      color: var(--gold);
       margin-bottom: 18px;
       font-weight: 600;
     }
 
     .hero-sub {
-      font-size: 16px;
+      font-size: 15px;
       line-height: 1.7;
-      color: var(--bone);
+      color: var(--text-dim);
       max-width: 760px;
       margin-bottom: 34px;
     }
@@ -304,8 +511,8 @@
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: var(--molten);
-      box-shadow: 0 0 10px var(--molten);
+      background: var(--gold);
+      box-shadow: 0 0 10px var(--gold);
     }
 
     .stat-pill strong {
@@ -337,16 +544,16 @@
     }
 
     .btn-primary {
-      background: var(--molten);
+      background: var(--gold);
       color: #111116;
-      border: 1px solid var(--molten);
+      border: 1px solid var(--gold);
     }
 
     .btn-primary:hover {
-      background: var(--molten-pale);
-      border-color: var(--molten-pale);
+      background: var(--gold-pale);
+      border-color: var(--gold-pale);
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(212, 175, 55, 0.35);
+      box-shadow: 0 8px 24px var(--gold-glow);
     }
 
     .btn-secondary {
@@ -356,8 +563,8 @@
     }
 
     .btn-secondary:hover {
-      border-color: var(--molten);
-      color: var(--molten);
+      border-color: var(--gold);
+      color: var(--gold);
       transform: translateY(-2px);
     }
 
@@ -371,7 +578,7 @@
       font-size: 11px;
       letter-spacing: 0.24em;
       text-transform: uppercase;
-      color: var(--molten);
+      color: var(--gold);
       margin-bottom: 8px;
       font-weight: 600;
     }
@@ -425,7 +632,7 @@
 
     .filter-btn:hover,
     .filter-btn.active {
-      border-color: var(--molten);
+      border-color: var(--gold);
       color: var(--bone);
       background: rgba(212, 175, 55, 0.15);
     }
@@ -444,7 +651,7 @@
     }
 
     .search-box:focus {
-      border-color: var(--molten);
+      border-color: var(--gold);
     }
 
     .projects-grid {
@@ -476,7 +683,7 @@
       padding: 1px;
       background: radial-gradient(
         320px circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
-        rgba(212, 175, 55, 0.4),
+        rgba(212, 175, 55, 0.35),
         transparent 70%
       );
       -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -498,7 +705,7 @@
       left: 0;
       right: 0;
       height: 2px;
-      background: var(--molten);
+      background: var(--gold);
       transform: scaleX(0);
       transform-origin: left;
       transition: transform 0.35s ease;
@@ -506,8 +713,8 @@
 
     .project-card:hover {
       transform: translateY(-4px);
-      border-color: var(--molten);
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+      border-color: var(--gold);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
     }
 
     .project-card:hover::before {
@@ -515,8 +722,8 @@
     }
 
     .project-card.featured {
-      border-color: rgba(212, 175, 55, 0.55);
-      background: linear-gradient(160deg, rgba(212, 175, 55, 0.08) 0%, var(--charcoal) 45%);
+      border-color: rgba(212, 175, 55, 0.45);
+      background: linear-gradient(160deg, rgba(212, 175, 55, 0.06) 0%, var(--charcoal) 45%);
     }
 
     .card-top {
@@ -531,7 +738,7 @@
       font-size: 10px;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--molten);
+      color: var(--gold);
       font-weight: 600;
     }
 
@@ -606,20 +813,20 @@
     }
 
     .card-link:hover {
-      border-color: var(--molten);
-      color: var(--molten);
+      border-color: var(--gold);
+      color: var(--gold);
     }
 
     .card-link.primary {
-      background: var(--molten);
+      background: var(--gold);
       color: #111116 !important;
-      border-color: var(--molten);
+      border-color: var(--gold);
       font-weight: 600;
     }
 
     .card-link.primary:hover {
-      background: var(--molten-pale);
-      border-color: var(--molten-pale);
+      background: var(--gold-pale);
+      border-color: var(--gold-pale);
     }
 
     /* Scene 3: Upgraded Operation Leviathan 3D Showcase */
@@ -680,14 +887,14 @@
     }
 
     .stage-hud-badge {
-      background: rgba(10, 10, 10, 0.75);
+      background: rgba(17, 17, 22, 0.85);
       border: 1px solid var(--steel);
       border-radius: 3px;
       padding: 5px 10px;
       font-size: 10px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--molten);
+      color: var(--gold);
       display: flex;
       align-items: center;
       gap: 6px;
@@ -713,7 +920,7 @@
     }
 
     .stage-mode-btn {
-      background: rgba(16, 16, 16, 0.85);
+      background: rgba(22, 22, 30, 0.88);
       backdrop-filter: blur(8px);
       border: 1px solid var(--steel);
       border-radius: 3px;
@@ -728,9 +935,9 @@
     }
 
     .stage-mode-btn:hover, .stage-mode-btn.active {
-      border-color: var(--molten);
+      border-color: var(--gold);
       color: var(--bone);
-      background: rgba(212, 175, 55, 0.2);
+      background: rgba(212, 175, 55, 0.18);
     }
 
     .leviathan-info-panel {
@@ -746,7 +953,7 @@
     .leviathan-info-panel h3 {
       font-family: var(--font-display);
       font-size: 26px;
-      color: var(--molten);
+      color: var(--gold);
       margin-bottom: 12px;
     }
 
@@ -773,7 +980,7 @@
       font-family: var(--font-display);
       font-weight: 800;
       font-size: 22px;
-      color: var(--molten);
+      color: var(--gold);
       line-height: 1.1;
       margin-bottom: 4px;
     }
@@ -814,7 +1021,7 @@
 
     .rack-header {
       padding: 16px 22px;
-      background: #111;
+      background: #15151c;
       border-bottom: 1px solid var(--steel);
       font-family: var(--font-display);
       font-weight: 700;
@@ -870,7 +1077,7 @@
     }
 
     .rack-spec a {
-      color: var(--molten);
+      color: var(--gold);
       text-decoration: none;
     }
 
@@ -882,7 +1089,7 @@
     .command-hud-modal {
       position: fixed;
       inset: 0;
-      background: rgba(8, 8, 8, 0.94);
+      background: rgba(14, 14, 18, 0.94);
       backdrop-filter: blur(24px);
       z-index: 99999;
       display: flex;
@@ -909,12 +1116,12 @@
       border: 1px solid var(--steel-light);
       border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.8), 0 0 40px rgba(212, 175, 55, 0.12);
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.8), 0 0 40px rgba(168, 36, 236, 0.15);
     }
 
     .hud-topbar {
       padding: 16px 24px;
-      background: #111;
+      background: #14141b;
       border-bottom: 1px solid var(--steel);
       display: flex;
       justify-content: space-between;
@@ -937,7 +1144,7 @@
 
     .hud-clock-ticker {
       font-size: 11px;
-      color: var(--molten);
+      color: var(--gold);
       letter-spacing: 0.1em;
     }
 
@@ -956,13 +1163,13 @@
     }
 
     .hud-close-btn:hover {
-      border-color: var(--molten);
-      color: var(--molten);
+      border-color: var(--gold);
+      color: var(--gold);
     }
 
     .hud-search-section {
       padding: 20px 24px 14px;
-      background: #141414;
+      background: #16161e;
       border-bottom: 1px solid var(--steel);
       display: flex;
       flex-direction: column;
@@ -977,7 +1184,7 @@
 
     .hud-search-input {
       width: 100%;
-      background: #0d0d0d;
+      background: #101015;
       border: 1px solid var(--steel-light);
       border-radius: 5px;
       padding: 14px 18px 14px 44px;
@@ -989,14 +1196,14 @@
     }
 
     .hud-search-input:focus {
-      border-color: var(--molten);
-      box-shadow: 0 0 12px rgba(212, 175, 55, 0.25);
+      border-color: var(--gold);
+      box-shadow: 0 0 12px var(--gold-glow);
     }
 
     .hud-search-icon {
       position: absolute;
       left: 16px;
-      color: var(--molten);
+      color: var(--gold);
       font-size: 16px;
       pointer-events: none;
     }
@@ -1008,7 +1215,7 @@
     }
 
     .hud-chip {
-      background: #1c1c1c;
+      background: #1e1e28;
       border: 1px solid var(--steel);
       color: var(--text-dim);
       padding: 6px 12px;
@@ -1021,7 +1228,7 @@
     }
 
     .hud-chip:hover, .hud-chip.active {
-      border-color: var(--molten);
+      border-color: var(--gold);
       color: var(--bone);
       background: rgba(212, 175, 55, 0.18);
     }
@@ -1036,7 +1243,7 @@
     }
 
     .hud-matrix-item {
-      background: #0f0f0f;
+      background: #131319;
       border: 1px solid var(--steel);
       border-radius: 4px;
       padding: 16px;
@@ -1048,14 +1255,14 @@
     }
 
     .hud-matrix-item:hover {
-      border-color: var(--molten);
-      background: #161616;
+      border-color: var(--gold);
+      background: #1b1b24;
       transform: translateY(-2px);
     }
 
     .hud-matrix-item .node-id {
       font-size: 10px;
-      color: var(--molten);
+      color: var(--gold);
       letter-spacing: 0.14em;
       margin-bottom: 6px;
     }
@@ -1087,7 +1294,7 @@
 
     .hud-telemetry-drawer {
       padding: 14px 24px;
-      background: #101010;
+      background: #131319;
       border-top: 1px solid var(--steel);
       display: flex;
       flex-wrap: wrap;
@@ -1125,225 +1332,6 @@
       color: var(--text-dim);
       font-size: 12px;
     }
-
-
-    /* Sovereign Standalone Monogram in Navbar */
-    .brand-lockup {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-      height: 48px;
-    }
-
-    .nav-standalone-monogram {
-      height: 40px;
-      width: auto;
-      object-fit: contain;
-      filter: drop-shadow(0 0 12px rgba(168, 36, 236, 0.5));
-      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
-    }
-
-    .brand-lockup:hover .nav-standalone-monogram {
-      transform: scale(1.12) rotate(-3deg);
-      filter: drop-shadow(0 0 20px rgba(168, 36, 236, 0.9));
-    }
-
-    .nav-brand-code {
-      font-family: var(--font-display);
-      font-weight: 800;
-      font-size: 15px;
-      letter-spacing: 0.18em;
-      color: var(--bone);
-      transition: color 0.2s;
-    }
-
-    .brand-lockup:hover .nav-brand-code {
-      color: var(--purple-brand);
-    }
-
-    /* Sovereign 3D Monogram Hero Stage */
-    .hero-brand-stage {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 32px;
-      position: relative;
-    }
-
-    .hero-monogram-container {
-      position: relative;
-      width: 260px;
-      height: 270px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 20px;
-      transition: transform 0.3s ease;
-    }
-
-    .hero-monogram-container:hover {
-      transform: translateY(-4px) scale(1.02);
-    }
-
-    .hero-monogram-img {
-      position: absolute;
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-      opacity: 0;
-      transform: scale(0.92);
-      transition: opacity 0.35s ease, transform 0.35s ease, filter 0.35s ease;
-      pointer-events: none;
-    }
-
-    .hero-monogram-img.active {
-      opacity: 1;
-      transform: scale(1);
-      pointer-events: auto;
-    }
-
-    .hero-title {
-      font-family: var(--font-display);
-      font-weight: 800;
-      font-size: clamp(36px, 5.5vw, 64px);
-      letter-spacing: -0.02em;
-      color: var(--bone);
-      line-height: 1.05;
-      margin-bottom: 12px;
-      text-transform: uppercase;
-      background: linear-gradient(180deg, #ffffff 30%, #9a9892 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    /* MRVH Rebrand Styles */
-    :root {
-      --purple-brand: #a824ec;
-      --purple-glow: rgba(168, 36, 236, 0.45);
-      --purple-deep: #581c87;
-      --cyan-glitch: #00ffff;
-      --cyan-glow: rgba(0, 255, 255, 0.35);
-      --magenta-glitch: #ff00ff;
-    }
-
-    .brand-lockup {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-      height: 46px;
-    }
-
-    .nav-logo-monogram {
-      height: 38px;
-      width: auto;
-      filter: drop-shadow(0 0 10px var(--purple-glow));
-      transition: transform 0.25s ease, filter 0.25s ease;
-    }
-
-    .brand-lockup:hover .nav-logo-monogram {
-      transform: scale(1.08) rotate(-3deg);
-      filter: drop-shadow(0 0 18px rgba(168, 36, 236, 0.85));
-    }
-
-    .nav-logo-wordmark {
-      height: 22px;
-      width: auto;
-      filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.35));
-    }
-
-    /* Hero Rebrand Centerpiece */
-    .hero-brand-stage {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 28px;
-      position: relative;
-    }
-
-    .hero-monogram-container {
-      position: relative;
-      width: 220px;
-      height: 230px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 18px;
-    }
-
-    .hero-monogram-img {
-      position: absolute;
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-      opacity: 0;
-      transform: scale(0.92);
-      transition: opacity 0.35s ease, transform 0.35s ease, filter 0.35s ease;
-      pointer-events: none;
-    }
-
-    .hero-monogram-img.active {
-      opacity: 1;
-      transform: scale(1);
-      pointer-events: auto;
-    }
-
-    .hero-monogram-img.purple-glow {
-      filter: drop-shadow(0 0 32px rgba(168, 36, 236, 0.65)) drop-shadow(0 0 12px rgba(168, 36, 236, 0.9));
-    }
-
-    .hero-monogram-img.wireframe-glow {
-      filter: drop-shadow(0 0 24px rgba(255, 255, 255, 0.5)) drop-shadow(0 0 40px rgba(0, 255, 255, 0.25));
-    }
-
-    .hero-monogram-img.glitch-glow {
-      filter: drop-shadow(-3px 0 12px rgba(255, 0, 255, 0.7)) drop-shadow(3px 0 12px rgba(0, 255, 255, 0.7));
-    }
-
-    .hero-wordmark-container {
-      max-width: 440px;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      margin-bottom: 14px;
-    }
-
-    .hero-wordmark-img {
-      width: 100%;
-      max-width: 360px;
-      height: auto;
-      filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.55));
-    }
-
-    .hero-brand-variants {
-      display: flex;
-      gap: 8px;
-      margin-top: 10px;
-      margin-bottom: 14px;
-    }
-
-    .variant-chip {
-      background: rgba(18, 18, 24, 0.85);
-      border: 1px solid var(--steel);
-      border-radius: 3px;
-      padding: 4px 10px;
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .variant-chip:hover, .variant-chip.active {
-      border-color: var(--purple-brand);
-      color: #fff;
-      background: rgba(168, 36, 236, 0.22);
-      box-shadow: 0 0 12px rgba(168, 36, 236, 0.35);
-    }
-
   </style>
   <script src="/js/three.min.js"></script>
   <script src="/js/OrbitControls.js"></script>
@@ -1384,34 +1372,36 @@
   <section class="scene-hero" id="top">
     <canvas id="forgeParticles" class="forge-canvas"></canvas>
     <div class="hero-content">
+
+      <!-- Sovereign 3D Monogram: Wireframe Resting -> Hover Power-Up Purple -> Click Glitch Overdrive -->
       <div class="hero-brand-stage">
-        <!-- Standalone 3D Isometric Monogram Sculpture -->
-        <div class="hero-monogram-container">
-          <img src="/assets/branding/mrvh-monogram-purple.png" alt="MRVH 3D Isometric Monogram" class="hero-monogram-img purple-glow active" id="heroBrandPurple">
-          <img src="/assets/branding/mrvh-monogram-wireframe.png" alt="MRVH Wireframe Monogram" class="hero-monogram-img wireframe-glow" id="heroBrandWire">
-          <img src="/assets/branding/mrvh-industries-rgb-glitch.png" alt="MRVH RGB Glitch" class="hero-monogram-img glitch-glow" id="heroBrandGlitch">
+        <div class="hero-monogram-container" id="heroMonogramContainer" role="button" aria-label="MRVH Monogram - Hover to Energize, Click for Glitch Overdrive" tabindex="0">
+          <img src="/assets/branding/mrvh-monogram-wireframe.png" alt="MRVH Wireframe Monogram" class="hero-monogram-layer wireframe-layer" id="monogramWire">
+          <img src="/assets/branding/mrvh-monogram-purple.png" alt="MRVH 3D Purple Monogram" class="hero-monogram-layer purple-layer" id="monogramPurple">
+          <img src="/assets/branding/mrvh-monogram-glitch.png" alt="MRVH Glitch Overdrive Monogram" class="hero-monogram-layer glitch-layer" id="monogramGlitch">
+          <div class="monogram-reactor-aura"></div>
         </div>
 
-        <!-- Standalone 3D Variant Switcher -->
-        <div class="hero-brand-variants">
-          <button class="variant-chip active" data-v="purple">3D PURPLE</button>
-          <button class="variant-chip" data-v="wire">WIREFRAME</button>
-          <button class="variant-chip" data-v="glitch">RGB GLITCH</button>
+        <div class="monogram-hud-status" id="monogramStatus">
+          <span class="status-dot"></span>
+          <span class="status-text">HOVER TO ENERGIZE · CLICK FOR OVERDRIVE</span>
         </div>
 
-        <!-- Independent Entity Stature -->
         <h1 class="hero-title">MRVH VENTURES</h1>
       </div>
-      <p class="tagline">MRVH VENTURES // FORGED IN CODE · SYSTEMS ARCHITECTURE · COMMAND DECK</p>
+
+      <p class="tagline">FORGED IN CODE · SYSTEMS ARCHITECTURE · COMMAND DECK</p>
       <p class="hero-sub">
         Off-grid mobile energy engineering, autonomous multi-agent systems, client-side privacy tools, additive manufacturing, and quantitative market telemetry. Built and operated by Mr. vH.
       </p>
+
       <div class="hero-stats-bar">
         <div class="stat-pill"><span class="dot"></span><strong>14+</strong> Active Ventures & Tools</div>
         <div class="stat-pill"><span class="dot"></span><strong>48V / 3.6kW+</strong> Alfa See Ya Micro-Grid</div>
         <div class="stat-pill"><span class="dot"></span><strong>590+</strong> Unified Agent Skills & MCPs</div>
         <div class="stat-pill"><span class="dot"></span><strong>Bambu P1S</strong> Additive Fab Hub</div>
       </div>
+
       <div class="hero-actions">
         <a href="#projects" class="btn-primary">Explore All Projects ↓</a>
         <button class="btn-secondary" onclick="window.MRVH_HUD.open()">Launch Command HUD ↗</button>
@@ -1874,8 +1864,8 @@
       <div class="hud-topbar">
         <div class="hud-title-lockup">
           <span class="hud-led" style="width: 8px; height: 8px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 8px var(--teal);"></span>
-          <span class="title">MR. vH // TACTICAL COMMAND HUD</span>
-          <span style="font-size: 10px; color: var(--text-dim); background: #1a1a1a; padding: 2px 8px; border-radius: 3px;">SYSTEM MATRIX v2.4</span>
+          <span class="title">MRVH // TACTICAL COMMAND HUD</span>
+          <span style="font-size: 10px; color: var(--text-dim); background: #1c1c26; padding: 2px 8px; border-radius: 3px;">SYSTEM MATRIX v2.4</span>
         </div>
         <div style="display: flex; align-items: center; gap: 16px;">
           <div class="hud-clock-ticker" id="hudClock">UTC --:--:-- | PST --:--:--</div>
@@ -1921,7 +1911,7 @@
           </div>
         </div>
         <div class="hud-telemetry-group">
-          <span style="color: var(--molten);">HERMES: ONLINE (127.0.0.1:9119)</span>
+          <span style="color: var(--gold);">HERMES: ONLINE (127.0.0.1:9119)</span>
           <span>·</span>
           <span style="color: var(--teal);">OLLAMA: READY (127.0.0.1:11434)</span>
         </div>
@@ -1930,12 +1920,12 @@
   </div>
 
   <footer>
-    <p><strong>MR. vH · FORGED IN CODE · PANIC RESPONSIBLY™</strong> — Built & Operated by Mr. vH (<a href="https://github.com/wilhewonthe" target="_blank" style="color: var(--molten); text-decoration: none;">@wilhewonthe</a>)</p>
+    <p><strong>MRVH · FORGED IN CODE · PANIC RESPONSIBLY™</strong> — Built & Operated by Mr. vH (<a href="https://github.com/wilhewonthe" target="_blank" style="color: var(--gold); text-decoration: none;">@wilhewonthe</a>)</p>
   </footer>
 
   <script>
     /* =====================================================================
-       MR. vH PROCEDURAL AUDIO ENGINE (Web Audio API)
+       MRVH PROCEDURAL AUDIO ENGINE (Web Audio API)
        ===================================================================== */
     class TacticalAudioEngine {
       constructor() {
@@ -2005,6 +1995,104 @@
         osc.stop(this.ctx.currentTime + 0.25);
       }
 
+      playPowerUp() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+
+        // 1. Rising Capacitor / Reactor Whine
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        const filter = this.ctx.createBiquadFilter();
+
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(110, now);
+        osc.frequency.exponentialRampToValueAtTime(880, now + 0.42);
+
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(220, now);
+        filter.frequency.exponentialRampToValueAtTime(1760, now + 0.42);
+        filter.Q.setValueAtTime(4.5, now);
+
+        gain.gain.setValueAtTime(0.01, now);
+        gain.gain.linearRampToValueAtTime(0.12, now + 0.15);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.48);
+
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(this.ctx.destination);
+
+        osc.start(now);
+        osc.stop(now + 0.5);
+
+        // 2. Sub-bass Reactor Resonance
+        const subOsc = this.ctx.createOscillator();
+        const subGain = this.ctx.createGain();
+        subOsc.type = 'sine';
+        subOsc.frequency.setValueAtTime(55, now);
+        subOsc.frequency.linearRampToValueAtTime(110, now + 0.35);
+
+        subGain.gain.setValueAtTime(0.14, now);
+        subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+
+        subOsc.connect(subGain);
+        subGain.connect(this.ctx.destination);
+        subOsc.start(now);
+        subOsc.stop(now + 0.48);
+      }
+
+      playPowerDown() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(440, now);
+        osc.frequency.exponentialRampToValueAtTime(70, now + 0.28);
+
+        gain.gain.setValueAtTime(0.08, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.32);
+      }
+
+      playGlitch() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+
+        // Rapid digital glitch burst
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sawtooth';
+
+        // Frequency hopping
+        osc.frequency.setValueAtTime(140, now);
+        osc.frequency.setValueAtTime(980, now + 0.04);
+        osc.frequency.setValueAtTime(320, now + 0.08);
+        osc.frequency.setValueAtTime(1640, now + 0.12);
+        osc.frequency.setValueAtTime(220, now + 0.16);
+        osc.frequency.setValueAtTime(80, now + 0.22);
+
+        gain.gain.setValueAtTime(0.18, now);
+        gain.gain.setValueAtTime(0.08, now + 0.06);
+        gain.gain.setValueAtTime(0.16, now + 0.12);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.26);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.28);
+      }
+
       toggle() {
         this.enabled = !this.enabled;
         localStorage.setItem('mrvh_audio', this.enabled);
@@ -2034,7 +2122,41 @@
     document.getElementById('audioToggleBtn')?.addEventListener('click', () => window.MRVH_Audio.toggle());
 
     /* =====================================================================
-       AMBIENT FORGE PARTICLE FIELD (HTML5 Canvas)
+       INTERACTIVE MONOGRAM (Hover Power-Up -> Click Cyber Glitch)
+       ===================================================================== */
+    (function initMonogramInteraction() {
+      const monogramBox = document.getElementById('heroMonogramContainer');
+      const statusText = document.getElementById('monogramStatus');
+      if (!monogramBox) return;
+
+      monogramBox.addEventListener('mouseenter', () => {
+        if (!monogramBox.classList.contains('glitch-mode')) {
+          window.MRVH_Audio.playPowerUp();
+          if (statusText) statusText.querySelector('.status-text').textContent = 'MRVH CORE: FULLY ENERGIZED (48V)';
+        }
+      });
+
+      monogramBox.addEventListener('mouseleave', () => {
+        if (!monogramBox.classList.contains('glitch-mode')) {
+          window.MRVH_Audio.playPowerDown();
+          if (statusText) statusText.querySelector('.status-text').textContent = 'HOVER TO ENERGIZE · CLICK FOR OVERDRIVE';
+        }
+      });
+
+      monogramBox.addEventListener('click', () => {
+        const isGlitch = monogramBox.classList.toggle('glitch-mode');
+        if (isGlitch) {
+          window.MRVH_Audio.playGlitch();
+          if (statusText) statusText.querySelector('.status-text').textContent = '⚡ OVERDRIVE ACTIVE // CYBER GLITCH MODE [CLICK TO RESET]';
+        } else {
+          window.MRVH_Audio.playPowerDown();
+          if (statusText) statusText.querySelector('.status-text').textContent = 'HOVER TO ENERGIZE · CLICK FOR OVERDRIVE';
+        }
+      });
+    })();
+
+    /* =====================================================================
+       AMBIENT FORGE PARTICLE FIELD (Warm Gold Embers)
        ===================================================================== */
     const forgeCanvas = document.getElementById('forgeParticles');
     if (forgeCanvas) {
@@ -2059,7 +2181,7 @@
           size: 1 + Math.random() * 2,
           alpha: 0.1 + Math.random() * 0.7,
           decay: 0.003 + Math.random() * 0.006,
-          hue: 42 + Math.random() * 12 // Molten orange/gold hue
+          hue: 42 + Math.random() * 12 // Deep warm gold hue
         });
       }
 
@@ -2080,7 +2202,7 @@
 
           ctx.beginPath();
           ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
-          ctx.fillStyle = `hsla(${s.hue}, 100%, 55%, ${s.alpha})`;
+          ctx.fillStyle = `hsla(${s.hue}, 95%, 55%, ${s.alpha})`;
           ctx.shadowBlur = 8;
           ctx.shadowColor = 'rgba(212, 175, 55, 0.6)';
           ctx.fill();
@@ -2111,7 +2233,7 @@
       const controls = new THREE.OrbitControls(camera, renderer.domElement);
       controls.enableDamping = true;
       controls.dampingFactor = 0.06;
-      controls.maxPolarAngle = Math.PI / 2 - 0.02; // Don't go below ground
+      controls.maxPolarAngle = Math.PI / 2 - 0.02;
       controls.minDistance = 4;
       controls.maxDistance = 22;
 
@@ -2123,12 +2245,12 @@
       dirLight.position.set(12, 18, 10);
       scene.add(dirLight);
 
-      const moltenRimLight = new THREE.DirectionalLight(0xd4af37, 1.8);
-      moltenRimLight.position.set(-10, -4, -10);
-      scene.add(moltenRimLight);
+      const goldRimLight = new THREE.DirectionalLight(0xd4af37, 1.8);
+      goldRimLight.position.set(-10, -4, -10);
+      scene.add(goldRimLight);
 
-      // Ground Grid
-      const grid = new THREE.GridHelper(26, 26, 0xd4af37, 0x1f1f1f);
+      // Ground Grid in Gold
+      const grid = new THREE.GridHelper(26, 26, 0xd4af37, 0x242432);
       grid.position.y = -0.01;
       scene.add(grid);
 
@@ -2138,7 +2260,7 @@
 
       // Base Materials
       const coachBodyMat = new THREE.MeshStandardMaterial({
-        color: 0x181818,
+        color: 0x181822,
         roughness: 0.25,
         metalness: 0.85
       });
@@ -2146,12 +2268,12 @@
       const accentStripeMat = new THREE.MeshStandardMaterial({
         color: 0xd4af37,
         emissive: 0xd4af37,
-        emissiveIntensity: 0.5,
+        emissiveIntensity: 0.45,
         roughness: 0.2
       });
 
       const glassMat = new THREE.MeshStandardMaterial({
-        color: 0x051522,
+        color: 0x091b2c,
         roughness: 0.05,
         metalness: 0.95,
         transparent: true,
@@ -2166,13 +2288,13 @@
       });
 
       const metalMat = new THREE.MeshStandardMaterial({
-        color: 0x333333,
+        color: 0x3a3a4c,
         roughness: 0.4,
         metalness: 0.9
       });
 
       const tireMat = new THREE.MeshStandardMaterial({
-        color: 0x0e0e0e,
+        color: 0x121216,
         roughness: 0.9
       });
 
@@ -2182,7 +2304,7 @@
       coachBody.position.y = 1.65;
       rvGroup.add(coachBody);
 
-      // Molten Pinstripe
+      // Gold Pinstripe
       const stripeGeom = new THREE.BoxGeometry(7.62, 0.1, 2.42);
       const stripe = new THREE.Mesh(stripeGeom, accentStripeMat);
       stripe.position.y = 1.35;
@@ -2219,7 +2341,7 @@
         wheel.position.set(pos[0], pos[1], pos[2]);
         rvGroup.add(wheel);
 
-        // Center hub cap in copper
+        // Center hub cap in gold
         const hubGeom = new THREE.CylinderGeometry(0.18, 0.18, 0.36, 16);
         hubGeom.rotateX(Math.PI / 2);
         const hub = new THREE.Mesh(hubGeom, accentStripeMat);
@@ -2227,12 +2349,11 @@
         rvGroup.add(hub);
       });
 
-      // 3. Elevated Over-Roof Bifacial Solar Array (3.6kW Unistrut)
+      // 3. Elevated Over-Roof Bifacial Solar Array
       const solarRack = new THREE.Group();
       solarRack.position.set(0, 2.9, 0);
       rvGroup.add(solarRack);
 
-      // Unistrut rails
       const railGeom = new THREE.BoxGeometry(7.2, 0.08, 0.08);
       const rail1 = new THREE.Mesh(railGeom, metalMat);
       rail1.position.z = 1.05;
@@ -2240,7 +2361,6 @@
       rail2.position.z = -1.05;
       solarRack.add(rail1, rail2);
 
-      // 10 Bifacial Panels
       const panelGeom = new THREE.BoxGeometry(0.65, 0.04, 2.15);
       for (let i = -4; i <= 4; i++) {
         const panel = new THREE.Mesh(panelGeom, solarMat);
@@ -2279,7 +2399,6 @@
       }
       rvGroup.add(ledRow);
 
-      // Handle Resize
       function onResize() {
         const w = canvas.parentElement.clientWidth;
         const h = canvas.parentElement.clientHeight || 460;
@@ -2335,18 +2454,12 @@
         accentStripeMat.wireframe = val;
       }
 
-      // Animation Loop
       function animate() {
         requestAnimationFrame(animate);
-
-        // Spin wind turbine
         turbine.rotation.y += 0.04;
-
-        // Smooth camera transitions
         camera.position.lerp(targetCameraPos, 0.04);
         controls.target.lerp(targetLookAt, 0.04);
         controls.update();
-
         renderer.render(scene, camera);
       }
       animate();
@@ -2364,7 +2477,6 @@
       const matrixBody = document.getElementById('hudMatrixBody');
       const clockElem = document.getElementById('hudClock');
 
-      // Extract raw data from all project cards
       const cards = Array.from(document.querySelectorAll('.project-card'));
       const projectsData = cards.map((card, idx) => {
         const title = card.querySelector('h3')?.innerText || `PROJECT_${idx+1}`;
@@ -2374,7 +2486,7 @@
         const tags = Array.from(card.querySelectorAll('.tech-tag')).map(t => t.innerText);
         const link = card.querySelector('.card-link.primary')?.getAttribute('href') || '#';
         const isExternal = link.startsWith('http');
-        return { id: `NODE_${String(idx+1).padStart(2, '0')}`, title, cat, catLabel, desc, tags, link, isExternal, domId: card.id || `card-${idx}` };
+        return { id: `NODE_${String(idx+1).padStart(2, '0')}`, title, cat, catLabel, desc, tags, link, isExternal };
       });
 
       function renderMatrix(items) {
@@ -2388,7 +2500,7 @@
             </div>
             <div class="node-footer">
               <span>STACK: ${p.tags.slice(0, 2).join(' · ')}</span>
-              <span style="color: var(--molten); font-weight: 600;">${p.isExternal ? 'LAUNCH ↗' : 'NAVIGATE ↓'}</span>
+              <span style="color: var(--gold); font-weight: 600;">${p.isExternal ? 'LAUNCH ↗' : 'NAVIGATE ↓'}</span>
             </div>
           </div>
         `).join('');
@@ -2420,7 +2532,6 @@
         });
       });
 
-      // Live UTC / PST Clock
       function updateClock() {
         if (!clockElem) return;
         const now = new Date();
@@ -2460,7 +2571,6 @@
       triggerBtn?.addEventListener('click', () => window.MRVH_HUD.open());
       closeBtn?.addEventListener('click', () => window.MRVH_HUD.close());
 
-      // Spacebar and Esc Hotkeys
       window.addEventListener('keydown', (e) => {
         const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
         const isInput = activeTag === 'input' || activeTag === 'textarea';
@@ -2520,28 +2630,6 @@
     });
 
     searchInput.addEventListener('input', filterCards);
-
-    // Hero Rebrand Variant Switcher
-    const variantChips = document.querySelectorAll('.variant-chip');
-    const heroPurple = document.getElementById('heroBrandPurple');
-    const heroWire = document.getElementById('heroBrandWire');
-    const heroGlitch = document.getElementById('heroBrandGlitch');
-
-    variantChips.forEach(chip => {
-      chip.addEventListener('click', () => {
-        variantChips.forEach(c => c.classList.remove('active'));
-        chip.classList.add('active');
-        window.MRVH_Audio.playClick();
-        const v = chip.dataset.v;
-
-        [heroPurple, heroWire, heroGlitch].forEach(img => img?.classList.remove('active'));
-
-        if (v === 'purple') heroPurple?.classList.add('active');
-        else if (v === 'wire') heroWire?.classList.add('active');
-        else if (v === 'glitch') heroGlitch?.classList.add('active');
-      });
-    });
-
 
     // Audio click hooks on primary buttons
     document.querySelectorAll('.btn-primary, .btn-secondary, .card-link').forEach(btn => {
