@@ -10,28 +10,44 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --bg: #0a0a0a;
-      --bone: #ece8df;
-      --molten: #ff5a1f;
-      --molten-dim: #ff8c00;
-      --molten-pale: #ffaa44;
-      --molten-glow: rgba(255, 90, 31, 0.35);
-      --charcoal: #141414;
-      --charcoal-elevated: #1a1a1a;
-      --charcoal-deep: #0e0e0e;
-      --steel: #262626;
-      --steel-light: #3e3e3e;
-      --text: #ece8df;
-      --text-dim: #9a9892;
-      --text-muted: #66645e;
+      /* Base Surface Palette: Sophisticated Dark Greys (No pitch black) */
+      --bg: #111116;
+      --bg-surface: #16161d;
+      --charcoal: #1a1a23;
+      --charcoal-elevated: #22222e;
+      --charcoal-deep: #131319;
+      --steel: #2d2d3c;
+      --steel-light: #424256;
+
+      /* Primary Metal Accent: Deep Industrial Gold */
+      --gold: #d4af37;
+      --gold-dim: #b89628;
+      --gold-pale: #f3cb50;
+      --gold-glow: rgba(212, 175, 55, 0.35);
+
+      /* Backward compatibility mapping */
+      --molten: var(--gold);
+      --molten-dim: var(--gold-dim);
+      --molten-pale: var(--gold-pale);
+      --molten-glow: var(--gold-glow);
+
+      /* Brand Accents */
+      --purple-brand: #a824ec;
+      --purple-glow: rgba(168, 36, 236, 0.45);
+      --purple-deep: #581c87;
       --teal: #14b8a6;
       --teal-glow: rgba(20, 184, 166, 0.3);
-      --emerald: #10b981;
+
+      /* Typography & Content Colors */
+      --text: #f3f4f6;
+      --text-dim: #9ca3af;
+      --text-muted: #6b7280;
+      --bone: #f3f4f6;
+
       --font-display: 'Syne', sans-serif;
       --font-mono: 'IBM Plex Mono', monospace;
     }
-
-    @media (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
@@ -123,8 +139,8 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(255, 90, 31, 0.12);
-      border: 1px solid rgba(255, 90, 31, 0.4);
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid rgba(212, 175, 55, 0.4);
       border-radius: 4px;
       padding: 6px 12px;
       color: var(--bone);
@@ -139,7 +155,7 @@
 
     .hud-trigger-btn:hover {
       background: var(--molten);
-      color: #0a0a0a;
+      color: #111116;
       border-color: var(--molten);
       box-shadow: 0 0 16px var(--molten-glow);
     }
@@ -237,7 +253,7 @@
       max-width: 520px;
       height: auto;
       margin-bottom: 24px;
-      filter: drop-shadow(0 0 24px rgba(255, 90, 31, 0.15));
+      filter: drop-shadow(0 0 24px rgba(212, 175, 55, 0.15));
     }
 
     .tagline {
@@ -322,7 +338,7 @@
 
     .btn-primary {
       background: var(--molten);
-      color: #0a0a0a;
+      color: #111116;
       border: 1px solid var(--molten);
     }
 
@@ -330,7 +346,7 @@
       background: var(--molten-pale);
       border-color: var(--molten-pale);
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(255, 90, 31, 0.35);
+      box-shadow: 0 8px 24px rgba(212, 175, 55, 0.35);
     }
 
     .btn-secondary {
@@ -411,7 +427,7 @@
     .filter-btn.active {
       border-color: var(--molten);
       color: var(--bone);
-      background: rgba(255, 90, 31, 0.15);
+      background: rgba(212, 175, 55, 0.15);
     }
 
     .search-box {
@@ -460,7 +476,7 @@
       padding: 1px;
       background: radial-gradient(
         320px circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
-        rgba(255, 90, 31, 0.4),
+        rgba(212, 175, 55, 0.4),
         transparent 70%
       );
       -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -499,8 +515,8 @@
     }
 
     .project-card.featured {
-      border-color: rgba(255, 90, 31, 0.55);
-      background: linear-gradient(160deg, rgba(255, 90, 31, 0.08) 0%, var(--charcoal) 45%);
+      border-color: rgba(212, 175, 55, 0.55);
+      background: linear-gradient(160deg, rgba(212, 175, 55, 0.08) 0%, var(--charcoal) 45%);
     }
 
     .card-top {
@@ -596,7 +612,7 @@
 
     .card-link.primary {
       background: var(--molten);
-      color: #0a0a0a !important;
+      color: #111116 !important;
       border-color: var(--molten);
       font-weight: 600;
     }
@@ -629,7 +645,7 @@
     }
 
     .leviathan-3d-box {
-      background: #080808;
+      background: #111116;
       border: 1px solid var(--steel);
       border-radius: 6px;
       position: relative;
@@ -714,7 +730,7 @@
     .stage-mode-btn:hover, .stage-mode-btn.active {
       border-color: var(--molten);
       color: var(--bone);
-      background: rgba(255, 90, 31, 0.2);
+      background: rgba(212, 175, 55, 0.2);
     }
 
     .leviathan-info-panel {
@@ -750,7 +766,7 @@
     }
 
     .spec-card.accent {
-      border-color: rgba(255, 90, 31, 0.45);
+      border-color: rgba(212, 175, 55, 0.45);
     }
 
     .spec-value {
@@ -893,7 +909,7 @@
       border: 1px solid var(--steel-light);
       border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 90, 31, 0.12);
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.8), 0 0 40px rgba(212, 175, 55, 0.12);
     }
 
     .hud-topbar {
@@ -974,7 +990,7 @@
 
     .hud-search-input:focus {
       border-color: var(--molten);
-      box-shadow: 0 0 12px rgba(255, 90, 31, 0.25);
+      box-shadow: 0 0 12px rgba(212, 175, 55, 0.25);
     }
 
     .hud-search-icon {
@@ -1007,7 +1023,7 @@
     .hud-chip:hover, .hud-chip.active {
       border-color: var(--molten);
       color: var(--bone);
-      background: rgba(255, 90, 31, 0.18);
+      background: rgba(212, 175, 55, 0.18);
     }
 
     .hud-matrix-body {
@@ -2043,7 +2059,7 @@
           size: 1 + Math.random() * 2,
           alpha: 0.1 + Math.random() * 0.7,
           decay: 0.003 + Math.random() * 0.006,
-          hue: 20 + Math.random() * 25 // Molten orange/gold hue
+          hue: 42 + Math.random() * 12 // Molten orange/gold hue
         });
       }
 
@@ -2066,7 +2082,7 @@
           ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
           ctx.fillStyle = `hsla(${s.hue}, 100%, 55%, ${s.alpha})`;
           ctx.shadowBlur = 8;
-          ctx.shadowColor = 'rgba(255, 90, 31, 0.6)';
+          ctx.shadowColor = 'rgba(212, 175, 55, 0.6)';
           ctx.fill();
         }
         requestAnimationFrame(renderSparks);
@@ -2082,7 +2098,7 @@
       if (!canvas || typeof THREE === 'undefined') return;
 
       const scene = new THREE.Scene();
-      scene.background = new THREE.Color(0x080808);
+      scene.background = new THREE.Color(0x111116);
 
       const camera = new THREE.PerspectiveCamera(42, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
       camera.position.set(9, 4.5, 9);
@@ -2107,12 +2123,12 @@
       dirLight.position.set(12, 18, 10);
       scene.add(dirLight);
 
-      const moltenRimLight = new THREE.DirectionalLight(0xff5a1f, 1.8);
+      const moltenRimLight = new THREE.DirectionalLight(0xd4af37, 1.8);
       moltenRimLight.position.set(-10, -4, -10);
       scene.add(moltenRimLight);
 
       // Ground Grid
-      const grid = new THREE.GridHelper(26, 26, 0xff5a1f, 0x1f1f1f);
+      const grid = new THREE.GridHelper(26, 26, 0xd4af37, 0x1f1f1f);
       grid.position.y = -0.01;
       scene.add(grid);
 
@@ -2128,8 +2144,8 @@
       });
 
       const accentStripeMat = new THREE.MeshStandardMaterial({
-        color: 0xff5a1f,
-        emissive: 0xff5a1f,
+        color: 0xd4af37,
+        emissive: 0xd4af37,
         emissiveIntensity: 0.5,
         roughness: 0.2
       });
@@ -2256,7 +2272,7 @@
       for (let i = 0; i < 4; i++) {
         const bLed = new THREE.Mesh(
           new THREE.SphereGeometry(0.04, 12, 12),
-          new THREE.MeshBasicMaterial({ color: i === 3 ? 0xff5a1f : 0x14b8a6 })
+          new THREE.MeshBasicMaterial({ color: i === 3 ? 0xd4af37 : 0x14b8a6 })
         );
         bLed.position.x = (i - 1.5) * 0.22;
         ledRow.add(bLed);
