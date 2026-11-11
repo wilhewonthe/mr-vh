@@ -8,6 +8,42 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,600;0,700;1,600;1,700&family=Oxanium:wght@600;700;800&family=Syne:wght@600;700;800&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
   <style>
+    @font-face {
+      font-family: 'Ethnocentric';
+      src: url('/assets/fonts/Ethnocentric.woff2') format('woff2'),
+           url('/assets/fonts/Ethnocentric.woff') format('woff');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Airstrike';
+      src: url('/assets/fonts/AirstrikeBold.woff2') format('woff2'),
+           url('/assets/fonts/AirstrikeBold.woff') format('woff');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Paladins';
+      src: url('/assets/fonts/PaladinsSemiItalic.woff2') format('woff2'),
+           url('/assets/fonts/PaladinsSemiItalic.woff') format('woff');
+      font-weight: 700;
+      font-style: italic;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Nasalization';
+      src: url('/assets/fonts/Nasalization.woff2') format('woff2'),
+           url('/assets/fonts/Nasalization.woff') format('woff');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
     :root {
       --bg: #0d0e12;
       --bg-surface: #13141a;
@@ -27,7 +63,7 @@
       --text-dim: #9ca3af;
       --text-muted: #6b7280;
 
-      --font-display: 'Chakra Petch', 'Oxanium', 'Syne', sans-serif;
+      --font-display: 'Ethnocentric', 'Paladins', 'Airstrike', 'Chakra Petch', sans-serif;
       --font-mono: 'IBM Plex Mono', monospace;
     }
 
@@ -987,6 +1023,15 @@
         renderer.render(scene, camera);
       }
       animate();
+    })();
+  </script>
+
+  <script>
+    (function syncGlobalFont() {
+      const savedFont = localStorage.getItem('mrvh_active_font');
+      if (savedFont) {
+        document.documentElement.style.setProperty('--font-display', savedFont);
+      }
     })();
   </script>
 </body>

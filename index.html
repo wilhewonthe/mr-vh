@@ -8,15 +8,52 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,600;0,700;1,600;1,700&family=Oxanium:wght@600;700;800&family=Syne:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+
     @font-face {
-      font-family: 'MRVH Display';
-      src: url('/assets/fonts/MRVHTacticalDisplay-Regular.woff2') format('woff2'),
-           url('/assets/fonts/MRVHTacticalDisplay-Regular.woff') format('woff'),
-           url('/assets/fonts/MRVHTacticalDisplay-Regular.ttf') format('truetype');
-      font-weight: 400 900;
+      font-family: 'Ethnocentric';
+      src: url('/assets/fonts/Ethnocentric.woff2') format('woff2'),
+           url('/assets/fonts/Ethnocentric.woff') format('woff');
+      font-weight: 700;
       font-style: normal;
       font-display: swap;
     }
+
+    @font-face {
+      font-family: 'Airstrike';
+      src: url('/assets/fonts/AirstrikeBold.woff2') format('woff2'),
+           url('/assets/fonts/AirstrikeBold.woff') format('woff');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Paladins';
+      src: url('/assets/fonts/PaladinsSemiItalic.woff2') format('woff2'),
+           url('/assets/fonts/PaladinsSemiItalic.woff') format('woff');
+      font-weight: 700;
+      font-style: italic;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'PaladinsSuper';
+      src: url('/assets/fonts/PaladinsSuperItalic.woff2') format('woff2'),
+           url('/assets/fonts/PaladinsSuperItalic.woff') format('woff');
+      font-weight: 700;
+      font-style: italic;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Nasalization';
+      src: url('/assets/fonts/Nasalization.woff2') format('woff2'),
+           url('/assets/fonts/Nasalization.woff') format('woff');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -57,8 +94,8 @@
       --text-muted: #6b7280;
       --bone: #f3f4f6;
 
-      --font-mrvh: 'Chakra Petch', 'Oxanium', 'Syne', sans-serif;
-      --font-display: 'Chakra Petch', 'Oxanium', 'Syne', sans-serif;
+      --font-mrvh: 'Ethnocentric', 'Paladins', 'Airstrike', 'Chakra Petch', sans-serif;
+      --font-display: 'Ethnocentric', 'Paladins', 'Airstrike', 'Chakra Petch', sans-serif;
       --font-mono: 'IBM Plex Mono', monospace;
     }
 
@@ -467,8 +504,8 @@
       font-family: var(--font-display);
       font-style: italic;
       font-weight: 700;
-      font-size: clamp(38px, 6vw, 72px);
-      letter-spacing: 0.08em;
+      font-size: clamp(32px, 5.2vw, 64px);
+      letter-spacing: 0.04em;
       color: var(--bone);
       line-height: 1.05;
       margin-bottom: 14px;
@@ -1425,6 +1462,34 @@
       color: var(--text-dim);
       font-size: 12px;
     }
+  
+    .font-switch-btn {
+      background: #171822;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: var(--text-dim);
+      padding: 5px 12px;
+      border-radius: 3px;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .font-switch-btn:hover {
+      border-color: var(--purple-brand);
+      color: #fff;
+      background: rgba(168, 36, 236, 0.25);
+      box-shadow: 0 0 14px var(--purple-glow);
+    }
+
+    .font-switch-btn.active {
+      border-color: var(--gold);
+      color: var(--bone);
+      background: rgba(212, 175, 55, 0.22);
+      box-shadow: 0 0 12px rgba(212, 175, 55, 0.35);
+    }
+
   </style>
   <script src="/js/three.min.js"></script>
   <script src="/js/OrbitControls.js"></script>
@@ -2736,5 +2801,31 @@
       });
     });
   </script>
+<script>
+    // Interactive Live Font Engine Switcher
+    (function initFontSwitcher() {
+      const savedFont = localStorage.getItem('mrvh_active_font') || "'Ethnocentric', sans-serif";
+      document.documentElement.style.setProperty('--font-display', savedFont);
+      document.documentElement.style.setProperty('--font-mrvh', savedFont);
+
+      const btns = document.querySelectorAll('.font-switch-btn');
+      btns.forEach(btn => {
+        if (btn.dataset.font === savedFont) {
+          btns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        }
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          btns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const chosen = btn.dataset.font;
+          document.documentElement.style.setProperty('--font-display', chosen);
+          document.documentElement.style.setProperty('--font-mrvh', chosen);
+          localStorage.setItem('mrvh_active_font', chosen);
+          if (window.MRVH_Audio) window.MRVH_Audio.playClick();
+        });
+      });
+    })();
+</script>
 </body>
 </html>
